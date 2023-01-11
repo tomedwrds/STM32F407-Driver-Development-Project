@@ -1,4 +1,3 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<session version="1.0">
-<refactoring comment="Delete resource &apos;Driver Development Project/Src/main.c&apos;" deleteContents="false" description="Delete resource &apos;Driver Development Project/Src/main.c&apos;" element1="/Driver Development Project/Src/main.c" flags="7" id="org.eclipse.ltk.core.refactoring.delete.resources" resources="1" stamp="1673314324441"/>
+<session version="1.0">&#x0A;<refactoring comment="Delete resource &apos;Driver Development Project/Src/main.c&apos;" deleteContents="false" description="Delete resource &apos;Driver Development Project/Src/main.c&apos;" element1="/Driver Development Project/Src/main.c" flags="7" id="org.eclipse.ltk.core.refactoring.delete.resources" resources="1" stamp="1673314324441"/>&#x0A;<refactoring comment="Delete resource &apos;Driver Development Project/Src/main.c&apos;" deleteContents="false" description="Delete resource &apos;Driver Development Project/Src/main.c&apos;" element1="/Driver Development Project/Src/main.c" flags="7" id="org.eclipse.ltk.core.refactoring.delete.resources" resources="1" stamp="1673411717322"/>
 </session>
