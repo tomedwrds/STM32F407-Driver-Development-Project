@@ -1,0 +1,110 @@
+/*
+ * stm32f407xx_gpio_driver.c
+ *
+ *  Created on: Jan 9, 2023
+ *      Author: tomed
+ */
+
+
+#include "stm32f407xx_gpio_driver.h"
+
+/*********************************************************************
+ * @fn      		  - GPIO_PeriClockControl
+ *
+ * @brief             - This function enables or disables peripheral clock for the given GPIO port
+ *
+ * @param[in]         - base address of the gpio peripheral
+ * @param[in]         - ENABLE or DISABLE macros
+ * @param[in]         -
+ *
+ * @return            -  none
+ *
+ * @Note              - the base address of gpio peripheal is used as a parameter as it allows the inuse GPIO port to be distnigused
+ *********************************************************************/
+
+//Peripheal clock setup
+void GPIO_PeriClockControl(GPIO_RegDef_t *GPIOx, uint8_t EnorDi)
+{
+	if(EnorDi == ENABLE)
+	{
+		//In header file for GPIO macros are set for all GPIO addresses allowing a comparinson to be made.
+		//Switch isnt used as pointers cannot be passed as an arugment
+		if(pGPIOx == GPIOA)
+		{
+			GPIOA_PCLK_EN();
+		}else if (pGPIOx == GPIOB)
+		{
+			GPIOB_PCLK_EN();
+		}else if (pGPIOx == GPIOC)
+		{
+			GPIOC_PCLK_EN();
+		}else if (pGPIOx == GPIOD)
+		{
+			GPIOD_PCLK_EN();
+		}else if (pGPIOx == GPIOE)
+		{
+			GPIOE_PCLK_EN();
+		}else if (pGPIOx == GPIOF)
+		{
+			GPIOF_PCLK_EN();
+		}else if (pGPIOx == GPIOG)
+		{
+			GPIOG_PCLK_EN();
+		}else if (pGPIOx == GPIOH)
+		{
+			GPIOH_PCLK_EN();
+		}else if (pGPIOx == GPIOI)
+		{
+			GPIOI_PCLK_EN();
+		}
+	}
+}
+
+
+
+/*********************************************************************
+ * @fn      		  - GPIO_Init
+ *
+ * @brief             - Intalize all parts of the GPIO pin such as mode, speed, pull up pull down, outtype, alternate func
+ *
+ * @param[in]         - handle struct that contains pointer to gpio and struct of pointer config
+ * @param[in]         -
+ * @param[in]         -
+ *
+ * @return            -  none
+ *
+ * @Note              - none
+ *********************************************************************/
+
+//Init/Deinit
+void GPIO_Init(GPIO_Handle_t *pGPIOHandle)
+{
+	//Set output mode of GPIO
+}
+void GPIO_DeInit(GPIO_RegDef_t *pGPIOx)
+{
+
+}
+
+//Data read write
+uint8_t GPIO_ReadFromInputPin(GPIO_RegDef_t *pGPIOx, uint8_t PinNumber)
+{
+;
+}
+uint16_t GPIO_ReadFromInputPort(GPIO_RegDef_t *pGPIOx)
+{
+;
+}
+void GPIO_WriteToOutputPin(GPIO_RegDef_t *pGPIOx, uint8_t PinNumber, uint8_t value)
+{
+;
+}
+void GPIO_WriteToOutputPort(GPIO_RegDef_t *pGPIOx, uint8_t PinNumber, uint16_t value)
+{
+;
+}
+void GPIO_ToggleOutputPin(GPIO_RegDef_t *pGPIOx, uint8_t PinNumber);
+
+//IRQ config and ISR handling
+void GPIO_IRQConfig(uint8_t IRQ_Number, uint8_t IRQ_Priority, uint8_t EnorDi);
+void GPIO_IRQHandling(uint8_t PinNumber);

@@ -1,0 +1,2 @@
+../drivers/Src/LedToggle.c:12:6:delay	16	static
+../drivers/Src/LedToggle.c:17:5:main	32	static
