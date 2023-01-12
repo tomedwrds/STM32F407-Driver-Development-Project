@@ -45,7 +45,7 @@ int main(void)
 
 
 	//IRQ config
-	GPIO_IRQPriorityConfig(IRQ_NO_EXTI15_10, 15);
+	//GPIO_IRQPriorityConfig(IRQ_NO_EXTI15_10, 15);
 	GPIO_IRQConfig(IRQ_NO_EXTI15_10, ENABLE);
 
 
