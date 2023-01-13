@@ -5,16 +5,19 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
-../drivers/Src/LedToggle.c \
-../drivers/Src/stm32f407xx_gpio_driver.c 
+../drivers/Src/SPItoLogicAnalyzer.c \
+../drivers/Src/stm32f407xx_gpio_driver.c \
+../drivers/Src/stm32f407xx_spi_driver.c 
 
 OBJS += \
-./drivers/Src/LedToggle.o \
-./drivers/Src/stm32f407xx_gpio_driver.o 
+./drivers/Src/SPItoLogicAnalyzer.o \
+./drivers/Src/stm32f407xx_gpio_driver.o \
+./drivers/Src/stm32f407xx_spi_driver.o 
 
 C_DEPS += \
-./drivers/Src/LedToggle.d \
-./drivers/Src/stm32f407xx_gpio_driver.d 
+./drivers/Src/SPItoLogicAnalyzer.d \
+./drivers/Src/stm32f407xx_gpio_driver.d \
+./drivers/Src/stm32f407xx_spi_driver.d 
 
 
 # Each subdirectory must supply rules for building sources it contributes
@@ -24,7 +27,7 @@ drivers/Src/%.o drivers/Src/%.su: ../drivers/Src/%.c drivers/Src/subdir.mk
 clean: clean-drivers-2f-Src
 
 clean-drivers-2f-Src:
-	-$(RM) ./drivers/Src/LedToggle.d ./drivers/Src/LedToggle.o ./drivers/Src/LedToggle.su ./drivers/Src/stm32f407xx_gpio_driver.d ./drivers/Src/stm32f407xx_gpio_driver.o ./drivers/Src/stm32f407xx_gpio_driver.su
+	-$(RM) ./drivers/Src/SPItoLogicAnalyzer.d ./drivers/Src/SPItoLogicAnalyzer.o ./drivers/Src/SPItoLogicAnalyzer.su ./drivers/Src/stm32f407xx_gpio_driver.d ./drivers/Src/stm32f407xx_gpio_driver.o ./drivers/Src/stm32f407xx_gpio_driver.su ./drivers/Src/stm32f407xx_spi_driver.d ./drivers/Src/stm32f407xx_spi_driver.o ./drivers/Src/stm32f407xx_spi_driver.su
 
 .PHONY: clean-drivers-2f-Src
 

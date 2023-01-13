@@ -1,124 +1,15 @@
-16:35:08 **** Incremental Build of configuration Debug for project Driver Development Project ****
+14:12:39 **** Incremental Build of configuration Debug for project Driver Development Project ****
 make -j8 all 
-arm-none-eabi-gcc "../Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DSTM32 -DSTM32F407G_DISC1 -DSTM32F4 -DSTM32F407VGTx -c -I../Inc -I"C:/Users/tomed/Documents/GitHub/GPIO-Driver/Driver Development Project/drivers/Inc" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Src/main.d" -MT"Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Src/main.o"
-arm-none-eabi-gcc -o "Driver Development Project.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\tomed\Documents\GitHub\GPIO-Driver\Driver Development Project\STM32F407VGTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Driver Development Project.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
-Finished building target: Driver Development Project.elf
- 
-arm-none-eabi-size   Driver\ Development\ Project.elf 
-arm-none-eabi-objdump -h -S  Driver\ Development\ Project.elf  > "Driver Development Project.list"
-   text	   data	    bss	    dec	    hex	filename
-    764	      8	   1568	   2340	    924	Driver Development Project.elf
-Finished building: default.size.stdout
- 
-Finished building: Driver Development Project.list
- 
-17:41:47 **** Clean-only build of configuration Debug for project Driver Development Project ****
-make -j8 clean 
-rm -rf ./drivers/Src/stm32f407xx_gpio_driver.d ./drivers/Src/stm32f407xx_gpio_driver.o ./drivers/Src/stm32f407xx_gpio_driver.su
-rm -rf ./Startup/startup_stm32f407vgtx.d ./Startup/startup_stm32f407vgtx.o
-rm -rf ./Src/main.d ./Src/main.o ./Src/main.su ./Src/syscalls.d ./Src/syscalls.o ./Src/syscalls.su ./Src/sysmem.d ./Src/sysmem.o ./Src/sysmem.su
-rm -rf Driver\ Development\ Project.elf Driver\ Development\ Project.list Driver\ Development\ Project.map Driver\\ Development\\ Project.elf default.size.stdout
- 
-17:41:48 **** Incremental Build of configuration Debug for project Driver Development Project ****
-make -j8 all 
-arm-none-eabi-gcc "../drivers/Src/LedToggle.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DSTM32 -DSTM32F407G_DISC1 -DSTM32F4 -DSTM32F407VGTx -c -I../Inc -I"C:/Users/tomed/Documents/GitHub/GPIO-Driver/Driver Development Project/drivers/Inc" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"drivers/Src/LedToggle.d" -MT"drivers/Src/LedToggle.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "drivers/Src/LedToggle.o"
+arm-none-eabi-gcc "../drivers/Src/SPItoLogicAnalyzer.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DSTM32 -DSTM32F407G_DISC1 -DSTM32F4 -DSTM32F407VGTx -c -I../Inc -I"C:/Users/tomed/Documents/GitHub/GPIO-Driver/Driver Development Project/drivers/Inc" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"drivers/Src/SPItoLogicAnalyzer.d" -MT"drivers/Src/SPItoLogicAnalyzer.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "drivers/Src/SPItoLogicAnalyzer.o"
 arm-none-eabi-gcc "../drivers/Src/stm32f407xx_gpio_driver.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DSTM32 -DSTM32F407G_DISC1 -DSTM32F4 -DSTM32F407VGTx -c -I../Inc -I"C:/Users/tomed/Documents/GitHub/GPIO-Driver/Driver Development Project/drivers/Inc" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"drivers/Src/stm32f407xx_gpio_driver.d" -MT"drivers/Src/stm32f407xx_gpio_driver.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "drivers/Src/stm32f407xx_gpio_driver.o"
-arm-none-eabi-gcc -mcpu=cortex-m4 -g3 -DDEBUG -c -x assembler-with-cpp -MMD -MP -MF"Startup/startup_stm32f407vgtx.d" -MT"Startup/startup_stm32f407vgtx.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Startup/startup_stm32f407vgtx.o" "../Startup/startup_stm32f407vgtx.s"
-arm-none-eabi-gcc "../Src/syscalls.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DSTM32 -DSTM32F407G_DISC1 -DSTM32F4 -DSTM32F407VGTx -c -I../Inc -I"C:/Users/tomed/Documents/GitHub/GPIO-Driver/Driver Development Project/drivers/Inc" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Src/syscalls.d" -MT"Src/syscalls.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Src/syscalls.o"
-arm-none-eabi-gcc "../Src/sysmem.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DSTM32 -DSTM32F407G_DISC1 -DSTM32F4 -DSTM32F407VGTx -c -I../Inc -I"C:/Users/tomed/Documents/GitHub/GPIO-Driver/Driver Development Project/drivers/Inc" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Src/sysmem.d" -MT"Src/sysmem.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Src/sysmem.o"
+arm-none-eabi-gcc "../drivers/Src/stm32f407xx_spi_driver.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DSTM32 -DSTM32F407G_DISC1 -DSTM32F4 -DSTM32F407VGTx -c -I../Inc -I"C:/Users/tomed/Documents/GitHub/GPIO-Driver/Driver Development Project/drivers/Inc" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"drivers/Src/stm32f407xx_spi_driver.d" -MT"drivers/Src/stm32f407xx_spi_driver.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "drivers/Src/stm32f407xx_spi_driver.o"
 arm-none-eabi-gcc -o "Driver Development Project.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\tomed\Documents\GitHub\GPIO-Driver\Driver Development Project\STM32F407VGTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Driver Development Project.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 Finished building target: Driver Development Project.elf
  
 arm-none-eabi-size   Driver\ Development\ Project.elf 
 arm-none-eabi-objdump -h -S  Driver\ Development\ Project.elf  > "Driver Development Project.list"
    text	   data	    bss	    dec	    hex	filename
-   2244	      8	   1568	   3820	    eec	Driver Development Project.elf
-Finished building: default.size.stdout
- 
-Finished building: Driver Development Project.list
- 
-17:44:07 **** Incremental Build of configuration Debug for project Driver Development Project ****
-make -j8 all 
-arm-none-eabi-gcc "../drivers/Src/LedToggle.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DSTM32 -DSTM32F407G_DISC1 -DSTM32F4 -DSTM32F407VGTx -c -I../Inc -I"C:/Users/tomed/Documents/GitHub/GPIO-Driver/Driver Development Project/drivers/Inc" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"drivers/Src/LedToggle.d" -MT"drivers/Src/LedToggle.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "drivers/Src/LedToggle.o"
-arm-none-eabi-gcc -o "Driver Development Project.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\tomed\Documents\GitHub\GPIO-Driver\Driver Development Project\STM32F407VGTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Driver Development Project.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
-Finished building target: Driver Development Project.elf
- 
-arm-none-eabi-size   Driver\ Development\ Project.elf 
-arm-none-eabi-objdump -h -S  Driver\ Development\ Project.elf  > "Driver Development Project.list"
-   text	   data	    bss	    dec	    hex	filename
-   2236	      8	   1568	   3812	    ee4	Driver Development Project.elf
-Finished building: default.size.stdout
- 
-Finished building: Driver Development Project.list
- 
-17:44:56 **** Incremental Build of configuration Debug for project Driver Development Project ****
-make -j8 all 
-arm-none-eabi-gcc "../drivers/Src/LedToggle.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DSTM32 -DSTM32F407G_DISC1 -DSTM32F4 -DSTM32F407VGTx -c -I../Inc -I"C:/Users/tomed/Documents/GitHub/GPIO-Driver/Driver Development Project/drivers/Inc" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"drivers/Src/LedToggle.d" -MT"drivers/Src/LedToggle.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "drivers/Src/LedToggle.o"
-arm-none-eabi-gcc -o "Driver Development Project.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\tomed\Documents\GitHub\GPIO-Driver\Driver Development Project\STM32F407VGTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Driver Development Project.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
-Finished building target: Driver Development Project.elf
- 
-arm-none-eabi-size   Driver\ Development\ Project.elf 
-arm-none-eabi-objdump -h -S  Driver\ Development\ Project.elf  > "Driver Development Project.list"
-   text	   data	    bss	    dec	    hex	filename
-   2236	      8	   1568	   3812	    ee4	Driver Development Project.elf
-Finished building: default.size.stdout
- 
-Finished building: Driver Development Project.list
- 
-17:45:10 **** Incremental Build of configuration Debug for project Driver Development Project ****
-make -j8 all 
-arm-none-eabi-size   Driver\ Development\ Project.elf 
-   text	   data	    bss	    dec	    hex	filename
-   2236	      8	   1568	   3812	    ee4	Driver Development Project.elf
-Finished building: default.size.stdout
- 
-17:53:41 **** Incremental Build of configuration Debug for project Driver Development Project ****
-make -j8 all 
-arm-none-eabi-gcc "../drivers/Src/LedToggle.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DSTM32 -DSTM32F407G_DISC1 -DSTM32F4 -DSTM32F407VGTx -c -I../Inc -I"C:/Users/tomed/Documents/GitHub/GPIO-Driver/Driver Development Project/drivers/Inc" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"drivers/Src/LedToggle.d" -MT"drivers/Src/LedToggle.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "drivers/Src/LedToggle.o"
-../drivers/Src/LedToggle.c: In function 'main':
-../drivers/Src/LedToggle.c:22:20: warning: implicit declaration of function 'sizeOf' [-Wimplicit-function-declaration]
-   22 |  memset(&GpioLed,0,sizeOf(GpioLed));
-      |                    ^~~~~~
-arm-none-eabi-gcc -o "Driver Development Project.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\tomed\Documents\GitHub\GPIO-Driver\Driver Development Project\STM32F407VGTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Driver Development Project.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
-c:\st\stm32cubeide_1.10.1\stm32cubeide\plugins\com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.10.3-2021.10.win32_1.0.0.202111181127\tools\arm-none-eabi\bin\ld.exe: ./drivers/Src/LedToggle.o: in function `main':
-C:/Users/tomed/Documents/GitHub/GPIO-Driver/Driver Development Project/Debug/../drivers/Src/LedToggle.c:22: undefined reference to `sizeOf'
-c:\st\stm32cubeide_1.10.1\stm32cubeide\plugins\com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.10.3-2021.10.win32_1.0.0.202111181127\tools\arm-none-eabi\bin\ld.exe: C:/Users/tomed/Documents/GitHub/GPIO-Driver/Driver Development Project/Debug/../drivers/Src/LedToggle.c:35: undefined reference to `sizeOf'
-collect2.exe: error: ld returned 1 exit status
-make: *** [makefile:64: Driver Development Project.elf] Error 1
-"make -j8 all" terminated with exit code 2. Build might be incomplete.
-17:53:52 **** Incremental Build of configuration Debug for project Driver Development Project ****
-make -j8 all 
-arm-none-eabi-gcc -o "Driver Development Project.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\tomed\Documents\GitHub\GPIO-Driver\Driver Development Project\STM32F407VGTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Driver Development Project.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
-c:\st\stm32cubeide_1.10.1\stm32cubeide\plugins\com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.10.3-2021.10.win32_1.0.0.202111181127\tools\arm-none-eabi\bin\ld.exe: ./drivers/Src/LedToggle.o: in function `main':
-C:/Users/tomed/Documents/GitHub/GPIO-Driver/Driver Development Project/Debug/../drivers/Src/LedToggle.c:22: undefined reference to `sizeOf'
-c:\st\stm32cubeide_1.10.1\stm32cubeide\plugins\com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.10.3-2021.10.win32_1.0.0.202111181127\tools\arm-none-eabi\bin\ld.exe: C:/Users/tomed/Documents/GitHub/GPIO-Driver/Driver Development Project/Debug/../drivers/Src/LedToggle.c:35: undefined reference to `sizeOf'
-collect2.exe: error: ld returned 1 exit status
-make: *** [makefile:64: Driver Development Project.elf] Error 1
-"make -j8 all" terminated with exit code 2. Build might be incomplete.
-17:54:47 **** Incremental Build of configuration Debug for project Driver Development Project ****
-make -j8 all 
-arm-none-eabi-gcc "../drivers/Src/LedToggle.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DSTM32 -DSTM32F407G_DISC1 -DSTM32F4 -DSTM32F407VGTx -c -I../Inc -I"C:/Users/tomed/Documents/GitHub/GPIO-Driver/Driver Development Project/drivers/Inc" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"drivers/Src/LedToggle.d" -MT"drivers/Src/LedToggle.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "drivers/Src/LedToggle.o"
-arm-none-eabi-gcc -o "Driver Development Project.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\tomed\Documents\GitHub\GPIO-Driver\Driver Development Project\STM32F407VGTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Driver Development Project.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
-Finished building target: Driver Development Project.elf
- 
-arm-none-eabi-size   Driver\ Development\ Project.elf 
-arm-none-eabi-objdump -h -S  Driver\ Development\ Project.elf  > "Driver Development Project.list"
-   text	   data	    bss	    dec	    hex	filename
-   2324	      8	   1568	   3900	    f3c	Driver Development Project.elf
-Finished building: default.size.stdout
- 
-Finished building: Driver Development Project.list
- 
-18:02:54 **** Incremental Build of configuration Debug for project Driver Development Project ****
-make -j8 all 
-arm-none-eabi-gcc "../drivers/Src/LedToggle.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DSTM32 -DSTM32F407G_DISC1 -DSTM32F4 -DSTM32F407VGTx -c -I../Inc -I"C:/Users/tomed/Documents/GitHub/GPIO-Driver/Driver Development Project/drivers/Inc" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"drivers/Src/LedToggle.d" -MT"drivers/Src/LedToggle.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "drivers/Src/LedToggle.o"
-arm-none-eabi-gcc -o "Driver Development Project.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\tomed\Documents\GitHub\GPIO-Driver\Driver Development Project\STM32F407VGTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Driver Development Project.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
-Finished building target: Driver Development Project.elf
- 
-arm-none-eabi-size   Driver\ Development\ Project.elf 
-arm-none-eabi-objdump -h -S  Driver\ Development\ Project.elf  > "Driver Development Project.list"
-   text	   data	    bss	    dec	    hex	filename
-   2424	      8	   1568	   4000	    fa0	Driver Development Project.elf
+   3152	      8	   1568	   4728	   1278	Driver Development Project.elf
 Finished building: default.size.stdout
  
 Finished building: Driver Development Project.list

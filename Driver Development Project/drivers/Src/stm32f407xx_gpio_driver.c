@@ -78,6 +78,9 @@ void GPIO_PeriClockControl(GPIO_RegDef_t *pGPIOx, uint8_t EnorDi)
 
 void GPIO_Init(GPIO_Handle_t *pGPIOHandle)
 {
+
+	//Enable peripheal clock
+	GPIO_PeriClockControl(pGPIOHandle->pGPIOx, ENABLE);
 	//Set mode of GPIO some modes are interupt mode
 	if(pGPIOHandle->GPIO_PinConfig.GPIO_PinMode <= GPIO_MODE_ANLG)
 	{
@@ -301,6 +304,19 @@ void GPIO_ToggleOutputPin(GPIO_RegDef_t *pGPIOx, uint8_t PinNumber)
 }
 
 
+/*********************************************************************
+ * @fn      		  - GPIO_IRQConfig
+ *
+ * @brief             - toggles the gpio interupt
+ *
+ * @param[in]         - irq nunber
+ * @param[in]         - enable or disable irq
+ * @param[in]         -
+ *
+ * @return            -  none
+ *
+ * @Note              - none
+ *********************************************************************/
 
 void GPIO_IRQConfig(uint8_t IRQ_Number, uint8_t EnorDi)
 {
@@ -343,6 +359,20 @@ void GPIO_IRQConfig(uint8_t IRQ_Number, uint8_t EnorDi)
 
 }
 
+
+/*********************************************************************
+ * @fn      		  - GPIO_IRQPriorityConfig
+ *
+ * @brief             - allows for setting of the priortiy of the GPIO IRQ
+ *
+ * @param[in]         - irq nunber
+ * @param[in]         - priority level
+ * @param[in]         -
+ *
+ * @return            -  none
+ *
+ * @Note              - none
+ *********************************************************************/
 void GPIO_IRQPriorityConfig(uint8_t IRQ_Number, uint8_t IRQ_Priority)
 {
 	//There exists multiple IPR registers with four IRQ priorties in each therefore we must find the reigster
@@ -355,6 +385,19 @@ void GPIO_IRQPriorityConfig(uint8_t IRQ_Number, uint8_t IRQ_Priority)
 }
 
 
+/*********************************************************************
+ * @fn      		  - GPIO_IRQHandling
+ *
+ * @brief             - sets the pending register to 1 causing the interupt to be cleared
+ *
+ * @param[in]         - pin number
+ * @param[in]         -
+ * @param[in]         -
+ *
+ * @return            -  none
+ *
+ * @Note              - none
+ *********************************************************************/
 void GPIO_IRQHandling(uint8_t PinNumber)
 {
 	//clear the exti pr numebr

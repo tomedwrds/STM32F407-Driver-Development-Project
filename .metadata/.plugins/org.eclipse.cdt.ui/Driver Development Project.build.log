@@ -1,17 +1,19 @@
-18:02:54 **** Incremental Build of configuration Debug for project Driver Development Project ****
+14:12:39 **** Incremental Build of configuration Debug for project Driver Development Project ****
 make -j8 all 
-arm-none-eabi-gcc "../drivers/Src/LedToggle.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DSTM32 -DSTM32F407G_DISC1 -DSTM32F4 -DSTM32F407VGTx -c -I../Inc -I"C:/Users/tomed/Documents/GitHub/GPIO-Driver/Driver Development Project/drivers/Inc" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"drivers/Src/LedToggle.d" -MT"drivers/Src/LedToggle.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "drivers/Src/LedToggle.o"
+arm-none-eabi-gcc "../drivers/Src/SPItoLogicAnalyzer.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DSTM32 -DSTM32F407G_DISC1 -DSTM32F4 -DSTM32F407VGTx -c -I../Inc -I"C:/Users/tomed/Documents/GitHub/GPIO-Driver/Driver Development Project/drivers/Inc" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"drivers/Src/SPItoLogicAnalyzer.d" -MT"drivers/Src/SPItoLogicAnalyzer.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "drivers/Src/SPItoLogicAnalyzer.o"
+arm-none-eabi-gcc "../drivers/Src/stm32f407xx_gpio_driver.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DSTM32 -DSTM32F407G_DISC1 -DSTM32F4 -DSTM32F407VGTx -c -I../Inc -I"C:/Users/tomed/Documents/GitHub/GPIO-Driver/Driver Development Project/drivers/Inc" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"drivers/Src/stm32f407xx_gpio_driver.d" -MT"drivers/Src/stm32f407xx_gpio_driver.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "drivers/Src/stm32f407xx_gpio_driver.o"
+arm-none-eabi-gcc "../drivers/Src/stm32f407xx_spi_driver.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DSTM32 -DSTM32F407G_DISC1 -DSTM32F4 -DSTM32F407VGTx -c -I../Inc -I"C:/Users/tomed/Documents/GitHub/GPIO-Driver/Driver Development Project/drivers/Inc" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"drivers/Src/stm32f407xx_spi_driver.d" -MT"drivers/Src/stm32f407xx_spi_driver.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "drivers/Src/stm32f407xx_spi_driver.o"
 arm-none-eabi-gcc -o "Driver Development Project.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\tomed\Documents\GitHub\GPIO-Driver\Driver Development Project\STM32F407VGTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Driver Development Project.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 Finished building target: Driver Development Project.elf
  
 arm-none-eabi-size   Driver\ Development\ Project.elf 
 arm-none-eabi-objdump -h -S  Driver\ Development\ Project.elf  > "Driver Development Project.list"
    text	   data	    bss	    dec	    hex	filename
-   2424	      8	   1568	   4000	    fa0	Driver Development Project.elf
+   3152	      8	   1568	   4728	   1278	Driver Development Project.elf
 Finished building: default.size.stdout
  
 Finished building: Driver Development Project.list
  
 
-18:02:55 Build Finished. 0 errors, 0 warnings. (took 588ms)
+14:12:40 Build Finished. 0 errors, 0 warnings. (took 695ms)
 

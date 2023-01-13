@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename resource &apos;Driver Development Project/drivers/Src/main.c&apos; to &apos;SPItoLogicAnalyzer.c&apos;" description="Rename resource &apos;main.c&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="drivers/Src/main.c" name="SPItoLogicAnalyzer.c" stamp="1673503417921" updateReferences="true"/>
+</session>
