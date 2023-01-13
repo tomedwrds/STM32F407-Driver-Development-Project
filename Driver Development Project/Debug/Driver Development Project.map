@@ -257,10 +257,10 @@ Discarded input sections
  .debug_macro   0x0000000000000000      0x103 ./drivers/Src/SPItoLogicAnalyzer.o
  .debug_macro   0x0000000000000000       0x6a ./drivers/Src/SPItoLogicAnalyzer.o
  .debug_macro   0x0000000000000000      0x1df ./drivers/Src/SPItoLogicAnalyzer.o
+ .debug_macro   0x0000000000000000      0x174 ./drivers/Src/SPItoLogicAnalyzer.o
  .debug_macro   0x0000000000000000       0x1e ./drivers/Src/SPItoLogicAnalyzer.o
  .debug_macro   0x0000000000000000       0x3c ./drivers/Src/SPItoLogicAnalyzer.o
  .debug_macro   0x0000000000000000       0x34 ./drivers/Src/SPItoLogicAnalyzer.o
- .debug_macro   0x0000000000000000      0x174 ./drivers/Src/SPItoLogicAnalyzer.o
  .debug_macro   0x0000000000000000       0x16 ./drivers/Src/SPItoLogicAnalyzer.o
  .debug_macro   0x0000000000000000       0x43 ./drivers/Src/SPItoLogicAnalyzer.o
  .debug_macro   0x0000000000000000       0x34 ./drivers/Src/SPItoLogicAnalyzer.o
@@ -271,6 +271,7 @@ Discarded input sections
  .debug_macro   0x0000000000000000      0x12a ./drivers/Src/SPItoLogicAnalyzer.o
  .debug_macro   0x0000000000000000      0x341 ./drivers/Src/SPItoLogicAnalyzer.o
  .debug_macro   0x0000000000000000       0x35 ./drivers/Src/SPItoLogicAnalyzer.o
+ .group         0x0000000000000000        0xc ./drivers/Src/stm32f407xx_gpio_driver.o
  .group         0x0000000000000000        0xc ./drivers/Src/stm32f407xx_gpio_driver.o
  .group         0x0000000000000000        0xc ./drivers/Src/stm32f407xx_gpio_driver.o
  .group         0x0000000000000000        0xc ./drivers/Src/stm32f407xx_gpio_driver.o
@@ -307,8 +308,10 @@ Discarded input sections
  .debug_macro   0x0000000000000000      0x103 ./drivers/Src/stm32f407xx_gpio_driver.o
  .debug_macro   0x0000000000000000       0x6a ./drivers/Src/stm32f407xx_gpio_driver.o
  .debug_macro   0x0000000000000000      0x1df ./drivers/Src/stm32f407xx_gpio_driver.o
+ .debug_macro   0x0000000000000000      0x174 ./drivers/Src/stm32f407xx_gpio_driver.o
  .debug_macro   0x0000000000000000      0x3f8 ./drivers/Src/stm32f407xx_gpio_driver.o
  .debug_macro   0x0000000000000000       0xc4 ./drivers/Src/stm32f407xx_gpio_driver.o
+ .group         0x0000000000000000        0xc ./drivers/Src/stm32f407xx_spi_driver.o
  .group         0x0000000000000000        0xc ./drivers/Src/stm32f407xx_spi_driver.o
  .group         0x0000000000000000        0xc ./drivers/Src/stm32f407xx_spi_driver.o
  .group         0x0000000000000000        0xc ./drivers/Src/stm32f407xx_spi_driver.o
@@ -324,10 +327,28 @@ Discarded input sections
  .bss           0x0000000000000000        0x0 ./drivers/Src/stm32f407xx_spi_driver.o
  .text.SPI_DeInit
                 0x0000000000000000       0x88 ./drivers/Src/stm32f407xx_spi_driver.o
+ .text.SPI_SendDataIT
+                0x0000000000000000       0x48 ./drivers/Src/stm32f407xx_spi_driver.o
+ .text.SPI_RecieveDataIT
+                0x0000000000000000       0x48 ./drivers/Src/stm32f407xx_spi_driver.o
  .text.SPI_IRQConfig
                 0x0000000000000000       0xb8 ./drivers/Src/stm32f407xx_spi_driver.o
  .text.SPI_IRQPriorityConfig
                 0x0000000000000000       0x5a ./drivers/Src/stm32f407xx_spi_driver.o
+ .text.SPI_IRQHandling
+                0x0000000000000000       0x7c ./drivers/Src/stm32f407xx_spi_driver.o
+ .text.spi_txe_interrupt_handle
+                0x0000000000000000       0x6e ./drivers/Src/stm32f407xx_spi_driver.o
+ .text.spi_rxe_interrupt_handle
+                0x0000000000000000       0x72 ./drivers/Src/stm32f407xx_spi_driver.o
+ .text.spi_ovr_err_interrupt_handle
+                0x0000000000000000       0x22 ./drivers/Src/stm32f407xx_spi_driver.o
+ .text.SPI_ClearOVRFlag
+                0x0000000000000000       0x20 ./drivers/Src/stm32f407xx_spi_driver.o
+ .text.SPI_CloseTransmisson
+                0x0000000000000000       0x30 ./drivers/Src/stm32f407xx_spi_driver.o
+ .text.SPI_CloseReception
+                0x0000000000000000       0x30 ./drivers/Src/stm32f407xx_spi_driver.o
  .debug_macro   0x0000000000000000      0xa84 ./drivers/Src/stm32f407xx_spi_driver.o
  .debug_macro   0x0000000000000000       0x22 ./drivers/Src/stm32f407xx_spi_driver.o
  .debug_macro   0x0000000000000000       0x8e ./drivers/Src/stm32f407xx_spi_driver.o
@@ -335,6 +356,7 @@ Discarded input sections
  .debug_macro   0x0000000000000000      0x103 ./drivers/Src/stm32f407xx_spi_driver.o
  .debug_macro   0x0000000000000000       0x6a ./drivers/Src/stm32f407xx_spi_driver.o
  .debug_macro   0x0000000000000000      0x1df ./drivers/Src/stm32f407xx_spi_driver.o
+ .debug_macro   0x0000000000000000      0x174 ./drivers/Src/stm32f407xx_spi_driver.o
  .debug_macro   0x0000000000000000      0x3f8 ./drivers/Src/stm32f407xx_spi_driver.o
  .debug_macro   0x0000000000000000       0xc4 ./drivers/Src/stm32f407xx_spi_driver.o
  .debug_macro   0x0000000000000000       0xbe ./drivers/Src/stm32f407xx_spi_driver.o
@@ -741,25 +763,25 @@ LOAD c:/st/stm32cubeide_1.10.1/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.ext
 LOAD c:/st/stm32cubeide_1.10.1/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.10.3-2021.10.win32_1.0.0.202111181127/tools/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libm.a
 LOAD c:/st/stm32cubeide_1.10.1/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.10.3-2021.10.win32_1.0.0.202111181127/tools/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard\libgcc.a
 
-.debug_line     0x0000000000000000     0x1721
+.debug_line     0x0000000000000000     0x1971
  .debug_line    0x0000000000000000       0x84 ./Startup/startup_stm32f407vgtx.o
  .debug_line    0x0000000000000084      0x6e7 ./drivers/Src/SPItoLogicAnalyzer.o
- .debug_line    0x000000000000076b      0x909 ./drivers/Src/stm32f407xx_gpio_driver.o
- .debug_line    0x0000000000001074      0x6ad ./drivers/Src/stm32f407xx_spi_driver.o
+ .debug_line    0x000000000000076b      0x915 ./drivers/Src/stm32f407xx_gpio_driver.o
+ .debug_line    0x0000000000001080      0x8f1 ./drivers/Src/stm32f407xx_spi_driver.o
 
-.debug_info     0x0000000000000000     0x135f
+.debug_info     0x0000000000000000     0x15eb
  .debug_info    0x0000000000000000       0x22 ./Startup/startup_stm32f407vgtx.o
- .debug_info    0x0000000000000022      0x565 ./drivers/Src/SPItoLogicAnalyzer.o
- .debug_info    0x0000000000000587      0x787 ./drivers/Src/stm32f407xx_gpio_driver.o
- .debug_info    0x0000000000000d0e      0x651 ./drivers/Src/stm32f407xx_spi_driver.o
+ .debug_info    0x0000000000000022      0x5b3 ./drivers/Src/SPItoLogicAnalyzer.o
+ .debug_info    0x00000000000005d5      0x78e ./drivers/Src/stm32f407xx_gpio_driver.o
+ .debug_info    0x0000000000000d63      0x888 ./drivers/Src/stm32f407xx_spi_driver.o
 
-.debug_abbrev   0x0000000000000000      0x465
+.debug_abbrev   0x0000000000000000      0x49b
  .debug_abbrev  0x0000000000000000       0x12 ./Startup/startup_stm32f407vgtx.o
  .debug_abbrev  0x0000000000000012      0x170 ./drivers/Src/SPItoLogicAnalyzer.o
  .debug_abbrev  0x0000000000000182      0x173 ./drivers/Src/stm32f407xx_gpio_driver.o
- .debug_abbrev  0x00000000000002f5      0x170 ./drivers/Src/stm32f407xx_spi_driver.o
+ .debug_abbrev  0x00000000000002f5      0x1a6 ./drivers/Src/stm32f407xx_spi_driver.o
 
-.debug_aranges  0x0000000000000000      0x150
+.debug_aranges  0x0000000000000000      0x198
  .debug_aranges
                 0x0000000000000000       0x28 ./Startup/startup_stm32f407vgtx.o
  .debug_aranges
@@ -767,36 +789,36 @@ LOAD c:/st/stm32cubeide_1.10.1/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.ext
  .debug_aranges
                 0x0000000000000070       0x70 ./drivers/Src/stm32f407xx_gpio_driver.o
  .debug_aranges
-                0x00000000000000e0       0x70 ./drivers/Src/stm32f407xx_spi_driver.o
+                0x00000000000000e0       0xb8 ./drivers/Src/stm32f407xx_spi_driver.o
 
-.debug_str      0x0000000000000000     0x8d7d
+.debug_str      0x0000000000000000     0x8e7a
  .debug_str     0x0000000000000000       0x7e ./Startup/startup_stm32f407vgtx.o
- .debug_str     0x000000000000007e     0x89a3 ./drivers/Src/SPItoLogicAnalyzer.o
-                                       0x8bf0 (size before relaxing)
- .debug_str     0x0000000000008a21      0x2b5 ./drivers/Src/stm32f407xx_gpio_driver.o
-                                       0x5ab4 (size before relaxing)
- .debug_str     0x0000000000008cd6       0xa7 ./drivers/Src/stm32f407xx_spi_driver.o
-                                       0x5a20 (size before relaxing)
+ .debug_str     0x000000000000007e     0x89d3 ./drivers/Src/SPItoLogicAnalyzer.o
+                                       0x8c20 (size before relaxing)
+ .debug_str     0x0000000000008a51      0x2b5 ./drivers/Src/stm32f407xx_gpio_driver.o
+                                       0x5dcc (size before relaxing)
+ .debug_str     0x0000000000008d06      0x174 ./drivers/Src/stm32f407xx_spi_driver.o
+                                       0x5e35 (size before relaxing)
 
-.debug_ranges   0x0000000000000000      0x118
+.debug_ranges   0x0000000000000000      0x160
  .debug_ranges  0x0000000000000000       0x20 ./Startup/startup_stm32f407vgtx.o
  .debug_ranges  0x0000000000000020       0x38 ./drivers/Src/SPItoLogicAnalyzer.o
  .debug_ranges  0x0000000000000058       0x60 ./drivers/Src/stm32f407xx_gpio_driver.o
- .debug_ranges  0x00000000000000b8       0x60 ./drivers/Src/stm32f407xx_spi_driver.o
+ .debug_ranges  0x00000000000000b8       0xa8 ./drivers/Src/stm32f407xx_spi_driver.o
 
-.debug_macro    0x0000000000000000      0xa84
- .debug_macro   0x0000000000000000      0x1b1 ./drivers/Src/SPItoLogicAnalyzer.o
- .debug_macro   0x00000000000001b1       0x8e ./drivers/Src/SPItoLogicAnalyzer.o
- .debug_macro   0x000000000000023f       0x51 ./drivers/Src/SPItoLogicAnalyzer.o
- .debug_macro   0x0000000000000290      0x3f8 ./drivers/Src/SPItoLogicAnalyzer.o
- .debug_macro   0x0000000000000688       0xc4 ./drivers/Src/SPItoLogicAnalyzer.o
- .debug_macro   0x000000000000074c       0xc4 ./drivers/Src/SPItoLogicAnalyzer.o
- .debug_macro   0x0000000000000810       0x52 ./drivers/Src/SPItoLogicAnalyzer.o
- .debug_macro   0x0000000000000862       0x10 ./drivers/Src/SPItoLogicAnalyzer.o
- .debug_macro   0x0000000000000872       0x20 ./drivers/Src/SPItoLogicAnalyzer.o
- .debug_macro   0x0000000000000892       0x9a ./drivers/Src/stm32f407xx_gpio_driver.o
- .debug_macro   0x000000000000092c       0xbe ./drivers/Src/stm32f407xx_gpio_driver.o
- .debug_macro   0x00000000000009ea       0x9a ./drivers/Src/stm32f407xx_spi_driver.o
+.debug_macro    0x0000000000000000      0xa9a
+ .debug_macro   0x0000000000000000      0x1b5 ./drivers/Src/SPItoLogicAnalyzer.o
+ .debug_macro   0x00000000000001b5       0x8e ./drivers/Src/SPItoLogicAnalyzer.o
+ .debug_macro   0x0000000000000243       0x51 ./drivers/Src/SPItoLogicAnalyzer.o
+ .debug_macro   0x0000000000000294      0x3f8 ./drivers/Src/SPItoLogicAnalyzer.o
+ .debug_macro   0x000000000000068c       0xc4 ./drivers/Src/SPItoLogicAnalyzer.o
+ .debug_macro   0x0000000000000750       0xc4 ./drivers/Src/SPItoLogicAnalyzer.o
+ .debug_macro   0x0000000000000814       0x52 ./drivers/Src/SPItoLogicAnalyzer.o
+ .debug_macro   0x0000000000000866       0x10 ./drivers/Src/SPItoLogicAnalyzer.o
+ .debug_macro   0x0000000000000876       0x20 ./drivers/Src/SPItoLogicAnalyzer.o
+ .debug_macro   0x0000000000000896       0xa3 ./drivers/Src/stm32f407xx_gpio_driver.o
+ .debug_macro   0x0000000000000939       0xbe ./drivers/Src/stm32f407xx_gpio_driver.o
+ .debug_macro   0x00000000000009f7       0xa3 ./drivers/Src/stm32f407xx_spi_driver.o
 
 .comment        0x0000000000000000       0x50
  .comment       0x0000000000000000       0x50 ./drivers/Src/SPItoLogicAnalyzer.o
@@ -804,8 +826,8 @@ LOAD c:/st/stm32cubeide_1.10.1/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.ext
  .comment       0x0000000000000050       0x51 ./drivers/Src/stm32f407xx_gpio_driver.o
  .comment       0x0000000000000050       0x51 ./drivers/Src/stm32f407xx_spi_driver.o
 
-.debug_frame    0x0000000000000000      0x49c
+.debug_frame    0x0000000000000000      0x5f4
  .debug_frame   0x0000000000000000       0xec ./drivers/Src/SPItoLogicAnalyzer.o
  .debug_frame   0x00000000000000ec      0x1c8 ./drivers/Src/stm32f407xx_gpio_driver.o
- .debug_frame   0x00000000000002b4      0x1bc ./drivers/Src/stm32f407xx_spi_driver.o
- .debug_frame   0x0000000000000470       0x2c c:/st/stm32cubeide_1.10.1/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.10.3-2021.10.win32_1.0.0.202111181127/tools/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-init.o)
+ .debug_frame   0x00000000000002b4      0x314 ./drivers/Src/stm32f407xx_spi_driver.o
+ .debug_frame   0x00000000000005c8       0x2c c:/st/stm32cubeide_1.10.1/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.10.3-2021.10.win32_1.0.0.202111181127/tools/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-init.o)

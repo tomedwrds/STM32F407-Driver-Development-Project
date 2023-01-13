@@ -8,6 +8,12 @@
 
 #include "stm32f407xx_spi_driver.h"
 
+//Static to make them private as we only want them used in this file
+static void spi_txe_interrupt_handle(SPI_Handle_t *pSPIHandle);
+static void spi_rxe_interrupt_handle(SPI_Handle_t *pSPIHandle);
+static void spi_ovr_err_interrupt_handle(SPI_Handle_t *pSPIHandle);
+
+
 /*********************************************************************
  * @fn      		  - SPI_PeriClockControl
  *
@@ -135,6 +141,20 @@ void SPI_DeInit(SPI_RegDef_t *pSPIx)
 	}
 }
 
+
+/*********************************************************************
+ * @fn      		  - SPI_Get_FlagStatus
+ *
+ * @brief             - Checks the SR of SPI to see if a flag is set. Ie TXE flag for when transmit buffer empty
+ *
+ * @param[in]         - spi port
+ * @param[in]         - flag to check for
+ * @param[in]         -
+ *
+ * @return            -  none
+ *
+ * @Note              -none
+ *********************************************************************/
 uint8_t SPI_Get_FlagStatus(SPI_RegDef_t *pSPIx, uint32_t flagName)
 {
 	if(pSPIx->SR & flagName)
@@ -147,14 +167,26 @@ uint8_t SPI_Get_FlagStatus(SPI_RegDef_t *pSPIx, uint32_t flagName)
 	}
 }
 
-//Blocking call. While loop present so fuction does return until all data sent.
-
+/*********************************************************************
+ * @fn      		  - SPI_SendData
+ *
+ * @brief             - moves data byte by byte into the Tx data to be sent.
+ *
+ * @param[in]         - spi port
+ * @param[in]         - data to send
+ * @param[in]         - length of data to send (bytes)
+ *
+ * @return            -  none
+ *
+ * @Note              - This send api makes use of polling so temporarily blocks the thread while waiting for Tx to be empty
+ *********************************************************************/
 
 void SPI_SendData(SPI_RegDef_t *pSPIx, uint8_t* dataToSend,uint32_t Len)
 {
 	while(Len > 0)
 	{
-		//Check if the TXE is set and Tx buffer empty. Program hangs until this happens
+		//Checks if all data has been moved out of the transmission buffer
+		//This is to prevent data being over written in Tx
 		while(SPI_Get_FlagStatus(pSPIx,SPI_TXE_FLAG) == RESET);
 
 		//Check dff
@@ -166,7 +198,6 @@ void SPI_SendData(SPI_RegDef_t *pSPIx, uint8_t* dataToSend,uint32_t Len)
 
 			//Increment the dataTosend pointer
 			dataToSend+=2;
-
 		}
 		else
 		{
@@ -175,19 +206,29 @@ void SPI_SendData(SPI_RegDef_t *pSPIx, uint8_t* dataToSend,uint32_t Len)
 			Len --;
 			dataToSend++;
 		}
-
 	}
-
 }
 
-
+/*********************************************************************
+ * @fn      		  - SPI_RecieveData
+ *
+ * @brief             - reads data byte by byte from the Rx buffer.
+ *
+ * @param[in]         - spi port
+ * @param[in]         - location to store data
+ * @param[in]         - length of data to send (bytes)
+ *
+ * @return            -  none
+ *
+ * @Note              - This send api makes use of polling so temporarily blocks the thread while waiting for Rx to be full
+ *********************************************************************/
 
 void SPI_RecieveData(SPI_RegDef_t *pSPIx, uint8_t* dataReceived,uint32_t Len)
 {
 	while(Len > 0)
 	{
-		//Check if the RXE is not empty
-		while(SPI_Get_FlagStatus(pSPIx,SPI_RXNE_FLAG) == SET);
+		//Hangs the programme until the buffer has data in it
+		while(SPI_Get_FlagStatus(pSPIx,SPI_RXNE_FLAG) == RESET);
 
 		//Check dff
 		if(pSPIx->CR1 & (1<<SPI_CR1_DFF))
@@ -212,6 +253,86 @@ void SPI_RecieveData(SPI_RegDef_t *pSPIx, uint8_t* dataReceived,uint32_t Len)
 
 }
 
+/*********************************************************************
+ * @fn      		  - SPI_SendDataIT
+ *
+ * @brief             - enables and confugres interupt allowing all data to be sent through it
+ *
+ * @param[in]         - global spi handle structure
+ * @param[in]         - data to send
+ * @param[in]         - length of data to send (bytes)
+ *
+ * @return            -  none
+ *
+ * @Note              - This function configures then enables the interupt. This interupt will continue to be called until all data is sent.
+ *********************************************************************/
+
+uint8_t SPI_SendDataIT(SPI_Handle_t *pSPIHandle, uint8_t* dataToSend,uint32_t Len)
+{
+	//Checks wether the SPI is in the process of sending data if so the function returns false and will be called again
+	uint8_t state = pSPIHandle->TxState;
+	if(state != SPI_BUSY_IN_TX)
+	{
+		//The SPIHandle should be globally inatlized to allow access to it in the interupt functions
+		pSPIHandle->pTxBuffer = dataToSend;
+		pSPIHandle->TxLen = Len;
+
+		//Mark the spi state as busy in transmission so no other code can take over same SPI peripheal until transmission is over
+		pSPIHandle->TxState = SPI_BUSY_IN_TX;
+
+		//Allows for an iterupt to occur when TXE bit is set in SR
+		//With this set an interupt will be called when the Tx buffer is empty allowing data to be passed into
+		pSPIHandle->pSPIx->CR2 |= (1<<SPI_CR2_TXEIE);
+	}
+	return state;
+}
+
+/*********************************************************************
+ * @fn      		  - SPI_RecieveDataIT
+ *
+ * @brief             - enables and confugres interupt allowing all data to be receieved through it
+ *
+ * @param[in]         - global spi handle structure
+ * @param[in]         - data to send
+ * @param[in]         - length of data to send (bytes)
+ *
+ * @return            -  none
+ *
+ * @Note              - none
+ *********************************************************************/
+uint8_t SPI_RecieveDataIT(SPI_Handle_t *pSPIHandle, uint8_t* dataReceived,uint32_t Len)
+{
+	//Checks wether the SPI is in the process of sending data if so the function returns false and will be called again
+	uint8_t state = pSPIHandle->RxState;
+	if(state != SPI_BUSY_IN_RX)
+	{
+		//The SPIHandle should be globally inatlized to allow access to it in the interupt functions
+		pSPIHandle->pRxBuffer = dataReceived;
+		pSPIHandle->RxLen = Len;
+
+		//mark the spi state as busy in transmission so no other code can take over same SPI peripheal until transmission is over
+		pSPIHandle->RxState = SPI_BUSY_IN_RX;
+
+		//Allows for an iterupt to occur when RNXE bit is set in SR
+		//With this set an interupt will be called when the Rx buffer is empty allowing data to be recieved from it
+		pSPIHandle->pSPIx->CR2 |= (1<<SPI_CR2_RXNEIE);
+	}
+	return state;
+}
+
+/*********************************************************************
+ * @fn      		  - SPI_PeripheralControl
+ *
+ * @brief             - turns on or off the spi
+ *
+ * @param[in]         - spi port
+ * @param[in]         - enable or disable
+ * @param[in]         -
+ *
+ * @return            -  none
+ *
+ * @Note              - THIS SHOULD ONLY BE CALLED AFTER THE SPI HAS BEEN CONFIGURED
+ *********************************************************************/
 void SPI_PeripheralControl(SPI_RegDef_t *pSPIx, uint8_t EnOrDi)
 {
 	if(EnOrDi == ENABLE)
@@ -224,7 +345,19 @@ void SPI_PeripheralControl(SPI_RegDef_t *pSPIx, uint8_t EnOrDi)
 	}
 }
 
-
+/*********************************************************************
+ * @fn      		  - SPI_SSIConfig
+ *
+ * @brief             - if SSM (software slave managment) is used the value of this bit is forced on to the NSS pin
+ *
+ * @param[in]         - spi port
+ * @param[in]         - enable or disable
+ * @param[in]         -
+ *
+ * @return            -  none
+ *
+ * @Note              - none
+ *********************************************************************/
 void SPI_SSIConfig(SPI_RegDef_t *pSPIx, uint8_t EnOrDi)
 {
 	if(EnOrDi == ENABLE)
@@ -236,7 +369,19 @@ void SPI_SSIConfig(SPI_RegDef_t *pSPIx, uint8_t EnOrDi)
 		pSPIx->CR1 &= ~(1<< SPI_CR1_SSI);
 	}
 }
-
+/*********************************************************************
+ * @fn      		  - SPI_SSOEConfig
+ *
+ * @brief             - allows for toggling of a multi master confuration
+ *
+ * @param[in]         - spi port
+ * @param[in]         - enable or disable
+ * @param[in]         -
+ *
+ * @return            -  none
+ *
+ * @Note              - THIS SHOULD BE SET TO 1 WHEN USING HARDWARE SLAVE MANAGMENT BUT NOT USING A MULTI MASTER SYSTEM
+ *********************************************************************/
 void SPI_SSOEConfig(SPI_RegDef_t *pSPIx, uint8_t EnOrDi)
 {
 	if(EnOrDi == ENABLE)
@@ -250,6 +395,19 @@ void SPI_SSOEConfig(SPI_RegDef_t *pSPIx, uint8_t EnOrDi)
 }
 
 
+/*********************************************************************
+ * @fn      		  - SPI_IRQConfig
+ *
+ * @brief             - enable and configure the IRQ interupt
+ *
+ * @param[in]         - irq number
+ * @param[in]         - enable or disable
+ * @param[in]         -
+ *
+ * @return            -  none
+ *
+ * @Note              - none
+ *********************************************************************/
 void SPI_IRQConfig(uint8_t IRQ_Number, uint8_t EnorDi)
 {
 	//Enable or disable pin
@@ -284,9 +442,9 @@ void SPI_IRQConfig(uint8_t IRQ_Number, uint8_t EnorDi)
 /*********************************************************************
  * @fn      		  - SPI_IRQPriorityConfig
  *
- * @brief             - allows for setting of the priortiy of the SPI IRQ
+ * @brief             - enable and configure the IRQ priort
  *
- * @param[in]         - irq nunber
+ * @param[in]         - irq number
  * @param[in]         - priority level
  * @param[in]         -
  *
@@ -294,6 +452,7 @@ void SPI_IRQConfig(uint8_t IRQ_Number, uint8_t EnorDi)
  *
  * @Note              - none
  *********************************************************************/
+
 void SPI_IRQPriorityConfig(uint8_t IRQ_Number, uint8_t IRQ_Priority)
 {
 	//There exists multiple IPR registers with four IRQ priorties in each therefore we must find the reigster
@@ -304,3 +463,209 @@ void SPI_IRQPriorityConfig(uint8_t IRQ_Number, uint8_t IRQ_Priority)
 	//We are incrementing the pointer by 32 bits for each value to get to next register
 	*(NVIC_PR_BASE_ADDR + IPRRegister) |= (IRQ_Priority << offset) ;
 }
+
+/*********************************************************************
+ * @fn      		  - SPI_IRQHandling
+ *
+ * @brief             - SPI can be interupted for multiple reasons. This function determines the reason of interupt and calls the approiate function.
+ *
+ * @param[in]         - SPI handle structure
+ * @param[in]         -
+ * @param[in]         -
+ *
+ * @return            -  none
+ *
+ * @Note              - none
+ *********************************************************************/
+void SPI_IRQHandling(SPI_Handle_t *pHandle)
+{
+	//Check for TXE to be true in status register and for interupts to be enabled for TXE
+	if(pHandle->pSPIx->SR & (1<< SPI_SR_TXE) && pHandle->pSPIx->CR2 & (1<< SPI_CR2_TXEIE))
+	{
+		spi_txe_interrupt_handle(pHandle);
+	}
+	//Receveiving
+	else if(pHandle->pSPIx->SR & (1<< SPI_SR_RXNE) && pHandle->pSPIx->CR2 & (1<< SPI_CR2_RXNEIE))
+	{
+		spi_rxe_interrupt_handle(pHandle);
+	}
+	//Overun flag
+	else if(pHandle->pSPIx->SR & (1<< SPI_SR_OVR) && pHandle->pSPIx->CR2 & (1<< SPI_CR2_ERRIE))
+	{
+		spi_ovr_err_interrupt_handle (pHandle);
+	}
+
+}
+
+/*********************************************************************
+ * @fn      		  - spi_txe_interrupt_handle
+ *
+ * @brief             - interupt called to transmit txe data
+ *
+ * @param[in]         - SPI handle structure
+ * @param[in]         -
+ * @param[in]         -
+ *
+ * @return            -  none
+ *
+ * @Note              - function is a helper function and is private to this header so carries a static typing
+ *********************************************************************/
+static void spi_txe_interrupt_handle(SPI_Handle_t *pSPIHandle)
+{
+	//Determines size of data frame
+	if(pSPIHandle->pSPIx->CR1 & (1<<SPI_CR1_DFF))
+	{
+		//16bit
+		pSPIHandle->pSPIx->DR = *((uint16_t*)pSPIHandle->pTxBuffer);
+		pSPIHandle->TxLen -=2;
+
+		//Increment the dataTosend pointer
+		pSPIHandle->pTxBuffer+=2;
+
+	}
+	else
+	{
+		//8bit
+		pSPIHandle->pSPIx->DR = *pSPIHandle->pTxBuffer;
+		pSPIHandle->TxLen  --;
+		pSPIHandle->pTxBuffer++;
+	}
+
+	if(! pSPIHandle->TxLen)
+	{
+		//if tx len is not 0 close the spi transimmison and infor the application that tx is over
+		SPI_CloseTransmisson(pSPIHandle);
+	}
+}
+
+/*********************************************************************
+ * @fn      		  - spi_rxe_interrupt_handle
+ *
+ * @brief             - interupt called to receive rxe data
+ *
+ * @param[in]         - SPI handle structure
+ * @param[in]         -
+ * @param[in]         -
+ *
+ * @return            -  none
+ *
+ * @Note              - function is a helper function and is private to this header so carries a static typing
+ *********************************************************************/
+static void spi_rxe_interrupt_handle(SPI_Handle_t *pSPIHandle)
+{
+	if(pSPIHandle->pSPIx->CR1 & (1<<SPI_CR1_DFF))
+	{
+		//16bit
+		*((uint16_t*)pSPIHandle->pRxBuffer) = (uint16_t) pSPIHandle->pSPIx->DR;
+		pSPIHandle->RxLen -=2;
+
+		//Increment the dataTosend pointer
+		pSPIHandle->pRxBuffer+=2;
+
+	}
+	else
+	{
+		//8bit
+		*pSPIHandle->pRxBuffer = (uint8_t) pSPIHandle->pSPIx->DR;
+		pSPIHandle->RxLen  --;
+		pSPIHandle->pRxBuffer++;
+	}
+
+	if(! pSPIHandle->RxLen)
+	{
+		//if tx len is not 0 close the spi transimmison and infor the application that tx is over
+		SPI_CloseReception(pSPIHandle);
+	}
+}
+
+/*********************************************************************
+ * @fn      		  - spi_ovr_err_interrupt_handle
+ *
+ * @brief             -  handles ovr error
+ *
+ * @param[in]         - SPI handle structure
+ * @param[in]         -
+ * @param[in]         -
+ *
+ * @return            -  none
+ *
+ * @Note              - function is a helper function and is private to this header so carries a static typing
+ *********************************************************************/
+static void spi_ovr_err_interrupt_handle(SPI_Handle_t *pSPIHandle)
+{
+	//clear the ovr flag by first reading DR then read the status register
+
+	//This checks if TX is active. IF so flag should not be cleared otherwise transmission will be cancelled
+	if(pSPIHandle->TxState != SPI_BUSY_IN_TX)
+	{
+		SPI_ClearOVRFlag(pSPIHandle->pSPIx);
+	}
+	//inform the application of error an application error can be implemented below if user wishes
+}
+
+/*********************************************************************
+ * @fn      		  - SPI_ClearOVRFlag
+ *
+ * @brief             -  clears ovr flag by reading both DR and SR
+ *
+ * @param[in]         - SPI port
+ * @param[in]         -
+ * @param[in]         -
+ *
+ * @return            -  none
+ *
+ * @Note              - none
+ *********************************************************************/
+void SPI_ClearOVRFlag(SPI_RegDef_t *pSPIx)
+{
+	uint8_t dummy;
+	dummy = pSPIx->DR;
+	dummy = pSPIx->SR;
+	(void) dummy;
+}
+
+/*********************************************************************
+ * @fn      		  - SPI_CloseTransmisson
+ *
+ * @brief             - closes transmisson of SPI port by disabling interupt
+ *
+ * @param[in]         - SPI port
+ * @param[in]         -
+ * @param[in]         -
+ *
+ * @return            -  none
+ *
+ * @Note              - none
+ *********************************************************************/
+void SPI_CloseTransmisson(SPI_Handle_t *pSPIHandle)
+{
+	//TX interupt flag is cleared
+	pSPIHandle->pSPIx->CR2 &= ~(1 << SPI_CR2_TXEIE);
+	//Pointer is reset to prevent a dangling pointer to no loner existing memory
+	pSPIHandle->pTxBuffer = NULL;
+	pSPIHandle->TxState = SPI_READY;
+	//SPI_ApplicationEventCallback(pSPIHandle,SPI_EVENT_TX_CMPLT);
+}
+
+/*********************************************************************
+ * @fn      		  - SPI_CloseReception
+ *
+ * @brief             - closes reception of SPI port by disabling interupt
+ *
+ * @param[in]         - SPI port
+ * @param[in]         -
+ * @param[in]         -
+ *
+ * @return            -  none
+ *
+ * @Note              - none
+ *********************************************************************/
+void SPI_CloseReception(SPI_Handle_t *pSPIHandle)
+{
+	//RX interupt flag is cleared
+	pSPIHandle->pSPIx->CR2 &= ~(1 << SPI_CR2_RXNEIE);
+	//Pointer is reset to prevent a dangling pointer to no loner existing memory
+	pSPIHandle->pRxBuffer = NULL;
+	pSPIHandle->RxState = SPI_READY;
+}
+

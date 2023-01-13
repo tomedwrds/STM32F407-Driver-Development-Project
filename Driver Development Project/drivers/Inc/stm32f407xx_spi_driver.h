@@ -32,12 +32,12 @@ typedef struct
 {
 	SPI_RegDef_t 	*pSPIx;
 	SPI_Config_t 	SPIConfig;
-//	uint8_t 		*pTxBuffer;
-//	uint8_t 		*pRxBuffer;
-//	uint32_t 		TxLen;
-//	uint32_t 		RxLen;
-//	uint8_t 		TxState;
-//	uint8_t 		RxState;
+	uint8_t 		*pTxBuffer;
+	uint8_t 		*pRxBuffer;
+	uint32_t 		TxLen;
+	uint32_t 		RxLen;
+	uint8_t 		TxState;
+	uint8_t 		RxState;
 }SPI_Handle_t;
 
 
@@ -129,12 +129,18 @@ void SPI_DeInit(SPI_RegDef_t *pSPIx);
 //Data send and recieve
 void SPI_SendData(SPI_RegDef_t *pSPIx, uint8_t* dataToSend,uint32_t Len);
 void SPI_RecieveData(SPI_RegDef_t *pSPIx, uint8_t* dataReceived,uint32_t Len);
+
+uint8_t SPI_SendDataIT(SPI_Handle_t *pSPIHandle, uint8_t* dataToSend,uint32_t Len);
+uint8_t SPI_RecieveDataIT(SPI_Handle_t *pSPIHandle, uint8_t* dataReceived,uint32_t Len);
+
+
+//Gener pupose SPI api
 uint8_t SPI_Get_FlagStatus(SPI_RegDef_t *pSPIx, uint32_t flagName);
 
 //IRQ config and ISR handling
 void SPI_IRQConfig(uint8_t IRQ_Number, uint8_t EnorDi);
 void SPI_IRQPriorityConfig(uint8_t IRQ_Number, uint8_t IRQ_Priority);
-
+void SPI_IRQHandling(SPI_Handle_t *pHandle);
 
 
 

@@ -29,23 +29,23 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   ALLOC
  12 .ARM.attributes 00000030  00000000  00000000  00010c58  2**0
                   CONTENTS, READONLY
- 13 .debug_line   00001721  00000000  00000000  00010c88  2**0
+ 13 .debug_line   00001971  00000000  00000000  00010c88  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 14 .debug_info   0000135f  00000000  00000000  000123a9  2**0
+ 14 .debug_info   000015eb  00000000  00000000  000125f9  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 15 .debug_abbrev 00000465  00000000  00000000  00013708  2**0
+ 15 .debug_abbrev 0000049b  00000000  00000000  00013be4  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 16 .debug_aranges 00000150  00000000  00000000  00013b70  2**3
+ 16 .debug_aranges 00000198  00000000  00000000  00014080  2**3
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 17 .debug_str    00008d7d  00000000  00000000  00013cc0  2**0
+ 17 .debug_str    00008e7a  00000000  00000000  00014218  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 18 .debug_ranges 00000118  00000000  00000000  0001ca40  2**3
+ 18 .debug_ranges 00000160  00000000  00000000  0001d098  2**3
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 19 .debug_macro  00000a84  00000000  00000000  0001cb58  2**0
+ 19 .debug_macro  00000a9a  00000000  00000000  0001d1f8  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 20 .comment      00000050  00000000  00000000  0001d5dc  2**0
+ 20 .comment      00000050  00000000  00000000  0001dc92  2**0
                   CONTENTS, READONLY
- 21 .debug_frame  0000049c  00000000  00000000  0001d62c  2**2
+ 21 .debug_frame  000005f4  00000000  00000000  0001dce4  2**2
                   CONTENTS, READONLY, DEBUGGING, OCTETS
 
 Disassembly of section .text:
@@ -293,41 +293,41 @@ void SPI_GPIO_Inits(void)
 void SPI2_Inits(void)
 {
  80002c4:	b580      	push	{r7, lr}
- 80002c6:	b084      	sub	sp, #16
+ 80002c6:	b088      	sub	sp, #32
  80002c8:	af00      	add	r7, sp, #0
 	SPI_Handle_t SPI2handle;
 	SPI2handle.pSPIx = SPI2;
  80002ca:	4b0c      	ldr	r3, [pc, #48]	; (80002fc <SPI2_Inits+0x38>)
- 80002cc:	607b      	str	r3, [r7, #4]
+ 80002cc:	603b      	str	r3, [r7, #0]
 	SPI2handle.SPIConfig.SPI_BusConfig = SPI_BUS_CONFIG_FD;
  80002ce:	2301      	movs	r3, #1
- 80002d0:	727b      	strb	r3, [r7, #9]
+ 80002d0:	717b      	strb	r3, [r7, #5]
 	SPI2handle.SPIConfig.SPI_DeviceMode = SPI_DEVICE_MODE_MASTER;
  80002d2:	2301      	movs	r3, #1
- 80002d4:	723b      	strb	r3, [r7, #8]
+ 80002d4:	713b      	strb	r3, [r7, #4]
 	SPI2handle.SPIConfig.SPI_SclkSpeed = SPI_SCLK_SPEED_DIV2;
  80002d6:	2300      	movs	r3, #0
- 80002d8:	72bb      	strb	r3, [r7, #10]
+ 80002d8:	71bb      	strb	r3, [r7, #6]
 	SPI2handle.SPIConfig.SPI_DFF = SPI_DFF_8BITS;
  80002da:	2300      	movs	r3, #0
- 80002dc:	72fb      	strb	r3, [r7, #11]
+ 80002dc:	71fb      	strb	r3, [r7, #7]
 	SPI2handle.SPIConfig.SPI_CPOL = SPI_CPOL_LOW;
  80002de:	2300      	movs	r3, #0
- 80002e0:	733b      	strb	r3, [r7, #12]
+ 80002e0:	723b      	strb	r3, [r7, #8]
 	SPI2handle.SPIConfig.SPI_CPHA = SPI_CPHA_LOW;
  80002e2:	2300      	movs	r3, #0
- 80002e4:	737b      	strb	r3, [r7, #13]
+ 80002e4:	727b      	strb	r3, [r7, #9]
 	SPI2handle.SPIConfig.SPI_SSM = SPI_SSM_DI;
  80002e6:	2300      	movs	r3, #0
- 80002e8:	73bb      	strb	r3, [r7, #14]
+ 80002e8:	72bb      	strb	r3, [r7, #10]
 
 	SPI_Init(&SPI2handle);
- 80002ea:	1d3b      	adds	r3, r7, #4
+ 80002ea:	463b      	mov	r3, r7
  80002ec:	4618      	mov	r0, r3
  80002ee:	f000 fb47 	bl	8000980 <SPI_Init>
 }
  80002f2:	bf00      	nop
- 80002f4:	3710      	adds	r7, #16
+ 80002f4:	3720      	adds	r7, #32
  80002f6:	46bd      	mov	sp, r7
  80002f8:	bd80      	pop	{r7, pc}
  80002fa:	bf00      	nop
@@ -1707,6 +1707,9 @@ void SPI_RecieveData(SPI_RegDef_t *pSPIx, uint8_t* dataReceived,uint32_t Len)
  8000b44:	bd80      	pop	{r7, pc}
 
 08000b46 <SPI_PeripheralControl>:
+	}
+	return state;
+}
 
 void SPI_PeripheralControl(SPI_RegDef_t *pSPIx, uint8_t EnOrDi)
 {
