@@ -136,8 +136,7 @@ void I2C_Init(I2C_Handle_t *pI2CHandle)
 	//Enable the clock
 	I2C_PeriClockControl(pI2CHandle->pI2Cx, ENABLE);
 
-	//Enable the ACKing
-	pI2CHandle->pI2Cx->CR1 |= (pI2CHandle->I2C_Config.I2C_AckControl << I2C_CR1_ACK);
+
 
 	//Set the freq field
 	pI2CHandle->pI2Cx->CR2 |= (RCC_Get_PCLK1Value())/1000000;
@@ -215,7 +214,7 @@ void I2C_DeInit(I2C_RegDef_t *pI2Cx)
 /*
  * Data Send and Receive
  */
-void I2C_MasterSendData(I2C_Handle_t *pI2CHandle,uint8_t *pTxbuffer, uint32_t Len, uint8_t SlaveAddr)
+void I2C_MasterSendData(I2C_Handle_t *pI2CHandle,uint8_t *pTxbuffer, uint32_t Len, uint8_t SlaveAddr,uint8_t Sr)
 {
 	//Generate the start condition
 	I2C_GenerateStartCondition(pI2CHandle->pI2Cx);
@@ -247,11 +246,12 @@ void I2C_MasterSendData(I2C_Handle_t *pI2CHandle,uint8_t *pTxbuffer, uint32_t Le
 	while(!I2C_GetFlagStatus(pI2CHandle->pI2Cx, I2C_FLAG_BTF));
 
 	//Generate stop condition
-	I2C_GenerateStopCondition(pI2CHandle->pI2Cx);
+	if(Sr == I2C_DISABLE_SR)
+		I2C_GenerateStopCondition(pI2CHandle->pI2Cx);
 
 
 }
-void I2C_MasterReceiveData(I2C_Handle_t *pI2CHandle,uint8_t *pRxBuffer, uint8_t Len, uint8_t SlaveAddr)
+void I2C_MasterReceiveData(I2C_Handle_t *pI2CHandle,uint8_t *pRxBuffer, uint8_t Len, uint8_t SlaveAddr,uint8_t Sr)
 {
 	//Generate the start condition
 	I2C_GenerateStartCondition(pI2CHandle->pI2Cx);
@@ -272,8 +272,6 @@ void I2C_MasterReceiveData(I2C_Handle_t *pI2CHandle,uint8_t *pRxBuffer, uint8_t 
 		//Disable acking
 		I2C_ManageAcking(pI2CHandle->pI2Cx, DISABLE);
 
-		//Generate the stop condtion
-		I2C_GenerateStopCondition(pI2CHandle->pI2Cx);
 
 		//clear the addr flag
 		I2C_ClearADDRFlag(pI2CHandle);
@@ -281,9 +279,13 @@ void I2C_MasterReceiveData(I2C_Handle_t *pI2CHandle,uint8_t *pRxBuffer, uint8_t 
 		//wait until RXNE becomes 1
 		while(!I2C_GetFlagStatus(pI2CHandle->pI2Cx, I2C_FLAG_RXNE));
 
+		if(Sr == I2C_DISABLE_SR)
+			//Generate the stop condtion
+			I2C_GenerateStopCondition(pI2CHandle->pI2Cx);
+
 		//read data in to the buffer
 		*pRxBuffer = pI2CHandle->pI2Cx->DR;
-		return;
+
 	}
 
 	if(Len > 1)
@@ -296,12 +298,14 @@ void I2C_MasterReceiveData(I2C_Handle_t *pI2CHandle,uint8_t *pRxBuffer, uint8_t 
 			//wait until rxne becomes 1. hang the program until read buffer is full
 			while(!I2C_GetFlagStatus(pI2CHandle->pI2Cx, I2C_FLAG_RXNE));
 
+			//There exists a delay between data being sent and read by 1 byte. Tehrefore acking must be disaled when the second byte is being read as the last byte is sent at this point
 			if(i == 2) // if last 2 bytes are remaning
 			{
 				//disable acking
-				I2C_ManageAcking(pI2CHandle->pI2Cx, ENABLE);
-				//generate stop condition
-				I2C_GenerateStopCondition(pI2CHandle->pI2Cx);
+				I2C_ManageAcking(pI2CHandle->pI2Cx, DISABLE);
+				if(Sr == I2C_DISABLE_SR)
+					//generate stop condition
+					I2C_GenerateStopCondition(pI2CHandle->pI2Cx);
 			}
 
 			//read the data from data register into the buffer

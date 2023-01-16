@@ -5,19 +5,19 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
-../drivers/Src/i2ctest.c \
+../drivers/Src/i2ctestrecieve.c \
 ../drivers/Src/stm32f407xx_gpio_driver.c \
 ../drivers/Src/stm32f407xx_i2c_driver.c \
 ../drivers/Src/stm32f407xx_spi_driver.c 
 
 OBJS += \
-./drivers/Src/i2ctest.o \
+./drivers/Src/i2ctestrecieve.o \
 ./drivers/Src/stm32f407xx_gpio_driver.o \
 ./drivers/Src/stm32f407xx_i2c_driver.o \
 ./drivers/Src/stm32f407xx_spi_driver.o 
 
 C_DEPS += \
-./drivers/Src/i2ctest.d \
+./drivers/Src/i2ctestrecieve.d \
 ./drivers/Src/stm32f407xx_gpio_driver.d \
 ./drivers/Src/stm32f407xx_i2c_driver.d \
 ./drivers/Src/stm32f407xx_spi_driver.d 
@@ -30,7 +30,7 @@ drivers/Src/%.o drivers/Src/%.su: ../drivers/Src/%.c drivers/Src/subdir.mk
 clean: clean-drivers-2f-Src
 
 clean-drivers-2f-Src:
-	-$(RM) ./drivers/Src/i2ctest.d ./drivers/Src/i2ctest.o ./drivers/Src/i2ctest.su ./drivers/Src/stm32f407xx_gpio_driver.d ./drivers/Src/stm32f407xx_gpio_driver.o ./drivers/Src/stm32f407xx_gpio_driver.su ./drivers/Src/stm32f407xx_i2c_driver.d ./drivers/Src/stm32f407xx_i2c_driver.o ./drivers/Src/stm32f407xx_i2c_driver.su ./drivers/Src/stm32f407xx_spi_driver.d ./drivers/Src/stm32f407xx_spi_driver.o ./drivers/Src/stm32f407xx_spi_driver.su
+	-$(RM) ./drivers/Src/i2ctestrecieve.d ./drivers/Src/i2ctestrecieve.o ./drivers/Src/i2ctestrecieve.su ./drivers/Src/stm32f407xx_gpio_driver.d ./drivers/Src/stm32f407xx_gpio_driver.o ./drivers/Src/stm32f407xx_gpio_driver.su ./drivers/Src/stm32f407xx_i2c_driver.d ./drivers/Src/stm32f407xx_i2c_driver.o ./drivers/Src/stm32f407xx_i2c_driver.su ./drivers/Src/stm32f407xx_spi_driver.d ./drivers/Src/stm32f407xx_spi_driver.o ./drivers/Src/stm32f407xx_spi_driver.su
 
 .PHONY: clean-drivers-2f-Src
 

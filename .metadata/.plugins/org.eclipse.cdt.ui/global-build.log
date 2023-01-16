@@ -1,6 +1,9 @@
-15:11:10 **** Incremental Build of configuration Debug for project Driver Development Project ****
+16:10:42 **** Incremental Build of configuration Debug for project Driver Development Project ****
 make -j8 all 
+arm-none-eabi-gcc "../drivers/Src/i2ctestrecieve.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DSTM32 -DSTM32F407G_DISC1 -DSTM32F4 -DSTM32F407VGTx -c -I../Inc -I"C:/Users/tomed/Documents/GitHub/GPIO-Driver/Driver Development Project/drivers/Inc" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"drivers/Src/i2ctestrecieve.d" -MT"drivers/Src/i2ctestrecieve.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "drivers/Src/i2ctestrecieve.o"
+arm-none-eabi-gcc "../drivers/Src/stm32f407xx_gpio_driver.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DSTM32 -DSTM32F407G_DISC1 -DSTM32F4 -DSTM32F407VGTx -c -I../Inc -I"C:/Users/tomed/Documents/GitHub/GPIO-Driver/Driver Development Project/drivers/Inc" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"drivers/Src/stm32f407xx_gpio_driver.d" -MT"drivers/Src/stm32f407xx_gpio_driver.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "drivers/Src/stm32f407xx_gpio_driver.o"
 arm-none-eabi-gcc "../drivers/Src/stm32f407xx_i2c_driver.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DSTM32 -DSTM32F407G_DISC1 -DSTM32F4 -DSTM32F407VGTx -c -I../Inc -I"C:/Users/tomed/Documents/GitHub/GPIO-Driver/Driver Development Project/drivers/Inc" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"drivers/Src/stm32f407xx_i2c_driver.d" -MT"drivers/Src/stm32f407xx_i2c_driver.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "drivers/Src/stm32f407xx_i2c_driver.o"
+arm-none-eabi-gcc "../drivers/Src/stm32f407xx_spi_driver.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DSTM32 -DSTM32F407G_DISC1 -DSTM32F4 -DSTM32F407VGTx -c -I../Inc -I"C:/Users/tomed/Documents/GitHub/GPIO-Driver/Driver Development Project/drivers/Inc" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"drivers/Src/stm32f407xx_spi_driver.d" -MT"drivers/Src/stm32f407xx_spi_driver.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "drivers/Src/stm32f407xx_spi_driver.o"
 ../drivers/Src/stm32f407xx_i2c_driver.c:18:13: warning: 'I2C_MasterHandleRXNEInterrupt' declared 'static' but never defined [-Wunused-function]
    18 | static void I2C_MasterHandleRXNEInterrupt(I2C_Handle_t *pI2CHandle );
       |             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -13,7 +16,7 @@ Finished building target: Driver Development Project.elf
 arm-none-eabi-size   Driver\ Development\ Project.elf 
 arm-none-eabi-objdump -h -S  Driver\ Development\ Project.elf  > "Driver Development Project.list"
    text	   data	    bss	    dec	    hex	filename
-   3176	     72	   1608	   4856	   12f8	Driver Development Project.elf
+   3592	     40	   1640	   5272	   1498	Driver Development Project.elf
 Finished building: default.size.stdout
  
 Finished building: Driver Development Project.list

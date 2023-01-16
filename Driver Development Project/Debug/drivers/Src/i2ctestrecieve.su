@@ -1,0 +1,5 @@
+../drivers/Src/i2ctestrecieve.c:12:6:delay	16	static
+../drivers/Src/i2ctestrecieve.c:16:6:I2C1_GPIO_Inits	24	static
+../drivers/Src/i2ctestrecieve.c:44:6:I2C1_Inits	8	static
+../drivers/Src/i2ctestrecieve.c:55:6:Btn_GPIO_Inits	24	static
+../drivers/Src/i2ctestrecieve.c:70:5:main	24	static
