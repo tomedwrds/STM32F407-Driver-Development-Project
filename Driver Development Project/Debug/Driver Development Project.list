@@ -5,21 +5,21 @@ Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
   0 .isr_vector   000001a8  08000000  08000000  00010000  2**0
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
-  1 .text         00000c60  080001a8  080001a8  000101a8  2**2
+  1 .text         00000cb4  080001a8  080001a8  000101a8  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  2 .rodata       00000000  08000e08  08000e08  00020020  2**0
+  2 .rodata       00000000  08000e5c  08000e5c  00020020  2**0
                   CONTENTS, ALLOC, LOAD, DATA
-  3 .ARM.extab    00000000  08000e08  08000e08  00020020  2**0
+  3 .ARM.extab    00000000  08000e5c  08000e5c  00020020  2**0
                   CONTENTS
-  4 .ARM          00000000  08000e08  08000e08  00020020  2**0
+  4 .ARM          00000000  08000e5c  08000e5c  00020020  2**0
                   CONTENTS
-  5 .preinit_array 00000000  08000e08  08000e08  00020020  2**0
+  5 .preinit_array 00000000  08000e5c  08000e5c  00020020  2**0
                   CONTENTS, ALLOC, LOAD, DATA
-  6 .init_array   00000004  08000e08  08000e08  00010e08  2**2
+  6 .init_array   00000004  08000e5c  08000e5c  00010e5c  2**2
                   CONTENTS, ALLOC, LOAD, DATA
-  7 .fini_array   00000004  08000e0c  08000e0c  00010e0c  2**2
+  7 .fini_array   00000004  08000e60  08000e60  00010e60  2**2
                   CONTENTS, ALLOC, LOAD, DATA
-  8 .data         00000020  20000000  08000e10  00020000  2**2
+  8 .data         00000020  20000000  08000e64  00020000  2**2
                   CONTENTS, ALLOC, LOAD, DATA
   9 .ccmram       00000000  10000000  10000000  00020020  2**0
                   CONTENTS
@@ -29,23 +29,23 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   ALLOC
  12 .ARM.attributes 00000030  00000000  00000000  00020020  2**0
                   CONTENTS, READONLY
- 13 .debug_line   00001919  00000000  00000000  00020050  2**0
+ 13 .debug_line   00001cf0  00000000  00000000  00020050  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 14 .debug_info   0000155c  00000000  00000000  00021969  2**0
+ 14 .debug_info   00001845  00000000  00000000  00021d40  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 15 .debug_abbrev 000004c6  00000000  00000000  00022ec5  2**0
+ 15 .debug_abbrev 00000536  00000000  00000000  00023585  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 16 .debug_aranges 00000170  00000000  00000000  00023390  2**3
+ 16 .debug_aranges 000001b0  00000000  00000000  00023ac0  2**3
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 17 .debug_str    000094eb  00000000  00000000  00023500  2**0
+ 17 .debug_str    00009648  00000000  00000000  00023c70  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 18 .debug_ranges 00000138  00000000  00000000  0002c9f0  2**3
+ 18 .debug_ranges 00000178  00000000  00000000  0002d2b8  2**3
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 19 .debug_macro  00000d50  00000000  00000000  0002cb28  2**0
+ 19 .debug_macro  00000d50  00000000  00000000  0002d430  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 20 .comment      00000050  00000000  00000000  0002d878  2**0
+ 20 .comment      00000050  00000000  00000000  0002e180  2**0
                   CONTENTS, READONLY
- 21 .debug_frame  00000534  00000000  00000000  0002d8c8  2**2
+ 21 .debug_frame  00000658  00000000  00000000  0002e1d0  2**2
                   CONTENTS, READONLY, DEBUGGING, OCTETS
 
 Disassembly of section .text:
@@ -64,7 +64,7 @@ Disassembly of section .text:
  80001be:	bd10      	pop	{r4, pc}
  80001c0:	20000020 	.word	0x20000020
  80001c4:	00000000 	.word	0x00000000
- 80001c8:	08000df0 	.word	0x08000df0
+ 80001c8:	08000e44 	.word	0x08000e44
 
 080001cc <frame_dummy>:
  80001cc:	b508      	push	{r3, lr}
@@ -76,7 +76,7 @@ Disassembly of section .text:
  80001da:	bd08      	pop	{r3, pc}
  80001dc:	00000000 	.word	0x00000000
  80001e0:	20000024 	.word	0x20000024
- 80001e4:	08000df0 	.word	0x08000df0
+ 80001e4:	08000e44 	.word	0x08000e44
 
 080001e8 <Reset_Handler>:
 
@@ -152,7 +152,7 @@ LoopFillZerobss:
 
 /* Call static constructors */
   bl __libc_init_array
- 8000216:	f000 fdc7 	bl	8000da8 <__libc_init_array>
+ 8000216:	f000 fdf1 	bl	8000dfc <__libc_init_array>
 /* Call the application's entry point.*/
   bl main
  800021a:	f000 f87b 	bl	8000314 <main>
@@ -169,7 +169,7 @@ LoopForever:
   ldr r1, =_edata
  8000228:	20000020 	.word	0x20000020
   ldr r2, =_sidata
- 800022c:	08000e10 	.word	0x08000e10
+ 800022c:	08000e64 	.word	0x08000e64
   ldr r2, =_sbss
  8000230:	20000020 	.word	0x20000020
   ldr r4, =_ebss
@@ -300,7 +300,7 @@ void I2C1_Inits(void)
 
 	I2C_Init(&I2C1Handle);
  80002ce:	4802      	ldr	r0, [pc, #8]	; (80002d8 <I2C1_Inits+0x2c>)
- 80002d0:	f000 fb7c 	bl	80009cc <I2C_Init>
+ 80002d0:	f000 fba6 	bl	8000a20 <I2C_Init>
 }
  80002d4:	bf00      	nop
  80002d6:	bd80      	pop	{r7, pc}
@@ -369,12 +369,12 @@ int main(void)
 	I2C_PeripheralControl(I2C1, ENABLE);
  8000326:	2101      	movs	r1, #1
  8000328:	481a      	ldr	r0, [pc, #104]	; (8000394 <main+0x80>)
- 800032a:	f000 fcf0 	bl	8000d0e <I2C_PeripheralControl>
+ 800032a:	f000 fd1a 	bl	8000d62 <I2C_PeripheralControl>
 
 	I2C_ManageAcking(I2C1, I2C_ACK_ENABLE);
  800032e:	2101      	movs	r1, #1
  8000330:	4818      	ldr	r0, [pc, #96]	; (8000394 <main+0x80>)
- 8000332:	f000 fd1c 	bl	8000d6e <I2C_ManageAcking>
+ 8000332:	f000 fd46 	bl	8000dc2 <I2C_ManageAcking>
 	while(1)
 	{
 		while(! GPIO_ReadFromInputPin(GPIOA, GPIO_PIN_NO_0));
@@ -399,7 +399,7 @@ int main(void)
  8000354:	2368      	movs	r3, #104	; 0x68
  8000356:	2201      	movs	r2, #1
  8000358:	4810      	ldr	r0, [pc, #64]	; (800039c <main+0x88>)
- 800035a:	f000 fbe7 	bl	8000b2c <I2C_MasterSendData>
+ 800035a:	f000 fc11 	bl	8000b80 <I2C_MasterSendData>
 
 		//Read the length of the data from the slave
 		I2C_MasterReceiveData(&I2C1Handle, &len, 1, SLAVE_ADDR,I2C_ENABLE_SR);
@@ -409,7 +409,7 @@ int main(void)
  8000364:	2368      	movs	r3, #104	; 0x68
  8000366:	2201      	movs	r2, #1
  8000368:	480c      	ldr	r0, [pc, #48]	; (800039c <main+0x88>)
- 800036a:	f000 fc42 	bl	8000bf2 <I2C_MasterReceiveData>
+ 800036a:	f000 fc6c 	bl	8000c46 <I2C_MasterReceiveData>
 
 		//Send the command to slave to send data
 		commandcode = 0x52;
@@ -422,7 +422,7 @@ int main(void)
  8000378:	2368      	movs	r3, #104	; 0x68
  800037a:	2201      	movs	r2, #1
  800037c:	4807      	ldr	r0, [pc, #28]	; (800039c <main+0x88>)
- 800037e:	f000 fbd5 	bl	8000b2c <I2C_MasterSendData>
+ 800037e:	f000 fbff 	bl	8000b80 <I2C_MasterSendData>
 
 		//Read the  data from the slave
 		I2C_MasterReceiveData(&I2C1Handle, rcv_buff, len, SLAVE_ADDR,I2C_DISABLE_SR);
@@ -432,7 +432,7 @@ int main(void)
  8000388:	2368      	movs	r3, #104	; 0x68
  800038a:	4905      	ldr	r1, [pc, #20]	; (80003a0 <main+0x8c>)
  800038c:	4803      	ldr	r0, [pc, #12]	; (800039c <main+0x88>)
- 800038e:	f000 fc30 	bl	8000bf2 <I2C_MasterReceiveData>
+ 800038e:	f000 fc5a 	bl	8000c46 <I2C_MasterReceiveData>
 		while(! GPIO_ReadFromInputPin(GPIOA, GPIO_PIN_NO_0));
  8000392:	e7d0      	b.n	8000336 <main+0x22>
  8000394:	40005400 	.word	0x40005400
@@ -1078,8 +1078,8 @@ uint8_t GPIO_ReadFromInputPin(GPIO_RegDef_t *pGPIOx, uint8_t PinNumber)
  80007f6:	4770      	bx	lr
 
 080007f8 <I2C_GenerateStartCondition>:
-static void I2C_MasterHandleRXNEInterrupt(I2C_Handle_t *pI2CHandle );
 static void I2C_MasterHandleTXEInterrupt(I2C_Handle_t *pI2CHandle );
+
 
 
 static void I2C_GenerateStartCondition(I2C_RegDef_t *pI2Cx)
@@ -1162,11 +1162,14 @@ static void I2C_ExecuteAddressPhaseRead(I2C_RegDef_t *pI2Cx, uint8_t SlaveAddr)
  800086e:	4770      	bx	lr
 
 08000870 <I2C_ClearADDRFlag>:
+	}
+
+}
 
 static void I2C_ClearADDRFlag(I2C_Handle_t *pI2CHandle)
 {
- 8000870:	b480      	push	{r7}
- 8000872:	b085      	sub	sp, #20
+ 8000870:	b580      	push	{r7, lr}
+ 8000872:	b084      	sub	sp, #16
  8000874:	af00      	add	r7, sp, #0
  8000876:	6078      	str	r0, [r7, #4]
 	uint32_t dummyRead = pI2CHandle->pI2Cx->SR1;
@@ -1174,954 +1177,1016 @@ static void I2C_ClearADDRFlag(I2C_Handle_t *pI2CHandle)
  800087a:	681b      	ldr	r3, [r3, #0]
  800087c:	695b      	ldr	r3, [r3, #20]
  800087e:	60fb      	str	r3, [r7, #12]
-	dummyRead = pI2CHandle->pI2Cx->SR2;
+	//check device mode
+	if(pI2CHandle->pI2Cx->SR2 & (1 << I2C_SR2_MSL))
  8000880:	687b      	ldr	r3, [r7, #4]
  8000882:	681b      	ldr	r3, [r3, #0]
  8000884:	699b      	ldr	r3, [r3, #24]
- 8000886:	60fb      	str	r3, [r7, #12]
-	(void)dummyRead; //dummy read needs to be type cast to void to prevent unused variable warning
+ 8000886:	f003 0301 	and.w	r3, r3, #1
+ 800088a:	2b00      	cmp	r3, #0
+ 800088c:	d01f      	beq.n	80008ce <I2C_ClearADDRFlag+0x5e>
+	{
+		//master mode
+		if(pI2CHandle->TxRxState == I2C_BUSY_IN_RX)
+ 800088e:	687b      	ldr	r3, [r7, #4]
+ 8000890:	7f1b      	ldrb	r3, [r3, #28]
+ 8000892:	2b01      	cmp	r3, #1
+ 8000894:	d112      	bne.n	80008bc <I2C_ClearADDRFlag+0x4c>
+		{
+			//if data sent is only 1 byte ack must be cleared on first byte transmisson
+			if(pI2CHandle->RxSize == 1)
+ 8000896:	687b      	ldr	r3, [r7, #4]
+ 8000898:	6a1b      	ldr	r3, [r3, #32]
+ 800089a:	2b01      	cmp	r3, #1
+ 800089c:	d105      	bne.n	80008aa <I2C_ClearADDRFlag+0x3a>
+			{
+
+				I2C_ManageAcking(pI2CHandle->pI2Cx, DISABLE);
+ 800089e:	687b      	ldr	r3, [r7, #4]
+ 80008a0:	681b      	ldr	r3, [r3, #0]
+ 80008a2:	2100      	movs	r1, #0
+ 80008a4:	4618      	mov	r0, r3
+ 80008a6:	f000 fa8c 	bl	8000dc2 <I2C_ManageAcking>
+			}
+			dummyRead = pI2CHandle->pI2Cx->SR1;
+ 80008aa:	687b      	ldr	r3, [r7, #4]
+ 80008ac:	681b      	ldr	r3, [r3, #0]
+ 80008ae:	695b      	ldr	r3, [r3, #20]
+ 80008b0:	60fb      	str	r3, [r7, #12]
+			dummyRead = pI2CHandle->pI2Cx->SR2;
+ 80008b2:	687b      	ldr	r3, [r7, #4]
+ 80008b4:	681b      	ldr	r3, [r3, #0]
+ 80008b6:	699b      	ldr	r3, [r3, #24]
+ 80008b8:	60fb      	str	r3, [r7, #12]
+	}
+
+
+
 
 }
- 8000888:	bf00      	nop
- 800088a:	3714      	adds	r7, #20
- 800088c:	46bd      	mov	sp, r7
- 800088e:	f85d 7b04 	ldr.w	r7, [sp], #4
- 8000892:	4770      	bx	lr
+ 80008ba:	e010      	b.n	80008de <I2C_ClearADDRFlag+0x6e>
+			dummyRead = pI2CHandle->pI2Cx->SR1;
+ 80008bc:	687b      	ldr	r3, [r7, #4]
+ 80008be:	681b      	ldr	r3, [r3, #0]
+ 80008c0:	695b      	ldr	r3, [r3, #20]
+ 80008c2:	60fb      	str	r3, [r7, #12]
+			dummyRead = pI2CHandle->pI2Cx->SR2;
+ 80008c4:	687b      	ldr	r3, [r7, #4]
+ 80008c6:	681b      	ldr	r3, [r3, #0]
+ 80008c8:	699b      	ldr	r3, [r3, #24]
+ 80008ca:	60fb      	str	r3, [r7, #12]
+}
+ 80008cc:	e007      	b.n	80008de <I2C_ClearADDRFlag+0x6e>
+		dummyRead = pI2CHandle->pI2Cx->SR1;
+ 80008ce:	687b      	ldr	r3, [r7, #4]
+ 80008d0:	681b      	ldr	r3, [r3, #0]
+ 80008d2:	695b      	ldr	r3, [r3, #20]
+ 80008d4:	60fb      	str	r3, [r7, #12]
+		dummyRead = pI2CHandle->pI2Cx->SR2;
+ 80008d6:	687b      	ldr	r3, [r7, #4]
+ 80008d8:	681b      	ldr	r3, [r3, #0]
+ 80008da:	699b      	ldr	r3, [r3, #24]
+ 80008dc:	60fb      	str	r3, [r7, #12]
+}
+ 80008de:	bf00      	nop
+ 80008e0:	3710      	adds	r7, #16
+ 80008e2:	46bd      	mov	sp, r7
+ 80008e4:	bd80      	pop	{r7, pc}
 
-08000894 <I2C_GenerateStopCondition>:
+080008e6 <I2C_GenerateStopCondition>:
 
 static void I2C_GenerateStopCondition(I2C_RegDef_t *pI2Cx)
 {
- 8000894:	b480      	push	{r7}
- 8000896:	b083      	sub	sp, #12
- 8000898:	af00      	add	r7, sp, #0
- 800089a:	6078      	str	r0, [r7, #4]
+ 80008e6:	b480      	push	{r7}
+ 80008e8:	b083      	sub	sp, #12
+ 80008ea:	af00      	add	r7, sp, #0
+ 80008ec:	6078      	str	r0, [r7, #4]
 	pI2Cx->CR1 |= (1<< I2C_CR1_STOP);
- 800089c:	687b      	ldr	r3, [r7, #4]
- 800089e:	681b      	ldr	r3, [r3, #0]
- 80008a0:	f443 7200 	orr.w	r2, r3, #512	; 0x200
- 80008a4:	687b      	ldr	r3, [r7, #4]
- 80008a6:	601a      	str	r2, [r3, #0]
+ 80008ee:	687b      	ldr	r3, [r7, #4]
+ 80008f0:	681b      	ldr	r3, [r3, #0]
+ 80008f2:	f443 7200 	orr.w	r2, r3, #512	; 0x200
+ 80008f6:	687b      	ldr	r3, [r7, #4]
+ 80008f8:	601a      	str	r2, [r3, #0]
 }
- 80008a8:	bf00      	nop
- 80008aa:	370c      	adds	r7, #12
- 80008ac:	46bd      	mov	sp, r7
- 80008ae:	f85d 7b04 	ldr.w	r7, [sp], #4
- 80008b2:	4770      	bx	lr
+ 80008fa:	bf00      	nop
+ 80008fc:	370c      	adds	r7, #12
+ 80008fe:	46bd      	mov	sp, r7
+ 8000900:	f85d 7b04 	ldr.w	r7, [sp], #4
+ 8000904:	4770      	bx	lr
+	...
 
-080008b4 <I2C_PeriClockControl>:
+08000908 <I2C_PeriClockControl>:
 
 /*
  * Peripheral Clock setup
  */
 void I2C_PeriClockControl(I2C_RegDef_t *pI2Cx, uint8_t EnorDi)
 {
- 80008b4:	b480      	push	{r7}
- 80008b6:	b083      	sub	sp, #12
- 80008b8:	af00      	add	r7, sp, #0
- 80008ba:	6078      	str	r0, [r7, #4]
- 80008bc:	460b      	mov	r3, r1
- 80008be:	70fb      	strb	r3, [r7, #3]
+ 8000908:	b480      	push	{r7}
+ 800090a:	b083      	sub	sp, #12
+ 800090c:	af00      	add	r7, sp, #0
+ 800090e:	6078      	str	r0, [r7, #4]
+ 8000910:	460b      	mov	r3, r1
+ 8000912:	70fb      	strb	r3, [r7, #3]
 	if(EnorDi == ENABLE)
- 80008c0:	78fb      	ldrb	r3, [r7, #3]
- 80008c2:	2b01      	cmp	r3, #1
- 80008c4:	d11f      	bne.n	8000906 <I2C_PeriClockControl+0x52>
+ 8000914:	78fb      	ldrb	r3, [r7, #3]
+ 8000916:	2b01      	cmp	r3, #1
+ 8000918:	d11f      	bne.n	800095a <I2C_PeriClockControl+0x52>
 	{
 		//In header file for I2C macros are set for all I2C addresses allowing a comparinson to be made.
 		//Switch isnt used as pointers cannot be passed as an arugment
 		if(pI2Cx == I2C1)
- 80008c6:	687b      	ldr	r3, [r7, #4]
- 80008c8:	4a12      	ldr	r2, [pc, #72]	; (8000914 <I2C_PeriClockControl+0x60>)
- 80008ca:	4293      	cmp	r3, r2
- 80008cc:	d106      	bne.n	80008dc <I2C_PeriClockControl+0x28>
+ 800091a:	687b      	ldr	r3, [r7, #4]
+ 800091c:	4a12      	ldr	r2, [pc, #72]	; (8000968 <I2C_PeriClockControl+0x60>)
+ 800091e:	4293      	cmp	r3, r2
+ 8000920:	d106      	bne.n	8000930 <I2C_PeriClockControl+0x28>
 		{
 			I2C1_PCLK_EN();
- 80008ce:	4b12      	ldr	r3, [pc, #72]	; (8000918 <I2C_PeriClockControl+0x64>)
- 80008d0:	6c1b      	ldr	r3, [r3, #64]	; 0x40
- 80008d2:	4a11      	ldr	r2, [pc, #68]	; (8000918 <I2C_PeriClockControl+0x64>)
- 80008d4:	f443 1300 	orr.w	r3, r3, #2097152	; 0x200000
- 80008d8:	6413      	str	r3, [r2, #64]	; 0x40
+ 8000922:	4b12      	ldr	r3, [pc, #72]	; (800096c <I2C_PeriClockControl+0x64>)
+ 8000924:	6c1b      	ldr	r3, [r3, #64]	; 0x40
+ 8000926:	4a11      	ldr	r2, [pc, #68]	; (800096c <I2C_PeriClockControl+0x64>)
+ 8000928:	f443 1300 	orr.w	r3, r3, #2097152	; 0x200000
+ 800092c:	6413      	str	r3, [r2, #64]	; 0x40
 		}else if (pI2Cx == I2C3)
 		{
 			I2C3_PCLK_EN();
 		}
 	}
 }
- 80008da:	e014      	b.n	8000906 <I2C_PeriClockControl+0x52>
+ 800092e:	e014      	b.n	800095a <I2C_PeriClockControl+0x52>
 		}else if (pI2Cx == I2C2)
- 80008dc:	687b      	ldr	r3, [r7, #4]
- 80008de:	4a0f      	ldr	r2, [pc, #60]	; (800091c <I2C_PeriClockControl+0x68>)
- 80008e0:	4293      	cmp	r3, r2
- 80008e2:	d106      	bne.n	80008f2 <I2C_PeriClockControl+0x3e>
+ 8000930:	687b      	ldr	r3, [r7, #4]
+ 8000932:	4a0f      	ldr	r2, [pc, #60]	; (8000970 <I2C_PeriClockControl+0x68>)
+ 8000934:	4293      	cmp	r3, r2
+ 8000936:	d106      	bne.n	8000946 <I2C_PeriClockControl+0x3e>
 			I2C2_PCLK_EN();
- 80008e4:	4b0c      	ldr	r3, [pc, #48]	; (8000918 <I2C_PeriClockControl+0x64>)
- 80008e6:	6c1b      	ldr	r3, [r3, #64]	; 0x40
- 80008e8:	4a0b      	ldr	r2, [pc, #44]	; (8000918 <I2C_PeriClockControl+0x64>)
- 80008ea:	f443 0380 	orr.w	r3, r3, #4194304	; 0x400000
- 80008ee:	6413      	str	r3, [r2, #64]	; 0x40
+ 8000938:	4b0c      	ldr	r3, [pc, #48]	; (800096c <I2C_PeriClockControl+0x64>)
+ 800093a:	6c1b      	ldr	r3, [r3, #64]	; 0x40
+ 800093c:	4a0b      	ldr	r2, [pc, #44]	; (800096c <I2C_PeriClockControl+0x64>)
+ 800093e:	f443 0380 	orr.w	r3, r3, #4194304	; 0x400000
+ 8000942:	6413      	str	r3, [r2, #64]	; 0x40
 }
- 80008f0:	e009      	b.n	8000906 <I2C_PeriClockControl+0x52>
+ 8000944:	e009      	b.n	800095a <I2C_PeriClockControl+0x52>
 		}else if (pI2Cx == I2C3)
- 80008f2:	687b      	ldr	r3, [r7, #4]
- 80008f4:	4a0a      	ldr	r2, [pc, #40]	; (8000920 <I2C_PeriClockControl+0x6c>)
- 80008f6:	4293      	cmp	r3, r2
- 80008f8:	d105      	bne.n	8000906 <I2C_PeriClockControl+0x52>
+ 8000946:	687b      	ldr	r3, [r7, #4]
+ 8000948:	4a0a      	ldr	r2, [pc, #40]	; (8000974 <I2C_PeriClockControl+0x6c>)
+ 800094a:	4293      	cmp	r3, r2
+ 800094c:	d105      	bne.n	800095a <I2C_PeriClockControl+0x52>
 			I2C3_PCLK_EN();
- 80008fa:	4b07      	ldr	r3, [pc, #28]	; (8000918 <I2C_PeriClockControl+0x64>)
- 80008fc:	6c1b      	ldr	r3, [r3, #64]	; 0x40
- 80008fe:	4a06      	ldr	r2, [pc, #24]	; (8000918 <I2C_PeriClockControl+0x64>)
- 8000900:	f443 0300 	orr.w	r3, r3, #8388608	; 0x800000
- 8000904:	6413      	str	r3, [r2, #64]	; 0x40
+ 800094e:	4b07      	ldr	r3, [pc, #28]	; (800096c <I2C_PeriClockControl+0x64>)
+ 8000950:	6c1b      	ldr	r3, [r3, #64]	; 0x40
+ 8000952:	4a06      	ldr	r2, [pc, #24]	; (800096c <I2C_PeriClockControl+0x64>)
+ 8000954:	f443 0300 	orr.w	r3, r3, #8388608	; 0x800000
+ 8000958:	6413      	str	r3, [r2, #64]	; 0x40
 }
- 8000906:	bf00      	nop
- 8000908:	370c      	adds	r7, #12
- 800090a:	46bd      	mov	sp, r7
- 800090c:	f85d 7b04 	ldr.w	r7, [sp], #4
- 8000910:	4770      	bx	lr
- 8000912:	bf00      	nop
- 8000914:	40005400 	.word	0x40005400
- 8000918:	40023800 	.word	0x40023800
- 800091c:	40005800 	.word	0x40005800
- 8000920:	40005c00 	.word	0x40005c00
+ 800095a:	bf00      	nop
+ 800095c:	370c      	adds	r7, #12
+ 800095e:	46bd      	mov	sp, r7
+ 8000960:	f85d 7b04 	ldr.w	r7, [sp], #4
+ 8000964:	4770      	bx	lr
+ 8000966:	bf00      	nop
+ 8000968:	40005400 	.word	0x40005400
+ 800096c:	40023800 	.word	0x40023800
+ 8000970:	40005800 	.word	0x40005800
+ 8000974:	40005c00 	.word	0x40005c00
 
-08000924 <RCC_Get_PCLK1Value>:
+08000978 <RCC_Get_PCLK1Value>:
 
 uint32_t RCC_Get_PCLK1Value(void)
 {
- 8000924:	b480      	push	{r7}
- 8000926:	b085      	sub	sp, #20
- 8000928:	af00      	add	r7, sp, #0
+ 8000978:	b480      	push	{r7}
+ 800097a:	b085      	sub	sp, #20
+ 800097c:	af00      	add	r7, sp, #0
 	uint32_t pClk1,SystemClk;
 
 	//Get the clock source HSI, HSE, PLL
 	uint8_t clkSrc = (RCC->CFGR >> 2) & 0x3;
- 800092a:	4b23      	ldr	r3, [pc, #140]	; (80009b8 <RCC_Get_PCLK1Value+0x94>)
- 800092c:	689b      	ldr	r3, [r3, #8]
- 800092e:	089b      	lsrs	r3, r3, #2
- 8000930:	b2db      	uxtb	r3, r3
- 8000932:	f003 0303 	and.w	r3, r3, #3
- 8000936:	71fb      	strb	r3, [r7, #7]
+ 800097e:	4b23      	ldr	r3, [pc, #140]	; (8000a0c <RCC_Get_PCLK1Value+0x94>)
+ 8000980:	689b      	ldr	r3, [r3, #8]
+ 8000982:	089b      	lsrs	r3, r3, #2
+ 8000984:	b2db      	uxtb	r3, r3
+ 8000986:	f003 0303 	and.w	r3, r3, #3
+ 800098a:	71fb      	strb	r3, [r7, #7]
 	if(clkSrc == 0)
- 8000938:	79fb      	ldrb	r3, [r7, #7]
- 800093a:	2b00      	cmp	r3, #0
- 800093c:	d102      	bne.n	8000944 <RCC_Get_PCLK1Value+0x20>
+ 800098c:	79fb      	ldrb	r3, [r7, #7]
+ 800098e:	2b00      	cmp	r3, #0
+ 8000990:	d102      	bne.n	8000998 <RCC_Get_PCLK1Value+0x20>
 	{
 		//HSI
 		SystemClk = 16000000;
- 800093e:	4b1f      	ldr	r3, [pc, #124]	; (80009bc <RCC_Get_PCLK1Value+0x98>)
- 8000940:	60fb      	str	r3, [r7, #12]
- 8000942:	e004      	b.n	800094e <RCC_Get_PCLK1Value+0x2a>
+ 8000992:	4b1f      	ldr	r3, [pc, #124]	; (8000a10 <RCC_Get_PCLK1Value+0x98>)
+ 8000994:	60fb      	str	r3, [r7, #12]
+ 8000996:	e004      	b.n	80009a2 <RCC_Get_PCLK1Value+0x2a>
 	}
 	else if (clkSrc == 1)
- 8000944:	79fb      	ldrb	r3, [r7, #7]
- 8000946:	2b01      	cmp	r3, #1
- 8000948:	d101      	bne.n	800094e <RCC_Get_PCLK1Value+0x2a>
+ 8000998:	79fb      	ldrb	r3, [r7, #7]
+ 800099a:	2b01      	cmp	r3, #1
+ 800099c:	d101      	bne.n	80009a2 <RCC_Get_PCLK1Value+0x2a>
 	{
 		//HSE
 		SystemClk = 8000000;
- 800094a:	4b1d      	ldr	r3, [pc, #116]	; (80009c0 <RCC_Get_PCLK1Value+0x9c>)
- 800094c:	60fb      	str	r3, [r7, #12]
+ 800099e:	4b1d      	ldr	r3, [pc, #116]	; (8000a14 <RCC_Get_PCLK1Value+0x9c>)
+ 80009a0:	60fb      	str	r3, [r7, #12]
 	{
 		//PLL not used
 	}
 
 	//Get the AHB prescalar value
 	uint8_t AHBSetPreScalar = (RCC->CFGR >> 4) & 0xF;
- 800094e:	4b1a      	ldr	r3, [pc, #104]	; (80009b8 <RCC_Get_PCLK1Value+0x94>)
- 8000950:	689b      	ldr	r3, [r3, #8]
- 8000952:	091b      	lsrs	r3, r3, #4
- 8000954:	b2db      	uxtb	r3, r3
- 8000956:	f003 030f 	and.w	r3, r3, #15
- 800095a:	71bb      	strb	r3, [r7, #6]
+ 80009a2:	4b1a      	ldr	r3, [pc, #104]	; (8000a0c <RCC_Get_PCLK1Value+0x94>)
+ 80009a4:	689b      	ldr	r3, [r3, #8]
+ 80009a6:	091b      	lsrs	r3, r3, #4
+ 80009a8:	b2db      	uxtb	r3, r3
+ 80009aa:	f003 030f 	and.w	r3, r3, #15
+ 80009ae:	71bb      	strb	r3, [r7, #6]
 	uint16_t ahbp;
 
 	if(AHBSetPreScalar < 8)
- 800095c:	79bb      	ldrb	r3, [r7, #6]
- 800095e:	2b07      	cmp	r3, #7
- 8000960:	d802      	bhi.n	8000968 <RCC_Get_PCLK1Value+0x44>
+ 80009b0:	79bb      	ldrb	r3, [r7, #6]
+ 80009b2:	2b07      	cmp	r3, #7
+ 80009b4:	d802      	bhi.n	80009bc <RCC_Get_PCLK1Value+0x44>
 	{
 		ahbp = 1;
- 8000962:	2301      	movs	r3, #1
- 8000964:	817b      	strh	r3, [r7, #10]
- 8000966:	e005      	b.n	8000974 <RCC_Get_PCLK1Value+0x50>
+ 80009b6:	2301      	movs	r3, #1
+ 80009b8:	817b      	strh	r3, [r7, #10]
+ 80009ba:	e005      	b.n	80009c8 <RCC_Get_PCLK1Value+0x50>
 	}
 	else
 	{
 		//First value is 1000 next is 1001. Therefore -8 is nesscary to index array correctly
 		ahbp = AHBPreScalarValues[AHBSetPreScalar-8];
- 8000968:	79bb      	ldrb	r3, [r7, #6]
- 800096a:	3b08      	subs	r3, #8
- 800096c:	4a15      	ldr	r2, [pc, #84]	; (80009c4 <RCC_Get_PCLK1Value+0xa0>)
- 800096e:	f832 3013 	ldrh.w	r3, [r2, r3, lsl #1]
- 8000972:	817b      	strh	r3, [r7, #10]
+ 80009bc:	79bb      	ldrb	r3, [r7, #6]
+ 80009be:	3b08      	subs	r3, #8
+ 80009c0:	4a15      	ldr	r2, [pc, #84]	; (8000a18 <RCC_Get_PCLK1Value+0xa0>)
+ 80009c2:	f832 3013 	ldrh.w	r3, [r2, r3, lsl #1]
+ 80009c6:	817b      	strh	r3, [r7, #10]
 	}
 
 	//Get the APB1 prescalar value
 	uint8_t APB1SetPreScalar = (RCC->CFGR >> 10) & 0x7;
- 8000974:	4b10      	ldr	r3, [pc, #64]	; (80009b8 <RCC_Get_PCLK1Value+0x94>)
- 8000976:	689b      	ldr	r3, [r3, #8]
- 8000978:	0a9b      	lsrs	r3, r3, #10
- 800097a:	b2db      	uxtb	r3, r3
- 800097c:	f003 0307 	and.w	r3, r3, #7
- 8000980:	717b      	strb	r3, [r7, #5]
+ 80009c8:	4b10      	ldr	r3, [pc, #64]	; (8000a0c <RCC_Get_PCLK1Value+0x94>)
+ 80009ca:	689b      	ldr	r3, [r3, #8]
+ 80009cc:	0a9b      	lsrs	r3, r3, #10
+ 80009ce:	b2db      	uxtb	r3, r3
+ 80009d0:	f003 0307 	and.w	r3, r3, #7
+ 80009d4:	717b      	strb	r3, [r7, #5]
 	uint16_t apb1p;
 
 	if(APB1SetPreScalar < 4)
- 8000982:	797b      	ldrb	r3, [r7, #5]
- 8000984:	2b03      	cmp	r3, #3
- 8000986:	d802      	bhi.n	800098e <RCC_Get_PCLK1Value+0x6a>
+ 80009d6:	797b      	ldrb	r3, [r7, #5]
+ 80009d8:	2b03      	cmp	r3, #3
+ 80009da:	d802      	bhi.n	80009e2 <RCC_Get_PCLK1Value+0x6a>
 	{
 		apb1p = 1;
- 8000988:	2301      	movs	r3, #1
- 800098a:	813b      	strh	r3, [r7, #8]
- 800098c:	e005      	b.n	800099a <RCC_Get_PCLK1Value+0x76>
+ 80009dc:	2301      	movs	r3, #1
+ 80009de:	813b      	strh	r3, [r7, #8]
+ 80009e0:	e005      	b.n	80009ee <RCC_Get_PCLK1Value+0x76>
 	}
 	else
 	{
 		apb1p = APB1PreScalarValues[APB1SetPreScalar-4];
- 800098e:	797b      	ldrb	r3, [r7, #5]
- 8000990:	3b04      	subs	r3, #4
- 8000992:	4a0d      	ldr	r2, [pc, #52]	; (80009c8 <RCC_Get_PCLK1Value+0xa4>)
- 8000994:	f832 3013 	ldrh.w	r3, [r2, r3, lsl #1]
- 8000998:	813b      	strh	r3, [r7, #8]
+ 80009e2:	797b      	ldrb	r3, [r7, #5]
+ 80009e4:	3b04      	subs	r3, #4
+ 80009e6:	4a0d      	ldr	r2, [pc, #52]	; (8000a1c <RCC_Get_PCLK1Value+0xa4>)
+ 80009e8:	f832 3013 	ldrh.w	r3, [r2, r3, lsl #1]
+ 80009ec:	813b      	strh	r3, [r7, #8]
 	}
 
 	pClk1 = SystemClk/ahbp/apb1p;
- 800099a:	897b      	ldrh	r3, [r7, #10]
- 800099c:	68fa      	ldr	r2, [r7, #12]
- 800099e:	fbb2 f2f3 	udiv	r2, r2, r3
- 80009a2:	893b      	ldrh	r3, [r7, #8]
- 80009a4:	fbb2 f3f3 	udiv	r3, r2, r3
- 80009a8:	603b      	str	r3, [r7, #0]
+ 80009ee:	897b      	ldrh	r3, [r7, #10]
+ 80009f0:	68fa      	ldr	r2, [r7, #12]
+ 80009f2:	fbb2 f2f3 	udiv	r2, r2, r3
+ 80009f6:	893b      	ldrh	r3, [r7, #8]
+ 80009f8:	fbb2 f3f3 	udiv	r3, r2, r3
+ 80009fc:	603b      	str	r3, [r7, #0]
 
 	return pClk1;
- 80009aa:	683b      	ldr	r3, [r7, #0]
+ 80009fe:	683b      	ldr	r3, [r7, #0]
 }
- 80009ac:	4618      	mov	r0, r3
- 80009ae:	3714      	adds	r7, #20
- 80009b0:	46bd      	mov	sp, r7
- 80009b2:	f85d 7b04 	ldr.w	r7, [sp], #4
- 80009b6:	4770      	bx	lr
- 80009b8:	40023800 	.word	0x40023800
- 80009bc:	00f42400 	.word	0x00f42400
- 80009c0:	007a1200 	.word	0x007a1200
- 80009c4:	20000000 	.word	0x20000000
- 80009c8:	20000010 	.word	0x20000010
+ 8000a00:	4618      	mov	r0, r3
+ 8000a02:	3714      	adds	r7, #20
+ 8000a04:	46bd      	mov	sp, r7
+ 8000a06:	f85d 7b04 	ldr.w	r7, [sp], #4
+ 8000a0a:	4770      	bx	lr
+ 8000a0c:	40023800 	.word	0x40023800
+ 8000a10:	00f42400 	.word	0x00f42400
+ 8000a14:	007a1200 	.word	0x007a1200
+ 8000a18:	20000000 	.word	0x20000000
+ 8000a1c:	20000010 	.word	0x20000010
 
-080009cc <I2C_Init>:
+08000a20 <I2C_Init>:
 
 /*
  * Init and De-init
  */
 void I2C_Init(I2C_Handle_t *pI2CHandle)
 {
- 80009cc:	b580      	push	{r7, lr}
- 80009ce:	b084      	sub	sp, #16
- 80009d0:	af00      	add	r7, sp, #0
- 80009d2:	6078      	str	r0, [r7, #4]
+ 8000a20:	b580      	push	{r7, lr}
+ 8000a22:	b084      	sub	sp, #16
+ 8000a24:	af00      	add	r7, sp, #0
+ 8000a26:	6078      	str	r0, [r7, #4]
 	//Enable the clock
 	I2C_PeriClockControl(pI2CHandle->pI2Cx, ENABLE);
- 80009d4:	687b      	ldr	r3, [r7, #4]
- 80009d6:	681b      	ldr	r3, [r3, #0]
- 80009d8:	2101      	movs	r1, #1
- 80009da:	4618      	mov	r0, r3
- 80009dc:	f7ff ff6a 	bl	80008b4 <I2C_PeriClockControl>
+ 8000a28:	687b      	ldr	r3, [r7, #4]
+ 8000a2a:	681b      	ldr	r3, [r3, #0]
+ 8000a2c:	2101      	movs	r1, #1
+ 8000a2e:	4618      	mov	r0, r3
+ 8000a30:	f7ff ff6a 	bl	8000908 <I2C_PeriClockControl>
 
 
 
 	//Set the freq field
 	pI2CHandle->pI2Cx->CR2 |= (RCC_Get_PCLK1Value())/1000000;
- 80009e0:	f7ff ffa0 	bl	8000924 <RCC_Get_PCLK1Value>
- 80009e4:	4603      	mov	r3, r0
- 80009e6:	4a4f      	ldr	r2, [pc, #316]	; (8000b24 <I2C_Init+0x158>)
- 80009e8:	fba2 2303 	umull	r2, r3, r2, r3
- 80009ec:	0c99      	lsrs	r1, r3, #18
- 80009ee:	687b      	ldr	r3, [r7, #4]
- 80009f0:	681b      	ldr	r3, [r3, #0]
- 80009f2:	685a      	ldr	r2, [r3, #4]
- 80009f4:	687b      	ldr	r3, [r7, #4]
- 80009f6:	681b      	ldr	r3, [r3, #0]
- 80009f8:	430a      	orrs	r2, r1
- 80009fa:	605a      	str	r2, [r3, #4]
+ 8000a34:	f7ff ffa0 	bl	8000978 <RCC_Get_PCLK1Value>
+ 8000a38:	4603      	mov	r3, r0
+ 8000a3a:	4a4f      	ldr	r2, [pc, #316]	; (8000b78 <I2C_Init+0x158>)
+ 8000a3c:	fba2 2303 	umull	r2, r3, r2, r3
+ 8000a40:	0c99      	lsrs	r1, r3, #18
+ 8000a42:	687b      	ldr	r3, [r7, #4]
+ 8000a44:	681b      	ldr	r3, [r3, #0]
+ 8000a46:	685a      	ldr	r2, [r3, #4]
+ 8000a48:	687b      	ldr	r3, [r7, #4]
+ 8000a4a:	681b      	ldr	r3, [r3, #0]
+ 8000a4c:	430a      	orrs	r2, r1
+ 8000a4e:	605a      	str	r2, [r3, #4]
 
 	//Configure the device address
 	pI2CHandle->pI2Cx->OAR1 |= (pI2CHandle->I2C_Config.I2C_DeviceAddress) << 1;
- 80009fc:	687b      	ldr	r3, [r7, #4]
- 80009fe:	681b      	ldr	r3, [r3, #0]
- 8000a00:	689a      	ldr	r2, [r3, #8]
- 8000a02:	687b      	ldr	r3, [r7, #4]
- 8000a04:	7a1b      	ldrb	r3, [r3, #8]
- 8000a06:	005b      	lsls	r3, r3, #1
- 8000a08:	4619      	mov	r1, r3
- 8000a0a:	687b      	ldr	r3, [r7, #4]
- 8000a0c:	681b      	ldr	r3, [r3, #0]
- 8000a0e:	430a      	orrs	r2, r1
- 8000a10:	609a      	str	r2, [r3, #8]
+ 8000a50:	687b      	ldr	r3, [r7, #4]
+ 8000a52:	681b      	ldr	r3, [r3, #0]
+ 8000a54:	689a      	ldr	r2, [r3, #8]
+ 8000a56:	687b      	ldr	r3, [r7, #4]
+ 8000a58:	7a1b      	ldrb	r3, [r3, #8]
+ 8000a5a:	005b      	lsls	r3, r3, #1
+ 8000a5c:	4619      	mov	r1, r3
+ 8000a5e:	687b      	ldr	r3, [r7, #4]
+ 8000a60:	681b      	ldr	r3, [r3, #0]
+ 8000a62:	430a      	orrs	r2, r1
+ 8000a64:	609a      	str	r2, [r3, #8]
 
 	//The 14th bit of the OAR1 register must always be mainted by software as 1
 	pI2CHandle->pI2Cx->OAR1 |= (1<<14);
- 8000a12:	687b      	ldr	r3, [r7, #4]
- 8000a14:	681b      	ldr	r3, [r3, #0]
- 8000a16:	689a      	ldr	r2, [r3, #8]
- 8000a18:	687b      	ldr	r3, [r7, #4]
- 8000a1a:	681b      	ldr	r3, [r3, #0]
- 8000a1c:	f442 4280 	orr.w	r2, r2, #16384	; 0x4000
- 8000a20:	609a      	str	r2, [r3, #8]
+ 8000a66:	687b      	ldr	r3, [r7, #4]
+ 8000a68:	681b      	ldr	r3, [r3, #0]
+ 8000a6a:	689a      	ldr	r2, [r3, #8]
+ 8000a6c:	687b      	ldr	r3, [r7, #4]
+ 8000a6e:	681b      	ldr	r3, [r3, #0]
+ 8000a70:	f442 4280 	orr.w	r2, r2, #16384	; 0x4000
+ 8000a74:	609a      	str	r2, [r3, #8]
 
 	//CCR calculation
 	uint16_t ccr_value = 0;
- 8000a22:	2300      	movs	r3, #0
- 8000a24:	81fb      	strh	r3, [r7, #14]
+ 8000a76:	2300      	movs	r3, #0
+ 8000a78:	81fb      	strh	r3, [r7, #14]
 
 	//First mode is configured
 	if(pI2CHandle->I2C_Config.I2C_SCLSpeed <= I2C_SCL_SPEED_SM)
- 8000a26:	687b      	ldr	r3, [r7, #4]
- 8000a28:	685b      	ldr	r3, [r3, #4]
- 8000a2a:	4a3f      	ldr	r2, [pc, #252]	; (8000b28 <I2C_Init+0x15c>)
- 8000a2c:	4293      	cmp	r3, r2
- 8000a2e:	d813      	bhi.n	8000a58 <I2C_Init+0x8c>
+ 8000a7a:	687b      	ldr	r3, [r7, #4]
+ 8000a7c:	685b      	ldr	r3, [r3, #4]
+ 8000a7e:	4a3f      	ldr	r2, [pc, #252]	; (8000b7c <I2C_Init+0x15c>)
+ 8000a80:	4293      	cmp	r3, r2
+ 8000a82:	d813      	bhi.n	8000aac <I2C_Init+0x8c>
 	{
 		//CCR = Tscl / 2TpClk1 | CCR = FPclk1 / 2Fscl
 		ccr_value = RCC_Get_PCLK1Value() / (2*pI2CHandle->I2C_Config.I2C_SCLSpeed);
- 8000a30:	f7ff ff78 	bl	8000924 <RCC_Get_PCLK1Value>
- 8000a34:	4602      	mov	r2, r0
- 8000a36:	687b      	ldr	r3, [r7, #4]
- 8000a38:	685b      	ldr	r3, [r3, #4]
- 8000a3a:	005b      	lsls	r3, r3, #1
- 8000a3c:	fbb2 f3f3 	udiv	r3, r2, r3
- 8000a40:	81fb      	strh	r3, [r7, #14]
+ 8000a84:	f7ff ff78 	bl	8000978 <RCC_Get_PCLK1Value>
+ 8000a88:	4602      	mov	r2, r0
+ 8000a8a:	687b      	ldr	r3, [r7, #4]
+ 8000a8c:	685b      	ldr	r3, [r3, #4]
+ 8000a8e:	005b      	lsls	r3, r3, #1
+ 8000a90:	fbb2 f3f3 	udiv	r3, r2, r3
+ 8000a94:	81fb      	strh	r3, [r7, #14]
 		//Mask out bits beyond 13 bits of ccr_value
 		pI2CHandle->pI2Cx->CCR |=(ccr_value & 0xFFF);
- 8000a42:	687b      	ldr	r3, [r7, #4]
- 8000a44:	681b      	ldr	r3, [r3, #0]
- 8000a46:	69d9      	ldr	r1, [r3, #28]
- 8000a48:	89fb      	ldrh	r3, [r7, #14]
- 8000a4a:	f3c3 020b 	ubfx	r2, r3, #0, #12
- 8000a4e:	687b      	ldr	r3, [r7, #4]
- 8000a50:	681b      	ldr	r3, [r3, #0]
- 8000a52:	430a      	orrs	r2, r1
- 8000a54:	61da      	str	r2, [r3, #28]
- 8000a56:	e039      	b.n	8000acc <I2C_Init+0x100>
+ 8000a96:	687b      	ldr	r3, [r7, #4]
+ 8000a98:	681b      	ldr	r3, [r3, #0]
+ 8000a9a:	69d9      	ldr	r1, [r3, #28]
+ 8000a9c:	89fb      	ldrh	r3, [r7, #14]
+ 8000a9e:	f3c3 020b 	ubfx	r2, r3, #0, #12
+ 8000aa2:	687b      	ldr	r3, [r7, #4]
+ 8000aa4:	681b      	ldr	r3, [r3, #0]
+ 8000aa6:	430a      	orrs	r2, r1
+ 8000aa8:	61da      	str	r2, [r3, #28]
+ 8000aaa:	e039      	b.n	8000b20 <I2C_Init+0x100>
 	}
 	else
 	{
 		//fast mode
 		pI2CHandle->pI2Cx->CCR |= (1 << I2C_CCR_FS);
- 8000a58:	687b      	ldr	r3, [r7, #4]
- 8000a5a:	681b      	ldr	r3, [r3, #0]
- 8000a5c:	69da      	ldr	r2, [r3, #28]
- 8000a5e:	687b      	ldr	r3, [r7, #4]
- 8000a60:	681b      	ldr	r3, [r3, #0]
- 8000a62:	f442 4200 	orr.w	r2, r2, #32768	; 0x8000
- 8000a66:	61da      	str	r2, [r3, #28]
+ 8000aac:	687b      	ldr	r3, [r7, #4]
+ 8000aae:	681b      	ldr	r3, [r3, #0]
+ 8000ab0:	69da      	ldr	r2, [r3, #28]
+ 8000ab2:	687b      	ldr	r3, [r7, #4]
+ 8000ab4:	681b      	ldr	r3, [r3, #0]
+ 8000ab6:	f442 4200 	orr.w	r2, r2, #32768	; 0x8000
+ 8000aba:	61da      	str	r2, [r3, #28]
 		pI2CHandle->pI2Cx->CCR |= (pI2CHandle->I2C_Config.I2C_FMDutyCycle << I2C_CCR_DUTY );
- 8000a68:	687b      	ldr	r3, [r7, #4]
- 8000a6a:	681b      	ldr	r3, [r3, #0]
- 8000a6c:	69da      	ldr	r2, [r3, #28]
- 8000a6e:	687b      	ldr	r3, [r7, #4]
- 8000a70:	7a9b      	ldrb	r3, [r3, #10]
- 8000a72:	039b      	lsls	r3, r3, #14
- 8000a74:	4619      	mov	r1, r3
- 8000a76:	687b      	ldr	r3, [r7, #4]
- 8000a78:	681b      	ldr	r3, [r3, #0]
- 8000a7a:	430a      	orrs	r2, r1
- 8000a7c:	61da      	str	r2, [r3, #28]
+ 8000abc:	687b      	ldr	r3, [r7, #4]
+ 8000abe:	681b      	ldr	r3, [r3, #0]
+ 8000ac0:	69da      	ldr	r2, [r3, #28]
+ 8000ac2:	687b      	ldr	r3, [r7, #4]
+ 8000ac4:	7a9b      	ldrb	r3, [r3, #10]
+ 8000ac6:	039b      	lsls	r3, r3, #14
+ 8000ac8:	4619      	mov	r1, r3
+ 8000aca:	687b      	ldr	r3, [r7, #4]
+ 8000acc:	681b      	ldr	r3, [r3, #0]
+ 8000ace:	430a      	orrs	r2, r1
+ 8000ad0:	61da      	str	r2, [r3, #28]
 
 		//Configure the duty cycle based on value user provided
 		if(pI2CHandle->I2C_Config.I2C_FMDutyCycle == I2C_FM_DUTY_2)
- 8000a7e:	687b      	ldr	r3, [r7, #4]
- 8000a80:	7a9b      	ldrb	r3, [r3, #10]
- 8000a82:	2b00      	cmp	r3, #0
- 8000a84:	d10b      	bne.n	8000a9e <I2C_Init+0xd2>
+ 8000ad2:	687b      	ldr	r3, [r7, #4]
+ 8000ad4:	7a9b      	ldrb	r3, [r3, #10]
+ 8000ad6:	2b00      	cmp	r3, #0
+ 8000ad8:	d10b      	bne.n	8000af2 <I2C_Init+0xd2>
 		{
 			//Tlow : Thigh is 2:1
 			ccr_value = RCC_Get_PCLK1Value() / (3*pI2CHandle->I2C_Config.I2C_SCLSpeed);
- 8000a86:	f7ff ff4d 	bl	8000924 <RCC_Get_PCLK1Value>
- 8000a8a:	4601      	mov	r1, r0
- 8000a8c:	687b      	ldr	r3, [r7, #4]
- 8000a8e:	685a      	ldr	r2, [r3, #4]
- 8000a90:	4613      	mov	r3, r2
- 8000a92:	005b      	lsls	r3, r3, #1
- 8000a94:	4413      	add	r3, r2
- 8000a96:	fbb1 f3f3 	udiv	r3, r1, r3
- 8000a9a:	81fb      	strh	r3, [r7, #14]
- 8000a9c:	e00c      	b.n	8000ab8 <I2C_Init+0xec>
+ 8000ada:	f7ff ff4d 	bl	8000978 <RCC_Get_PCLK1Value>
+ 8000ade:	4601      	mov	r1, r0
+ 8000ae0:	687b      	ldr	r3, [r7, #4]
+ 8000ae2:	685a      	ldr	r2, [r3, #4]
+ 8000ae4:	4613      	mov	r3, r2
+ 8000ae6:	005b      	lsls	r3, r3, #1
+ 8000ae8:	4413      	add	r3, r2
+ 8000aea:	fbb1 f3f3 	udiv	r3, r1, r3
+ 8000aee:	81fb      	strh	r3, [r7, #14]
+ 8000af0:	e00c      	b.n	8000b0c <I2C_Init+0xec>
 		}
 		else
 		{
 			//Tlow : Thigh is 16:9
 			ccr_value = RCC_Get_PCLK1Value() / (25*pI2CHandle->I2C_Config.I2C_SCLSpeed);
- 8000a9e:	f7ff ff41 	bl	8000924 <RCC_Get_PCLK1Value>
- 8000aa2:	4601      	mov	r1, r0
- 8000aa4:	687b      	ldr	r3, [r7, #4]
- 8000aa6:	685a      	ldr	r2, [r3, #4]
- 8000aa8:	4613      	mov	r3, r2
- 8000aaa:	009b      	lsls	r3, r3, #2
- 8000aac:	4413      	add	r3, r2
- 8000aae:	009a      	lsls	r2, r3, #2
- 8000ab0:	4413      	add	r3, r2
- 8000ab2:	fbb1 f3f3 	udiv	r3, r1, r3
- 8000ab6:	81fb      	strh	r3, [r7, #14]
+ 8000af2:	f7ff ff41 	bl	8000978 <RCC_Get_PCLK1Value>
+ 8000af6:	4601      	mov	r1, r0
+ 8000af8:	687b      	ldr	r3, [r7, #4]
+ 8000afa:	685a      	ldr	r2, [r3, #4]
+ 8000afc:	4613      	mov	r3, r2
+ 8000afe:	009b      	lsls	r3, r3, #2
+ 8000b00:	4413      	add	r3, r2
+ 8000b02:	009a      	lsls	r2, r3, #2
+ 8000b04:	4413      	add	r3, r2
+ 8000b06:	fbb1 f3f3 	udiv	r3, r1, r3
+ 8000b0a:	81fb      	strh	r3, [r7, #14]
 		}
 		pI2CHandle->pI2Cx->CCR |=(ccr_value & 0xFFF);
- 8000ab8:	687b      	ldr	r3, [r7, #4]
- 8000aba:	681b      	ldr	r3, [r3, #0]
- 8000abc:	69d9      	ldr	r1, [r3, #28]
- 8000abe:	89fb      	ldrh	r3, [r7, #14]
- 8000ac0:	f3c3 020b 	ubfx	r2, r3, #0, #12
- 8000ac4:	687b      	ldr	r3, [r7, #4]
- 8000ac6:	681b      	ldr	r3, [r3, #0]
- 8000ac8:	430a      	orrs	r2, r1
- 8000aca:	61da      	str	r2, [r3, #28]
+ 8000b0c:	687b      	ldr	r3, [r7, #4]
+ 8000b0e:	681b      	ldr	r3, [r3, #0]
+ 8000b10:	69d9      	ldr	r1, [r3, #28]
+ 8000b12:	89fb      	ldrh	r3, [r7, #14]
+ 8000b14:	f3c3 020b 	ubfx	r2, r3, #0, #12
+ 8000b18:	687b      	ldr	r3, [r7, #4]
+ 8000b1a:	681b      	ldr	r3, [r3, #0]
+ 8000b1c:	430a      	orrs	r2, r1
+ 8000b1e:	61da      	str	r2, [r3, #28]
 	}
 
 	//Configure the rise time for I2C pin
 	uint8_t tRise;
 	if(pI2CHandle->I2C_Config.I2C_SCLSpeed <= I2C_SCL_SPEED_SM)
- 8000acc:	687b      	ldr	r3, [r7, #4]
- 8000ace:	685b      	ldr	r3, [r3, #4]
- 8000ad0:	4a15      	ldr	r2, [pc, #84]	; (8000b28 <I2C_Init+0x15c>)
- 8000ad2:	4293      	cmp	r3, r2
- 8000ad4:	d80a      	bhi.n	8000aec <I2C_Init+0x120>
+ 8000b20:	687b      	ldr	r3, [r7, #4]
+ 8000b22:	685b      	ldr	r3, [r3, #4]
+ 8000b24:	4a15      	ldr	r2, [pc, #84]	; (8000b7c <I2C_Init+0x15c>)
+ 8000b26:	4293      	cmp	r3, r2
+ 8000b28:	d80a      	bhi.n	8000b40 <I2C_Init+0x120>
 	{
 		//standard mode
 		//trise = trisemax / tpclk1
 		//trise = Fpclk / Frisemax
 		tRise = (RCC_Get_PCLK1Value() / 1000000U) + 1;
- 8000ad6:	f7ff ff25 	bl	8000924 <RCC_Get_PCLK1Value>
- 8000ada:	4603      	mov	r3, r0
- 8000adc:	4a11      	ldr	r2, [pc, #68]	; (8000b24 <I2C_Init+0x158>)
- 8000ade:	fba2 2303 	umull	r2, r3, r2, r3
- 8000ae2:	0c9b      	lsrs	r3, r3, #18
- 8000ae4:	b2db      	uxtb	r3, r3
- 8000ae6:	3301      	adds	r3, #1
- 8000ae8:	737b      	strb	r3, [r7, #13]
- 8000aea:	e00d      	b.n	8000b08 <I2C_Init+0x13c>
+ 8000b2a:	f7ff ff25 	bl	8000978 <RCC_Get_PCLK1Value>
+ 8000b2e:	4603      	mov	r3, r0
+ 8000b30:	4a11      	ldr	r2, [pc, #68]	; (8000b78 <I2C_Init+0x158>)
+ 8000b32:	fba2 2303 	umull	r2, r3, r2, r3
+ 8000b36:	0c9b      	lsrs	r3, r3, #18
+ 8000b38:	b2db      	uxtb	r3, r3
+ 8000b3a:	3301      	adds	r3, #1
+ 8000b3c:	737b      	strb	r3, [r7, #13]
+ 8000b3e:	e00d      	b.n	8000b5c <I2C_Init+0x13c>
 	}
 	else
 	{
 		tRise = ((RCC_Get_PCLK1Value()  *300)/ 1000000U) + 1;
- 8000aec:	f7ff ff1a 	bl	8000924 <RCC_Get_PCLK1Value>
- 8000af0:	4603      	mov	r3, r0
- 8000af2:	f44f 7296 	mov.w	r2, #300	; 0x12c
- 8000af6:	fb02 f303 	mul.w	r3, r2, r3
- 8000afa:	4a0a      	ldr	r2, [pc, #40]	; (8000b24 <I2C_Init+0x158>)
- 8000afc:	fba2 2303 	umull	r2, r3, r2, r3
- 8000b00:	0c9b      	lsrs	r3, r3, #18
- 8000b02:	b2db      	uxtb	r3, r3
- 8000b04:	3301      	adds	r3, #1
- 8000b06:	737b      	strb	r3, [r7, #13]
+ 8000b40:	f7ff ff1a 	bl	8000978 <RCC_Get_PCLK1Value>
+ 8000b44:	4603      	mov	r3, r0
+ 8000b46:	f44f 7296 	mov.w	r2, #300	; 0x12c
+ 8000b4a:	fb02 f303 	mul.w	r3, r2, r3
+ 8000b4e:	4a0a      	ldr	r2, [pc, #40]	; (8000b78 <I2C_Init+0x158>)
+ 8000b50:	fba2 2303 	umull	r2, r3, r2, r3
+ 8000b54:	0c9b      	lsrs	r3, r3, #18
+ 8000b56:	b2db      	uxtb	r3, r3
+ 8000b58:	3301      	adds	r3, #1
+ 8000b5a:	737b      	strb	r3, [r7, #13]
 	}
 	pI2CHandle->pI2Cx->TRISE |=(tRise & 0x3F);
- 8000b08:	687b      	ldr	r3, [r7, #4]
- 8000b0a:	681b      	ldr	r3, [r3, #0]
- 8000b0c:	6a19      	ldr	r1, [r3, #32]
- 8000b0e:	7b7b      	ldrb	r3, [r7, #13]
- 8000b10:	f003 023f 	and.w	r2, r3, #63	; 0x3f
- 8000b14:	687b      	ldr	r3, [r7, #4]
- 8000b16:	681b      	ldr	r3, [r3, #0]
- 8000b18:	430a      	orrs	r2, r1
- 8000b1a:	621a      	str	r2, [r3, #32]
+ 8000b5c:	687b      	ldr	r3, [r7, #4]
+ 8000b5e:	681b      	ldr	r3, [r3, #0]
+ 8000b60:	6a19      	ldr	r1, [r3, #32]
+ 8000b62:	7b7b      	ldrb	r3, [r7, #13]
+ 8000b64:	f003 023f 	and.w	r2, r3, #63	; 0x3f
+ 8000b68:	687b      	ldr	r3, [r7, #4]
+ 8000b6a:	681b      	ldr	r3, [r3, #0]
+ 8000b6c:	430a      	orrs	r2, r1
+ 8000b6e:	621a      	str	r2, [r3, #32]
 }
- 8000b1c:	bf00      	nop
- 8000b1e:	3710      	adds	r7, #16
- 8000b20:	46bd      	mov	sp, r7
- 8000b22:	bd80      	pop	{r7, pc}
- 8000b24:	431bde83 	.word	0x431bde83
- 8000b28:	000186a0 	.word	0x000186a0
+ 8000b70:	bf00      	nop
+ 8000b72:	3710      	adds	r7, #16
+ 8000b74:	46bd      	mov	sp, r7
+ 8000b76:	bd80      	pop	{r7, pc}
+ 8000b78:	431bde83 	.word	0x431bde83
+ 8000b7c:	000186a0 	.word	0x000186a0
 
-08000b2c <I2C_MasterSendData>:
+08000b80 <I2C_MasterSendData>:
 
 /*
  * Data Send and Receive
  */
 void I2C_MasterSendData(I2C_Handle_t *pI2CHandle,uint8_t *pTxbuffer, uint32_t Len, uint8_t SlaveAddr,uint8_t Sr)
 {
- 8000b2c:	b580      	push	{r7, lr}
- 8000b2e:	b084      	sub	sp, #16
- 8000b30:	af00      	add	r7, sp, #0
- 8000b32:	60f8      	str	r0, [r7, #12]
- 8000b34:	60b9      	str	r1, [r7, #8]
- 8000b36:	607a      	str	r2, [r7, #4]
- 8000b38:	70fb      	strb	r3, [r7, #3]
+ 8000b80:	b580      	push	{r7, lr}
+ 8000b82:	b084      	sub	sp, #16
+ 8000b84:	af00      	add	r7, sp, #0
+ 8000b86:	60f8      	str	r0, [r7, #12]
+ 8000b88:	60b9      	str	r1, [r7, #8]
+ 8000b8a:	607a      	str	r2, [r7, #4]
+ 8000b8c:	70fb      	strb	r3, [r7, #3]
 	//Generate the start condition
 	I2C_GenerateStartCondition(pI2CHandle->pI2Cx);
- 8000b3a:	68fb      	ldr	r3, [r7, #12]
- 8000b3c:	681b      	ldr	r3, [r3, #0]
- 8000b3e:	4618      	mov	r0, r3
- 8000b40:	f7ff fe5a 	bl	80007f8 <I2C_GenerateStartCondition>
+ 8000b8e:	68fb      	ldr	r3, [r7, #12]
+ 8000b90:	681b      	ldr	r3, [r3, #0]
+ 8000b92:	4618      	mov	r0, r3
+ 8000b94:	f7ff fe30 	bl	80007f8 <I2C_GenerateStartCondition>
 
 	//Read SR1 register to check if SB has been set. Not operator is nesscary to hang the code until flag = 1
 	while(!I2C_GetFlagStatus(pI2CHandle->pI2Cx, I2C_FLAG_SB));
- 8000b44:	bf00      	nop
- 8000b46:	68fb      	ldr	r3, [r7, #12]
- 8000b48:	681b      	ldr	r3, [r3, #0]
- 8000b4a:	2101      	movs	r1, #1
- 8000b4c:	4618      	mov	r0, r3
- 8000b4e:	f000 f8fa 	bl	8000d46 <I2C_GetFlagStatus>
- 8000b52:	4603      	mov	r3, r0
- 8000b54:	2b00      	cmp	r3, #0
- 8000b56:	d0f6      	beq.n	8000b46 <I2C_MasterSendData+0x1a>
+ 8000b98:	bf00      	nop
+ 8000b9a:	68fb      	ldr	r3, [r7, #12]
+ 8000b9c:	681b      	ldr	r3, [r3, #0]
+ 8000b9e:	2101      	movs	r1, #1
+ 8000ba0:	4618      	mov	r0, r3
+ 8000ba2:	f000 f8fa 	bl	8000d9a <I2C_GetFlagStatus>
+ 8000ba6:	4603      	mov	r3, r0
+ 8000ba8:	2b00      	cmp	r3, #0
+ 8000baa:	d0f6      	beq.n	8000b9a <I2C_MasterSendData+0x1a>
 
 	//Write the address of the slave to DR register
 	I2C_ExecuteAddressPhaseWrite(pI2CHandle->pI2Cx, SlaveAddr);
- 8000b58:	68fb      	ldr	r3, [r7, #12]
- 8000b5a:	681b      	ldr	r3, [r3, #0]
- 8000b5c:	78fa      	ldrb	r2, [r7, #3]
- 8000b5e:	4611      	mov	r1, r2
- 8000b60:	4618      	mov	r0, r3
- 8000b62:	f7ff fe59 	bl	8000818 <I2C_ExecuteAddressPhaseWrite>
+ 8000bac:	68fb      	ldr	r3, [r7, #12]
+ 8000bae:	681b      	ldr	r3, [r3, #0]
+ 8000bb0:	78fa      	ldrb	r2, [r7, #3]
+ 8000bb2:	4611      	mov	r1, r2
+ 8000bb4:	4618      	mov	r0, r3
+ 8000bb6:	f7ff fe2f 	bl	8000818 <I2C_ExecuteAddressPhaseWrite>
 
 	//Confirm the address phase is compelted by checking if ADDR bit set in SR1
 	while(!I2C_GetFlagStatus(pI2CHandle->pI2Cx, I2C_FLAG_ADDR));
- 8000b66:	bf00      	nop
- 8000b68:	68fb      	ldr	r3, [r7, #12]
- 8000b6a:	681b      	ldr	r3, [r3, #0]
- 8000b6c:	2102      	movs	r1, #2
- 8000b6e:	4618      	mov	r0, r3
- 8000b70:	f000 f8e9 	bl	8000d46 <I2C_GetFlagStatus>
- 8000b74:	4603      	mov	r3, r0
- 8000b76:	2b00      	cmp	r3, #0
- 8000b78:	d0f6      	beq.n	8000b68 <I2C_MasterSendData+0x3c>
+ 8000bba:	bf00      	nop
+ 8000bbc:	68fb      	ldr	r3, [r7, #12]
+ 8000bbe:	681b      	ldr	r3, [r3, #0]
+ 8000bc0:	2102      	movs	r1, #2
+ 8000bc2:	4618      	mov	r0, r3
+ 8000bc4:	f000 f8e9 	bl	8000d9a <I2C_GetFlagStatus>
+ 8000bc8:	4603      	mov	r3, r0
+ 8000bca:	2b00      	cmp	r3, #0
+ 8000bcc:	d0f6      	beq.n	8000bbc <I2C_MasterSendData+0x3c>
 
 	//Clear the ADDR flag by reading SR1 and SR2
 	I2C_ClearADDRFlag(pI2CHandle);
- 8000b7a:	68f8      	ldr	r0, [r7, #12]
- 8000b7c:	f7ff fe78 	bl	8000870 <I2C_ClearADDRFlag>
+ 8000bce:	68f8      	ldr	r0, [r7, #12]
+ 8000bd0:	f7ff fe4e 	bl	8000870 <I2C_ClearADDRFlag>
 
 	//Send all bytes of data until len is = 0
 	while(Len > 0)
- 8000b80:	e014      	b.n	8000bac <I2C_MasterSendData+0x80>
+ 8000bd4:	e014      	b.n	8000c00 <I2C_MasterSendData+0x80>
 	{
 		//When txe is set to 1 data register is empty and ready to recieve data
 		while(!I2C_GetFlagStatus(pI2CHandle->pI2Cx, I2C_FLAG_TXE));
- 8000b82:	bf00      	nop
- 8000b84:	68fb      	ldr	r3, [r7, #12]
- 8000b86:	681b      	ldr	r3, [r3, #0]
- 8000b88:	2180      	movs	r1, #128	; 0x80
- 8000b8a:	4618      	mov	r0, r3
- 8000b8c:	f000 f8db 	bl	8000d46 <I2C_GetFlagStatus>
- 8000b90:	4603      	mov	r3, r0
- 8000b92:	2b00      	cmp	r3, #0
- 8000b94:	d0f6      	beq.n	8000b84 <I2C_MasterSendData+0x58>
+ 8000bd6:	bf00      	nop
+ 8000bd8:	68fb      	ldr	r3, [r7, #12]
+ 8000bda:	681b      	ldr	r3, [r3, #0]
+ 8000bdc:	2180      	movs	r1, #128	; 0x80
+ 8000bde:	4618      	mov	r0, r3
+ 8000be0:	f000 f8db 	bl	8000d9a <I2C_GetFlagStatus>
+ 8000be4:	4603      	mov	r3, r0
+ 8000be6:	2b00      	cmp	r3, #0
+ 8000be8:	d0f6      	beq.n	8000bd8 <I2C_MasterSendData+0x58>
 		pI2CHandle->pI2Cx->DR = *pTxbuffer;
- 8000b96:	68bb      	ldr	r3, [r7, #8]
- 8000b98:	781a      	ldrb	r2, [r3, #0]
- 8000b9a:	68fb      	ldr	r3, [r7, #12]
- 8000b9c:	681b      	ldr	r3, [r3, #0]
- 8000b9e:	611a      	str	r2, [r3, #16]
+ 8000bea:	68bb      	ldr	r3, [r7, #8]
+ 8000bec:	781a      	ldrb	r2, [r3, #0]
+ 8000bee:	68fb      	ldr	r3, [r7, #12]
+ 8000bf0:	681b      	ldr	r3, [r3, #0]
+ 8000bf2:	611a      	str	r2, [r3, #16]
 		pTxbuffer ++;
- 8000ba0:	68bb      	ldr	r3, [r7, #8]
- 8000ba2:	3301      	adds	r3, #1
- 8000ba4:	60bb      	str	r3, [r7, #8]
+ 8000bf4:	68bb      	ldr	r3, [r7, #8]
+ 8000bf6:	3301      	adds	r3, #1
+ 8000bf8:	60bb      	str	r3, [r7, #8]
 		Len --;
- 8000ba6:	687b      	ldr	r3, [r7, #4]
- 8000ba8:	3b01      	subs	r3, #1
- 8000baa:	607b      	str	r3, [r7, #4]
+ 8000bfa:	687b      	ldr	r3, [r7, #4]
+ 8000bfc:	3b01      	subs	r3, #1
+ 8000bfe:	607b      	str	r3, [r7, #4]
 	while(Len > 0)
- 8000bac:	687b      	ldr	r3, [r7, #4]
- 8000bae:	2b00      	cmp	r3, #0
- 8000bb0:	d1e7      	bne.n	8000b82 <I2C_MasterSendData+0x56>
+ 8000c00:	687b      	ldr	r3, [r7, #4]
+ 8000c02:	2b00      	cmp	r3, #0
+ 8000c04:	d1e7      	bne.n	8000bd6 <I2C_MasterSendData+0x56>
 	}
 
 	//Wait for Txe and BTF to be set as they signal end of data transfer
 	while(!I2C_GetFlagStatus(pI2CHandle->pI2Cx, I2C_FLAG_TXE));
- 8000bb2:	bf00      	nop
- 8000bb4:	68fb      	ldr	r3, [r7, #12]
- 8000bb6:	681b      	ldr	r3, [r3, #0]
- 8000bb8:	2180      	movs	r1, #128	; 0x80
- 8000bba:	4618      	mov	r0, r3
- 8000bbc:	f000 f8c3 	bl	8000d46 <I2C_GetFlagStatus>
- 8000bc0:	4603      	mov	r3, r0
- 8000bc2:	2b00      	cmp	r3, #0
- 8000bc4:	d0f6      	beq.n	8000bb4 <I2C_MasterSendData+0x88>
+ 8000c06:	bf00      	nop
+ 8000c08:	68fb      	ldr	r3, [r7, #12]
+ 8000c0a:	681b      	ldr	r3, [r3, #0]
+ 8000c0c:	2180      	movs	r1, #128	; 0x80
+ 8000c0e:	4618      	mov	r0, r3
+ 8000c10:	f000 f8c3 	bl	8000d9a <I2C_GetFlagStatus>
+ 8000c14:	4603      	mov	r3, r0
+ 8000c16:	2b00      	cmp	r3, #0
+ 8000c18:	d0f6      	beq.n	8000c08 <I2C_MasterSendData+0x88>
 	while(!I2C_GetFlagStatus(pI2CHandle->pI2Cx, I2C_FLAG_BTF));
- 8000bc6:	bf00      	nop
- 8000bc8:	68fb      	ldr	r3, [r7, #12]
- 8000bca:	681b      	ldr	r3, [r3, #0]
- 8000bcc:	2104      	movs	r1, #4
- 8000bce:	4618      	mov	r0, r3
- 8000bd0:	f000 f8b9 	bl	8000d46 <I2C_GetFlagStatus>
- 8000bd4:	4603      	mov	r3, r0
- 8000bd6:	2b00      	cmp	r3, #0
- 8000bd8:	d0f6      	beq.n	8000bc8 <I2C_MasterSendData+0x9c>
+ 8000c1a:	bf00      	nop
+ 8000c1c:	68fb      	ldr	r3, [r7, #12]
+ 8000c1e:	681b      	ldr	r3, [r3, #0]
+ 8000c20:	2104      	movs	r1, #4
+ 8000c22:	4618      	mov	r0, r3
+ 8000c24:	f000 f8b9 	bl	8000d9a <I2C_GetFlagStatus>
+ 8000c28:	4603      	mov	r3, r0
+ 8000c2a:	2b00      	cmp	r3, #0
+ 8000c2c:	d0f6      	beq.n	8000c1c <I2C_MasterSendData+0x9c>
 
 	//Generate stop condition
 	if(Sr == I2C_DISABLE_SR)
- 8000bda:	7e3b      	ldrb	r3, [r7, #24]
- 8000bdc:	2b00      	cmp	r3, #0
- 8000bde:	d104      	bne.n	8000bea <I2C_MasterSendData+0xbe>
+ 8000c2e:	7e3b      	ldrb	r3, [r7, #24]
+ 8000c30:	2b00      	cmp	r3, #0
+ 8000c32:	d104      	bne.n	8000c3e <I2C_MasterSendData+0xbe>
 		I2C_GenerateStopCondition(pI2CHandle->pI2Cx);
- 8000be0:	68fb      	ldr	r3, [r7, #12]
- 8000be2:	681b      	ldr	r3, [r3, #0]
- 8000be4:	4618      	mov	r0, r3
- 8000be6:	f7ff fe55 	bl	8000894 <I2C_GenerateStopCondition>
+ 8000c34:	68fb      	ldr	r3, [r7, #12]
+ 8000c36:	681b      	ldr	r3, [r3, #0]
+ 8000c38:	4618      	mov	r0, r3
+ 8000c3a:	f7ff fe54 	bl	80008e6 <I2C_GenerateStopCondition>
 
 
 }
- 8000bea:	bf00      	nop
- 8000bec:	3710      	adds	r7, #16
- 8000bee:	46bd      	mov	sp, r7
- 8000bf0:	bd80      	pop	{r7, pc}
+ 8000c3e:	bf00      	nop
+ 8000c40:	3710      	adds	r7, #16
+ 8000c42:	46bd      	mov	sp, r7
+ 8000c44:	bd80      	pop	{r7, pc}
 
-08000bf2 <I2C_MasterReceiveData>:
+08000c46 <I2C_MasterReceiveData>:
 void I2C_MasterReceiveData(I2C_Handle_t *pI2CHandle,uint8_t *pRxBuffer, uint8_t Len, uint8_t SlaveAddr,uint8_t Sr)
 {
- 8000bf2:	b580      	push	{r7, lr}
- 8000bf4:	b086      	sub	sp, #24
- 8000bf6:	af00      	add	r7, sp, #0
- 8000bf8:	60f8      	str	r0, [r7, #12]
- 8000bfa:	60b9      	str	r1, [r7, #8]
- 8000bfc:	4611      	mov	r1, r2
- 8000bfe:	461a      	mov	r2, r3
- 8000c00:	460b      	mov	r3, r1
- 8000c02:	71fb      	strb	r3, [r7, #7]
- 8000c04:	4613      	mov	r3, r2
- 8000c06:	71bb      	strb	r3, [r7, #6]
+ 8000c46:	b580      	push	{r7, lr}
+ 8000c48:	b086      	sub	sp, #24
+ 8000c4a:	af00      	add	r7, sp, #0
+ 8000c4c:	60f8      	str	r0, [r7, #12]
+ 8000c4e:	60b9      	str	r1, [r7, #8]
+ 8000c50:	4611      	mov	r1, r2
+ 8000c52:	461a      	mov	r2, r3
+ 8000c54:	460b      	mov	r3, r1
+ 8000c56:	71fb      	strb	r3, [r7, #7]
+ 8000c58:	4613      	mov	r3, r2
+ 8000c5a:	71bb      	strb	r3, [r7, #6]
 	//Generate the start condition
 	I2C_GenerateStartCondition(pI2CHandle->pI2Cx);
- 8000c08:	68fb      	ldr	r3, [r7, #12]
- 8000c0a:	681b      	ldr	r3, [r3, #0]
- 8000c0c:	4618      	mov	r0, r3
- 8000c0e:	f7ff fdf3 	bl	80007f8 <I2C_GenerateStartCondition>
+ 8000c5c:	68fb      	ldr	r3, [r7, #12]
+ 8000c5e:	681b      	ldr	r3, [r3, #0]
+ 8000c60:	4618      	mov	r0, r3
+ 8000c62:	f7ff fdc9 	bl	80007f8 <I2C_GenerateStartCondition>
 
 	//Confirm the start generation is completed by checking the SB flag in SR1
 	while(!I2C_GetFlagStatus(pI2CHandle->pI2Cx, I2C_FLAG_SB));
- 8000c12:	bf00      	nop
- 8000c14:	68fb      	ldr	r3, [r7, #12]
- 8000c16:	681b      	ldr	r3, [r3, #0]
- 8000c18:	2101      	movs	r1, #1
- 8000c1a:	4618      	mov	r0, r3
- 8000c1c:	f000 f893 	bl	8000d46 <I2C_GetFlagStatus>
- 8000c20:	4603      	mov	r3, r0
- 8000c22:	2b00      	cmp	r3, #0
- 8000c24:	d0f6      	beq.n	8000c14 <I2C_MasterReceiveData+0x22>
+ 8000c66:	bf00      	nop
+ 8000c68:	68fb      	ldr	r3, [r7, #12]
+ 8000c6a:	681b      	ldr	r3, [r3, #0]
+ 8000c6c:	2101      	movs	r1, #1
+ 8000c6e:	4618      	mov	r0, r3
+ 8000c70:	f000 f893 	bl	8000d9a <I2C_GetFlagStatus>
+ 8000c74:	4603      	mov	r3, r0
+ 8000c76:	2b00      	cmp	r3, #0
+ 8000c78:	d0f6      	beq.n	8000c68 <I2C_MasterReceiveData+0x22>
 
 	//Send the address of the slave with the r/nw bit to R(1)
 	I2C_ExecuteAddressPhaseRead(pI2CHandle->pI2Cx, SlaveAddr);
- 8000c26:	68fb      	ldr	r3, [r7, #12]
- 8000c28:	681b      	ldr	r3, [r3, #0]
- 8000c2a:	79ba      	ldrb	r2, [r7, #6]
- 8000c2c:	4611      	mov	r1, r2
- 8000c2e:	4618      	mov	r0, r3
- 8000c30:	f7ff fe08 	bl	8000844 <I2C_ExecuteAddressPhaseRead>
+ 8000c7a:	68fb      	ldr	r3, [r7, #12]
+ 8000c7c:	681b      	ldr	r3, [r3, #0]
+ 8000c7e:	79ba      	ldrb	r2, [r7, #6]
+ 8000c80:	4611      	mov	r1, r2
+ 8000c82:	4618      	mov	r0, r3
+ 8000c84:	f7ff fdde 	bl	8000844 <I2C_ExecuteAddressPhaseRead>
 
 	//Wait until the address phase is completed by checking the ADDR flag in the SR1
 	while(!I2C_GetFlagStatus(pI2CHandle->pI2Cx, I2C_FLAG_ADDR));
- 8000c34:	bf00      	nop
- 8000c36:	68fb      	ldr	r3, [r7, #12]
- 8000c38:	681b      	ldr	r3, [r3, #0]
- 8000c3a:	2102      	movs	r1, #2
- 8000c3c:	4618      	mov	r0, r3
- 8000c3e:	f000 f882 	bl	8000d46 <I2C_GetFlagStatus>
- 8000c42:	4603      	mov	r3, r0
- 8000c44:	2b00      	cmp	r3, #0
- 8000c46:	d0f6      	beq.n	8000c36 <I2C_MasterReceiveData+0x44>
+ 8000c88:	bf00      	nop
+ 8000c8a:	68fb      	ldr	r3, [r7, #12]
+ 8000c8c:	681b      	ldr	r3, [r3, #0]
+ 8000c8e:	2102      	movs	r1, #2
+ 8000c90:	4618      	mov	r0, r3
+ 8000c92:	f000 f882 	bl	8000d9a <I2C_GetFlagStatus>
+ 8000c96:	4603      	mov	r3, r0
+ 8000c98:	2b00      	cmp	r3, #0
+ 8000c9a:	d0f6      	beq.n	8000c8a <I2C_MasterReceiveData+0x44>
 
 
 	//Procedure to handle last byte and ending communcation
 	if(Len == 1)
- 8000c48:	79fb      	ldrb	r3, [r7, #7]
- 8000c4a:	2b01      	cmp	r3, #1
- 8000c4c:	d121      	bne.n	8000c92 <I2C_MasterReceiveData+0xa0>
+ 8000c9c:	79fb      	ldrb	r3, [r7, #7]
+ 8000c9e:	2b01      	cmp	r3, #1
+ 8000ca0:	d121      	bne.n	8000ce6 <I2C_MasterReceiveData+0xa0>
 	{
 		//Disable acking
 		I2C_ManageAcking(pI2CHandle->pI2Cx, DISABLE);
- 8000c4e:	68fb      	ldr	r3, [r7, #12]
- 8000c50:	681b      	ldr	r3, [r3, #0]
- 8000c52:	2100      	movs	r1, #0
- 8000c54:	4618      	mov	r0, r3
- 8000c56:	f000 f88a 	bl	8000d6e <I2C_ManageAcking>
+ 8000ca2:	68fb      	ldr	r3, [r7, #12]
+ 8000ca4:	681b      	ldr	r3, [r3, #0]
+ 8000ca6:	2100      	movs	r1, #0
+ 8000ca8:	4618      	mov	r0, r3
+ 8000caa:	f000 f88a 	bl	8000dc2 <I2C_ManageAcking>
 
 
 		//clear the addr flag
 		I2C_ClearADDRFlag(pI2CHandle);
- 8000c5a:	68f8      	ldr	r0, [r7, #12]
- 8000c5c:	f7ff fe08 	bl	8000870 <I2C_ClearADDRFlag>
+ 8000cae:	68f8      	ldr	r0, [r7, #12]
+ 8000cb0:	f7ff fdde 	bl	8000870 <I2C_ClearADDRFlag>
 
 		//wait until RXNE becomes 1
 		while(!I2C_GetFlagStatus(pI2CHandle->pI2Cx, I2C_FLAG_RXNE));
- 8000c60:	bf00      	nop
- 8000c62:	68fb      	ldr	r3, [r7, #12]
- 8000c64:	681b      	ldr	r3, [r3, #0]
- 8000c66:	2140      	movs	r1, #64	; 0x40
- 8000c68:	4618      	mov	r0, r3
- 8000c6a:	f000 f86c 	bl	8000d46 <I2C_GetFlagStatus>
- 8000c6e:	4603      	mov	r3, r0
- 8000c70:	2b00      	cmp	r3, #0
- 8000c72:	d0f6      	beq.n	8000c62 <I2C_MasterReceiveData+0x70>
+ 8000cb4:	bf00      	nop
+ 8000cb6:	68fb      	ldr	r3, [r7, #12]
+ 8000cb8:	681b      	ldr	r3, [r3, #0]
+ 8000cba:	2140      	movs	r1, #64	; 0x40
+ 8000cbc:	4618      	mov	r0, r3
+ 8000cbe:	f000 f86c 	bl	8000d9a <I2C_GetFlagStatus>
+ 8000cc2:	4603      	mov	r3, r0
+ 8000cc4:	2b00      	cmp	r3, #0
+ 8000cc6:	d0f6      	beq.n	8000cb6 <I2C_MasterReceiveData+0x70>
 
 		if(Sr == I2C_DISABLE_SR)
- 8000c74:	f897 3020 	ldrb.w	r3, [r7, #32]
- 8000c78:	2b00      	cmp	r3, #0
- 8000c7a:	d104      	bne.n	8000c86 <I2C_MasterReceiveData+0x94>
+ 8000cc8:	f897 3020 	ldrb.w	r3, [r7, #32]
+ 8000ccc:	2b00      	cmp	r3, #0
+ 8000cce:	d104      	bne.n	8000cda <I2C_MasterReceiveData+0x94>
 			//Generate the stop condtion
 			I2C_GenerateStopCondition(pI2CHandle->pI2Cx);
- 8000c7c:	68fb      	ldr	r3, [r7, #12]
- 8000c7e:	681b      	ldr	r3, [r3, #0]
- 8000c80:	4618      	mov	r0, r3
- 8000c82:	f7ff fe07 	bl	8000894 <I2C_GenerateStopCondition>
+ 8000cd0:	68fb      	ldr	r3, [r7, #12]
+ 8000cd2:	681b      	ldr	r3, [r3, #0]
+ 8000cd4:	4618      	mov	r0, r3
+ 8000cd6:	f7ff fe06 	bl	80008e6 <I2C_GenerateStopCondition>
 
 		//read data in to the buffer
 		*pRxBuffer = pI2CHandle->pI2Cx->DR;
- 8000c86:	68fb      	ldr	r3, [r7, #12]
- 8000c88:	681b      	ldr	r3, [r3, #0]
- 8000c8a:	691b      	ldr	r3, [r3, #16]
- 8000c8c:	b2da      	uxtb	r2, r3
- 8000c8e:	68bb      	ldr	r3, [r7, #8]
- 8000c90:	701a      	strb	r2, [r3, #0]
-
+ 8000cda:	68fb      	ldr	r3, [r7, #12]
+ 8000cdc:	681b      	ldr	r3, [r3, #0]
+ 8000cde:	691b      	ldr	r3, [r3, #16]
+ 8000ce0:	b2da      	uxtb	r2, r3
+ 8000ce2:	68bb      	ldr	r3, [r7, #8]
+ 8000ce4:	701a      	strb	r2, [r3, #0]
 	}
 
 	if(Len > 1)
- 8000c92:	79fb      	ldrb	r3, [r7, #7]
- 8000c94:	2b01      	cmp	r3, #1
- 8000c96:	d930      	bls.n	8000cfa <I2C_MasterReceiveData+0x108>
+ 8000ce6:	79fb      	ldrb	r3, [r7, #7]
+ 8000ce8:	2b01      	cmp	r3, #1
+ 8000cea:	d930      	bls.n	8000d4e <I2C_MasterReceiveData+0x108>
 	{
 		//Clear the addr flag
 		I2C_ClearADDRFlag(pI2CHandle);
- 8000c98:	68f8      	ldr	r0, [r7, #12]
- 8000c9a:	f7ff fde9 	bl	8000870 <I2C_ClearADDRFlag>
+ 8000cec:	68f8      	ldr	r0, [r7, #12]
+ 8000cee:	f7ff fdbf 	bl	8000870 <I2C_ClearADDRFlag>
 		//read the data until len becomes 0
 		for(uint32_t i = Len; i > 0; i--)
- 8000c9e:	79fb      	ldrb	r3, [r7, #7]
- 8000ca0:	617b      	str	r3, [r7, #20]
- 8000ca2:	e027      	b.n	8000cf4 <I2C_MasterReceiveData+0x102>
+ 8000cf2:	79fb      	ldrb	r3, [r7, #7]
+ 8000cf4:	617b      	str	r3, [r7, #20]
+ 8000cf6:	e027      	b.n	8000d48 <I2C_MasterReceiveData+0x102>
 		{
 			//wait until rxne becomes 1. hang the program until read buffer is full
 			while(!I2C_GetFlagStatus(pI2CHandle->pI2Cx, I2C_FLAG_RXNE));
- 8000ca4:	bf00      	nop
- 8000ca6:	68fb      	ldr	r3, [r7, #12]
- 8000ca8:	681b      	ldr	r3, [r3, #0]
- 8000caa:	2140      	movs	r1, #64	; 0x40
- 8000cac:	4618      	mov	r0, r3
- 8000cae:	f000 f84a 	bl	8000d46 <I2C_GetFlagStatus>
- 8000cb2:	4603      	mov	r3, r0
- 8000cb4:	2b00      	cmp	r3, #0
- 8000cb6:	d0f6      	beq.n	8000ca6 <I2C_MasterReceiveData+0xb4>
+ 8000cf8:	bf00      	nop
+ 8000cfa:	68fb      	ldr	r3, [r7, #12]
+ 8000cfc:	681b      	ldr	r3, [r3, #0]
+ 8000cfe:	2140      	movs	r1, #64	; 0x40
+ 8000d00:	4618      	mov	r0, r3
+ 8000d02:	f000 f84a 	bl	8000d9a <I2C_GetFlagStatus>
+ 8000d06:	4603      	mov	r3, r0
+ 8000d08:	2b00      	cmp	r3, #0
+ 8000d0a:	d0f6      	beq.n	8000cfa <I2C_MasterReceiveData+0xb4>
 
 			//There exists a delay between data being sent and read by 1 byte. Tehrefore acking must be disaled when the second byte is being read as the last byte is sent at this point
 			if(i == 2) // if last 2 bytes are remaning
- 8000cb8:	697b      	ldr	r3, [r7, #20]
- 8000cba:	2b02      	cmp	r3, #2
- 8000cbc:	d10e      	bne.n	8000cdc <I2C_MasterReceiveData+0xea>
+ 8000d0c:	697b      	ldr	r3, [r7, #20]
+ 8000d0e:	2b02      	cmp	r3, #2
+ 8000d10:	d10e      	bne.n	8000d30 <I2C_MasterReceiveData+0xea>
 			{
 				//disable acking
 				I2C_ManageAcking(pI2CHandle->pI2Cx, DISABLE);
- 8000cbe:	68fb      	ldr	r3, [r7, #12]
- 8000cc0:	681b      	ldr	r3, [r3, #0]
- 8000cc2:	2100      	movs	r1, #0
- 8000cc4:	4618      	mov	r0, r3
- 8000cc6:	f000 f852 	bl	8000d6e <I2C_ManageAcking>
+ 8000d12:	68fb      	ldr	r3, [r7, #12]
+ 8000d14:	681b      	ldr	r3, [r3, #0]
+ 8000d16:	2100      	movs	r1, #0
+ 8000d18:	4618      	mov	r0, r3
+ 8000d1a:	f000 f852 	bl	8000dc2 <I2C_ManageAcking>
 				if(Sr == I2C_DISABLE_SR)
- 8000cca:	f897 3020 	ldrb.w	r3, [r7, #32]
- 8000cce:	2b00      	cmp	r3, #0
- 8000cd0:	d104      	bne.n	8000cdc <I2C_MasterReceiveData+0xea>
+ 8000d1e:	f897 3020 	ldrb.w	r3, [r7, #32]
+ 8000d22:	2b00      	cmp	r3, #0
+ 8000d24:	d104      	bne.n	8000d30 <I2C_MasterReceiveData+0xea>
 					//generate stop condition
 					I2C_GenerateStopCondition(pI2CHandle->pI2Cx);
- 8000cd2:	68fb      	ldr	r3, [r7, #12]
- 8000cd4:	681b      	ldr	r3, [r3, #0]
- 8000cd6:	4618      	mov	r0, r3
- 8000cd8:	f7ff fddc 	bl	8000894 <I2C_GenerateStopCondition>
+ 8000d26:	68fb      	ldr	r3, [r7, #12]
+ 8000d28:	681b      	ldr	r3, [r3, #0]
+ 8000d2a:	4618      	mov	r0, r3
+ 8000d2c:	f7ff fddb 	bl	80008e6 <I2C_GenerateStopCondition>
 			}
 
 			//read the data from data register into the buffer
 			*pRxBuffer = pI2CHandle->pI2Cx->DR;
- 8000cdc:	68fb      	ldr	r3, [r7, #12]
- 8000cde:	681b      	ldr	r3, [r3, #0]
- 8000ce0:	691b      	ldr	r3, [r3, #16]
- 8000ce2:	b2da      	uxtb	r2, r3
- 8000ce4:	68bb      	ldr	r3, [r7, #8]
- 8000ce6:	701a      	strb	r2, [r3, #0]
+ 8000d30:	68fb      	ldr	r3, [r7, #12]
+ 8000d32:	681b      	ldr	r3, [r3, #0]
+ 8000d34:	691b      	ldr	r3, [r3, #16]
+ 8000d36:	b2da      	uxtb	r2, r3
+ 8000d38:	68bb      	ldr	r3, [r7, #8]
+ 8000d3a:	701a      	strb	r2, [r3, #0]
 
 			//increment the buffer address
 			pRxBuffer++;
- 8000ce8:	68bb      	ldr	r3, [r7, #8]
- 8000cea:	3301      	adds	r3, #1
- 8000cec:	60bb      	str	r3, [r7, #8]
+ 8000d3c:	68bb      	ldr	r3, [r7, #8]
+ 8000d3e:	3301      	adds	r3, #1
+ 8000d40:	60bb      	str	r3, [r7, #8]
 		for(uint32_t i = Len; i > 0; i--)
- 8000cee:	697b      	ldr	r3, [r7, #20]
- 8000cf0:	3b01      	subs	r3, #1
- 8000cf2:	617b      	str	r3, [r7, #20]
- 8000cf4:	697b      	ldr	r3, [r7, #20]
- 8000cf6:	2b00      	cmp	r3, #0
- 8000cf8:	d1d4      	bne.n	8000ca4 <I2C_MasterReceiveData+0xb2>
+ 8000d42:	697b      	ldr	r3, [r7, #20]
+ 8000d44:	3b01      	subs	r3, #1
+ 8000d46:	617b      	str	r3, [r7, #20]
+ 8000d48:	697b      	ldr	r3, [r7, #20]
+ 8000d4a:	2b00      	cmp	r3, #0
+ 8000d4c:	d1d4      	bne.n	8000cf8 <I2C_MasterReceiveData+0xb2>
 		}
 	}
 
 	//re-enable accking
 	I2C_ManageAcking(pI2CHandle->pI2Cx, ENABLE);
- 8000cfa:	68fb      	ldr	r3, [r7, #12]
- 8000cfc:	681b      	ldr	r3, [r3, #0]
- 8000cfe:	2101      	movs	r1, #1
- 8000d00:	4618      	mov	r0, r3
- 8000d02:	f000 f834 	bl	8000d6e <I2C_ManageAcking>
+ 8000d4e:	68fb      	ldr	r3, [r7, #12]
+ 8000d50:	681b      	ldr	r3, [r3, #0]
+ 8000d52:	2101      	movs	r1, #1
+ 8000d54:	4618      	mov	r0, r3
+ 8000d56:	f000 f834 	bl	8000dc2 <I2C_ManageAcking>
 }
- 8000d06:	bf00      	nop
- 8000d08:	3718      	adds	r7, #24
- 8000d0a:	46bd      	mov	sp, r7
- 8000d0c:	bd80      	pop	{r7, pc}
+ 8000d5a:	bf00      	nop
+ 8000d5c:	3718      	adds	r7, #24
+ 8000d5e:	46bd      	mov	sp, r7
+ 8000d60:	bd80      	pop	{r7, pc}
 
-08000d0e <I2C_PeripheralControl>:
+08000d62 <I2C_PeripheralControl>:
 
 /*
  * Other Peripheral Control APIs
  */
 void I2C_PeripheralControl(I2C_RegDef_t *pI2Cx, uint8_t EnOrDi)
 {
- 8000d0e:	b480      	push	{r7}
- 8000d10:	b083      	sub	sp, #12
- 8000d12:	af00      	add	r7, sp, #0
- 8000d14:	6078      	str	r0, [r7, #4]
- 8000d16:	460b      	mov	r3, r1
- 8000d18:	70fb      	strb	r3, [r7, #3]
+ 8000d62:	b480      	push	{r7}
+ 8000d64:	b083      	sub	sp, #12
+ 8000d66:	af00      	add	r7, sp, #0
+ 8000d68:	6078      	str	r0, [r7, #4]
+ 8000d6a:	460b      	mov	r3, r1
+ 8000d6c:	70fb      	strb	r3, [r7, #3]
 	if(EnOrDi == ENABLE)
- 8000d1a:	78fb      	ldrb	r3, [r7, #3]
- 8000d1c:	2b01      	cmp	r3, #1
- 8000d1e:	d106      	bne.n	8000d2e <I2C_PeripheralControl+0x20>
+ 8000d6e:	78fb      	ldrb	r3, [r7, #3]
+ 8000d70:	2b01      	cmp	r3, #1
+ 8000d72:	d106      	bne.n	8000d82 <I2C_PeripheralControl+0x20>
 	{
 		pI2Cx->CR1 |= (1<< I2C_CR1_PE);
- 8000d20:	687b      	ldr	r3, [r7, #4]
- 8000d22:	681b      	ldr	r3, [r3, #0]
- 8000d24:	f043 0201 	orr.w	r2, r3, #1
- 8000d28:	687b      	ldr	r3, [r7, #4]
- 8000d2a:	601a      	str	r2, [r3, #0]
+ 8000d74:	687b      	ldr	r3, [r7, #4]
+ 8000d76:	681b      	ldr	r3, [r3, #0]
+ 8000d78:	f043 0201 	orr.w	r2, r3, #1
+ 8000d7c:	687b      	ldr	r3, [r7, #4]
+ 8000d7e:	601a      	str	r2, [r3, #0]
 	}
 	else
 	{
 		pI2Cx->CR1 &= ~(1<< I2C_CR1_PE);
 	}
 }
- 8000d2c:	e005      	b.n	8000d3a <I2C_PeripheralControl+0x2c>
+ 8000d80:	e005      	b.n	8000d8e <I2C_PeripheralControl+0x2c>
 		pI2Cx->CR1 &= ~(1<< I2C_CR1_PE);
- 8000d2e:	687b      	ldr	r3, [r7, #4]
- 8000d30:	681b      	ldr	r3, [r3, #0]
- 8000d32:	f023 0201 	bic.w	r2, r3, #1
- 8000d36:	687b      	ldr	r3, [r7, #4]
- 8000d38:	601a      	str	r2, [r3, #0]
+ 8000d82:	687b      	ldr	r3, [r7, #4]
+ 8000d84:	681b      	ldr	r3, [r3, #0]
+ 8000d86:	f023 0201 	bic.w	r2, r3, #1
+ 8000d8a:	687b      	ldr	r3, [r7, #4]
+ 8000d8c:	601a      	str	r2, [r3, #0]
 }
- 8000d3a:	bf00      	nop
- 8000d3c:	370c      	adds	r7, #12
- 8000d3e:	46bd      	mov	sp, r7
- 8000d40:	f85d 7b04 	ldr.w	r7, [sp], #4
- 8000d44:	4770      	bx	lr
+ 8000d8e:	bf00      	nop
+ 8000d90:	370c      	adds	r7, #12
+ 8000d92:	46bd      	mov	sp, r7
+ 8000d94:	f85d 7b04 	ldr.w	r7, [sp], #4
+ 8000d98:	4770      	bx	lr
 
-08000d46 <I2C_GetFlagStatus>:
+08000d9a <I2C_GetFlagStatus>:
 uint8_t I2C_GetFlagStatus(I2C_RegDef_t *pI2Cx , uint32_t FlagName)
 {
- 8000d46:	b480      	push	{r7}
- 8000d48:	b083      	sub	sp, #12
- 8000d4a:	af00      	add	r7, sp, #0
- 8000d4c:	6078      	str	r0, [r7, #4]
- 8000d4e:	6039      	str	r1, [r7, #0]
+ 8000d9a:	b480      	push	{r7}
+ 8000d9c:	b083      	sub	sp, #12
+ 8000d9e:	af00      	add	r7, sp, #0
+ 8000da0:	6078      	str	r0, [r7, #4]
+ 8000da2:	6039      	str	r1, [r7, #0]
 	if(pI2Cx->SR1 & FlagName)
- 8000d50:	687b      	ldr	r3, [r7, #4]
- 8000d52:	695a      	ldr	r2, [r3, #20]
- 8000d54:	683b      	ldr	r3, [r7, #0]
- 8000d56:	4013      	ands	r3, r2
- 8000d58:	2b00      	cmp	r3, #0
- 8000d5a:	d001      	beq.n	8000d60 <I2C_GetFlagStatus+0x1a>
+ 8000da4:	687b      	ldr	r3, [r7, #4]
+ 8000da6:	695a      	ldr	r2, [r3, #20]
+ 8000da8:	683b      	ldr	r3, [r7, #0]
+ 8000daa:	4013      	ands	r3, r2
+ 8000dac:	2b00      	cmp	r3, #0
+ 8000dae:	d001      	beq.n	8000db4 <I2C_GetFlagStatus+0x1a>
 	{
 		return SET;
- 8000d5c:	2301      	movs	r3, #1
- 8000d5e:	e000      	b.n	8000d62 <I2C_GetFlagStatus+0x1c>
+ 8000db0:	2301      	movs	r3, #1
+ 8000db2:	e000      	b.n	8000db6 <I2C_GetFlagStatus+0x1c>
 	}
 	else
 	{
 		return RESET;
- 8000d60:	2300      	movs	r3, #0
+ 8000db4:	2300      	movs	r3, #0
 	}
 }
- 8000d62:	4618      	mov	r0, r3
- 8000d64:	370c      	adds	r7, #12
- 8000d66:	46bd      	mov	sp, r7
- 8000d68:	f85d 7b04 	ldr.w	r7, [sp], #4
- 8000d6c:	4770      	bx	lr
+ 8000db6:	4618      	mov	r0, r3
+ 8000db8:	370c      	adds	r7, #12
+ 8000dba:	46bd      	mov	sp, r7
+ 8000dbc:	f85d 7b04 	ldr.w	r7, [sp], #4
+ 8000dc0:	4770      	bx	lr
 
-08000d6e <I2C_ManageAcking>:
+08000dc2 <I2C_ManageAcking>:
 void I2C_ManageAcking(I2C_RegDef_t *pI2Cx, uint8_t EnorDi)
 {
- 8000d6e:	b480      	push	{r7}
- 8000d70:	b083      	sub	sp, #12
- 8000d72:	af00      	add	r7, sp, #0
- 8000d74:	6078      	str	r0, [r7, #4]
- 8000d76:	460b      	mov	r3, r1
- 8000d78:	70fb      	strb	r3, [r7, #3]
+ 8000dc2:	b480      	push	{r7}
+ 8000dc4:	b083      	sub	sp, #12
+ 8000dc6:	af00      	add	r7, sp, #0
+ 8000dc8:	6078      	str	r0, [r7, #4]
+ 8000dca:	460b      	mov	r3, r1
+ 8000dcc:	70fb      	strb	r3, [r7, #3]
 	if(EnorDi == ENABLE)
- 8000d7a:	78fb      	ldrb	r3, [r7, #3]
- 8000d7c:	2b01      	cmp	r3, #1
- 8000d7e:	d106      	bne.n	8000d8e <I2C_ManageAcking+0x20>
+ 8000dce:	78fb      	ldrb	r3, [r7, #3]
+ 8000dd0:	2b01      	cmp	r3, #1
+ 8000dd2:	d106      	bne.n	8000de2 <I2C_ManageAcking+0x20>
 	{
 		pI2Cx->CR1 |= (1 << I2C_CR1_ACK);
- 8000d80:	687b      	ldr	r3, [r7, #4]
- 8000d82:	681b      	ldr	r3, [r3, #0]
- 8000d84:	f443 6280 	orr.w	r2, r3, #1024	; 0x400
- 8000d88:	687b      	ldr	r3, [r7, #4]
- 8000d8a:	601a      	str	r2, [r3, #0]
+ 8000dd4:	687b      	ldr	r3, [r7, #4]
+ 8000dd6:	681b      	ldr	r3, [r3, #0]
+ 8000dd8:	f443 6280 	orr.w	r2, r3, #1024	; 0x400
+ 8000ddc:	687b      	ldr	r3, [r7, #4]
+ 8000dde:	601a      	str	r2, [r3, #0]
 	}
 	else
 	{
 		pI2Cx->CR1 &= ~(1 << I2C_CR1_ACK);
 	}
 }
- 8000d8c:	e005      	b.n	8000d9a <I2C_ManageAcking+0x2c>
+ 8000de0:	e005      	b.n	8000dee <I2C_ManageAcking+0x2c>
 		pI2Cx->CR1 &= ~(1 << I2C_CR1_ACK);
- 8000d8e:	687b      	ldr	r3, [r7, #4]
- 8000d90:	681b      	ldr	r3, [r3, #0]
- 8000d92:	f423 6280 	bic.w	r2, r3, #1024	; 0x400
- 8000d96:	687b      	ldr	r3, [r7, #4]
- 8000d98:	601a      	str	r2, [r3, #0]
+ 8000de2:	687b      	ldr	r3, [r7, #4]
+ 8000de4:	681b      	ldr	r3, [r3, #0]
+ 8000de6:	f423 6280 	bic.w	r2, r3, #1024	; 0x400
+ 8000dea:	687b      	ldr	r3, [r7, #4]
+ 8000dec:	601a      	str	r2, [r3, #0]
 }
- 8000d9a:	bf00      	nop
- 8000d9c:	370c      	adds	r7, #12
- 8000d9e:	46bd      	mov	sp, r7
- 8000da0:	f85d 7b04 	ldr.w	r7, [sp], #4
- 8000da4:	4770      	bx	lr
+ 8000dee:	bf00      	nop
+ 8000df0:	370c      	adds	r7, #12
+ 8000df2:	46bd      	mov	sp, r7
+ 8000df4:	f85d 7b04 	ldr.w	r7, [sp], #4
+ 8000df8:	4770      	bx	lr
 	...
 
-08000da8 <__libc_init_array>:
- 8000da8:	b570      	push	{r4, r5, r6, lr}
- 8000daa:	4d0d      	ldr	r5, [pc, #52]	; (8000de0 <__libc_init_array+0x38>)
- 8000dac:	4c0d      	ldr	r4, [pc, #52]	; (8000de4 <__libc_init_array+0x3c>)
- 8000dae:	1b64      	subs	r4, r4, r5
- 8000db0:	10a4      	asrs	r4, r4, #2
- 8000db2:	2600      	movs	r6, #0
- 8000db4:	42a6      	cmp	r6, r4
- 8000db6:	d109      	bne.n	8000dcc <__libc_init_array+0x24>
- 8000db8:	4d0b      	ldr	r5, [pc, #44]	; (8000de8 <__libc_init_array+0x40>)
- 8000dba:	4c0c      	ldr	r4, [pc, #48]	; (8000dec <__libc_init_array+0x44>)
- 8000dbc:	f000 f818 	bl	8000df0 <_init>
- 8000dc0:	1b64      	subs	r4, r4, r5
- 8000dc2:	10a4      	asrs	r4, r4, #2
- 8000dc4:	2600      	movs	r6, #0
- 8000dc6:	42a6      	cmp	r6, r4
- 8000dc8:	d105      	bne.n	8000dd6 <__libc_init_array+0x2e>
- 8000dca:	bd70      	pop	{r4, r5, r6, pc}
- 8000dcc:	f855 3b04 	ldr.w	r3, [r5], #4
- 8000dd0:	4798      	blx	r3
- 8000dd2:	3601      	adds	r6, #1
- 8000dd4:	e7ee      	b.n	8000db4 <__libc_init_array+0xc>
- 8000dd6:	f855 3b04 	ldr.w	r3, [r5], #4
- 8000dda:	4798      	blx	r3
- 8000ddc:	3601      	adds	r6, #1
- 8000dde:	e7f2      	b.n	8000dc6 <__libc_init_array+0x1e>
- 8000de0:	08000e08 	.word	0x08000e08
- 8000de4:	08000e08 	.word	0x08000e08
- 8000de8:	08000e08 	.word	0x08000e08
- 8000dec:	08000e0c 	.word	0x08000e0c
+08000dfc <__libc_init_array>:
+ 8000dfc:	b570      	push	{r4, r5, r6, lr}
+ 8000dfe:	4d0d      	ldr	r5, [pc, #52]	; (8000e34 <__libc_init_array+0x38>)
+ 8000e00:	4c0d      	ldr	r4, [pc, #52]	; (8000e38 <__libc_init_array+0x3c>)
+ 8000e02:	1b64      	subs	r4, r4, r5
+ 8000e04:	10a4      	asrs	r4, r4, #2
+ 8000e06:	2600      	movs	r6, #0
+ 8000e08:	42a6      	cmp	r6, r4
+ 8000e0a:	d109      	bne.n	8000e20 <__libc_init_array+0x24>
+ 8000e0c:	4d0b      	ldr	r5, [pc, #44]	; (8000e3c <__libc_init_array+0x40>)
+ 8000e0e:	4c0c      	ldr	r4, [pc, #48]	; (8000e40 <__libc_init_array+0x44>)
+ 8000e10:	f000 f818 	bl	8000e44 <_init>
+ 8000e14:	1b64      	subs	r4, r4, r5
+ 8000e16:	10a4      	asrs	r4, r4, #2
+ 8000e18:	2600      	movs	r6, #0
+ 8000e1a:	42a6      	cmp	r6, r4
+ 8000e1c:	d105      	bne.n	8000e2a <__libc_init_array+0x2e>
+ 8000e1e:	bd70      	pop	{r4, r5, r6, pc}
+ 8000e20:	f855 3b04 	ldr.w	r3, [r5], #4
+ 8000e24:	4798      	blx	r3
+ 8000e26:	3601      	adds	r6, #1
+ 8000e28:	e7ee      	b.n	8000e08 <__libc_init_array+0xc>
+ 8000e2a:	f855 3b04 	ldr.w	r3, [r5], #4
+ 8000e2e:	4798      	blx	r3
+ 8000e30:	3601      	adds	r6, #1
+ 8000e32:	e7f2      	b.n	8000e1a <__libc_init_array+0x1e>
+ 8000e34:	08000e5c 	.word	0x08000e5c
+ 8000e38:	08000e5c 	.word	0x08000e5c
+ 8000e3c:	08000e5c 	.word	0x08000e5c
+ 8000e40:	08000e60 	.word	0x08000e60
 
-08000df0 <_init>:
- 8000df0:	b5f8      	push	{r3, r4, r5, r6, r7, lr}
- 8000df2:	bf00      	nop
- 8000df4:	bcf8      	pop	{r3, r4, r5, r6, r7}
- 8000df6:	bc08      	pop	{r3}
- 8000df8:	469e      	mov	lr, r3
- 8000dfa:	4770      	bx	lr
+08000e44 <_init>:
+ 8000e44:	b5f8      	push	{r3, r4, r5, r6, r7, lr}
+ 8000e46:	bf00      	nop
+ 8000e48:	bcf8      	pop	{r3, r4, r5, r6, r7}
+ 8000e4a:	bc08      	pop	{r3}
+ 8000e4c:	469e      	mov	lr, r3
+ 8000e4e:	4770      	bx	lr
 
-08000dfc <_fini>:
- 8000dfc:	b5f8      	push	{r3, r4, r5, r6, r7, lr}
- 8000dfe:	bf00      	nop
- 8000e00:	bcf8      	pop	{r3, r4, r5, r6, r7}
- 8000e02:	bc08      	pop	{r3}
- 8000e04:	469e      	mov	lr, r3
- 8000e06:	4770      	bx	lr
+08000e50 <_fini>:
+ 8000e50:	b5f8      	push	{r3, r4, r5, r6, r7, lr}
+ 8000e52:	bf00      	nop
+ 8000e54:	bcf8      	pop	{r3, r4, r5, r6, r7}
+ 8000e56:	bc08      	pop	{r3}
+ 8000e58:	469e      	mov	lr, r3
+ 8000e5a:	4770      	bx	lr

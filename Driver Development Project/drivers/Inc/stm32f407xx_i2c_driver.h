@@ -29,14 +29,14 @@ typedef struct
 {
 	I2C_RegDef_t 	*pI2Cx;
 	I2C_Config_t 	I2C_Config;
-	uint8_t 		*pTxBuffer; /* !< To store the app. Tx buffer address > */
-	uint8_t 		*pRxBuffer;	/* !< To store the app. Rx buffer address > */
-	uint32_t 		TxLen;		/* !< To store Tx len > */
-	uint32_t 		RxLen;		/* !< To store Tx len > */
-	uint8_t 		TxRxState;	/* !< To store Communication state > */
-	uint8_t 		DevAddr;	/* !< To store slave/device address > */
-    uint32_t        RxSize;		/* !< To store Rx size  > */
-    uint8_t         Sr;			/* !< To store repeated start value  > */
+	uint8_t 		*pTxBuffer; //store the tx buffer address
+	uint8_t 		*pRxBuffer;	//rx buffer adress
+	uint32_t 		TxLen;		//tx len
+	uint32_t 		RxLen;		//rx len
+	uint8_t 		TxRxState;	//comunication state
+	uint8_t 		DevAddr;	//slave device address
+    uint32_t        RxSize;
+    uint8_t         Sr;			//repeated start
 }I2C_Handle_t;
 
 
@@ -125,7 +125,7 @@ void I2C_DeInit(I2C_RegDef_t *pI2Cx);
 void I2C_MasterSendData(I2C_Handle_t *pI2CHandle,uint8_t *pTxbuffer, uint32_t Len, uint8_t SlaveAddr,uint8_t Sr);
 void I2C_MasterReceiveData(I2C_Handle_t *pI2CHandle,uint8_t *pRxBuffer, uint8_t Len, uint8_t SlaveAddr,uint8_t Sr);
 uint8_t I2C_MasterSendDataIT(I2C_Handle_t *pI2CHandle,uint8_t *pTxbuffer, uint32_t Len, uint8_t SlaveAddr,uint8_t Sr);
-uint8_t I2C_MasterReceiveDataIT(I2C_Handle_t *pI2CHandle,uint8_t *pRxBuffer, uint8_t Len, uint8_t SlaveAddr,uint8_t Sr);
+uint8_t I2C_MasterReceiveDataIT(I2C_Handle_t *pI2CHandle,uint8_t *pRxBuffer, uint32_t Len, uint8_t SlaveAddr,uint8_t Sr);
 
 void I2C_CloseReceiveData(I2C_Handle_t *pI2CHandle);
 void I2C_CloseSendData(I2C_Handle_t *pI2CHandle);
