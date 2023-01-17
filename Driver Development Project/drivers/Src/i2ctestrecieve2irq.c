@@ -78,10 +78,6 @@ int main(void)
 	I2C1_GPIO_Inits();
 	I2C1_Inits();
 
-	//I2c irq configurations
-	I2C_IRQInterruptConfig(IRQ_NO_I2C1_EV, ENABLE);
-	I2C_IRQInterruptConfig(IRQ_NO_I2C1_ER, ENABLE);
-
 	I2C_PeripheralControl(I2C1, ENABLE);
 
 	I2C_ManageAcking(I2C1, I2C_ACK_ENABLE);
@@ -92,44 +88,20 @@ int main(void)
 
 		//Send the command code that will cause slave to send length of data
 		commandcode = 0x51;
-		//Application hangs until i2c is ready
-		while( I2C_MasterSendDataIT(&I2C1Handle, &commandcode, 1, SLAVE_ADDR,I2C_ENABLE_SR) != I2C_READY);
+		I2C_MasterSendData(&I2C1Handle, &commandcode, 1, SLAVE_ADDR,I2C_ENABLE_SR);
 
 		//Read the length of the data from the slave
-		while( I2C_MasterReceiveDataIT(&I2C1Handle, &len, 1, SLAVE_ADDR,I2C_ENABLE_SR) != I2C_READY);
+		I2C_MasterReceiveData(&I2C1Handle, &len, 1, SLAVE_ADDR,I2C_ENABLE_SR);
 
 		//Send the command to slave to send data
 		commandcode = 0x52;
-		while(I2C_MasterSendDataIT(&I2C1Handle, &commandcode, 1, SLAVE_ADDR,I2C_ENABLE_SR)!=I2C_READY);
+		I2C_MasterSendData(&I2C1Handle, &commandcode, 1, SLAVE_ADDR,I2C_ENABLE_SR);
 
 		//Read the  data from the slave
-		while(I2C_MasterReceiveDataIT(&I2C1Handle, rcv_buff, len, SLAVE_ADDR,I2C_DISABLE_SR) !=I2C_READY);
+		I2C_MasterReceiveData(&I2C1Handle, rcv_buff, len, SLAVE_ADDR,I2C_DISABLE_SR);
 
 	}
 
-}
 
-void I2C1_EV_IRQHandler (void)
-{
-	I2C_EV_IRQHandling(&I2C1Handle);
-}
 
-void I2C1_ER_IRQHandler (void)
-{
-	I2C_ER_IRQHandling(&I2C1Handle);
-}
-
-void I2C_ApplicationEventCallback(I2C_Handle_t *pI2CHandle,uint8_t AppEv)
-{
-	if(AppEv == I2C_ERROR_AF)
-	{
-		//if master ack error occurs when slave fails to send ack for the byte
-		I2C_CloseSendData(pI2CHandle);
-
-		//generate stop condition to relase the bus
-		I2C_GenerateStopCondition(I2C1);
-
-		//Hang in infinite loop
-		 while(1);
-	}
 }

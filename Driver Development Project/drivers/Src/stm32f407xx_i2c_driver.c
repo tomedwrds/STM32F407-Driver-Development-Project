@@ -13,7 +13,6 @@ static void  I2C_GenerateStartCondition(I2C_RegDef_t *pI2Cx);
 static void I2C_ExecuteAddressPhaseWrite(I2C_RegDef_t *pI2Cx, uint8_t SlaveAddr);
 static void I2C_ExecuteAddressPhaseRead(I2C_RegDef_t *pI2Cx, uint8_t SlaveAddr);
 static void I2C_ClearADDRFlag(I2C_Handle_t *pI2CHandle);
-static void I2C_GenerateStopCondition(I2C_RegDef_t *pI2Cx);
 static void I2C_MasterHandleRXNEInterrupt(I2C_Handle_t *pI2CHandle );
 static void I2C_MasterHandleTXEInterrupt(I2C_Handle_t *pI2CHandle );
 
@@ -143,7 +142,7 @@ static void I2C_ClearADDRFlag(I2C_Handle_t *pI2CHandle)
 
 }
 
-static void I2C_GenerateStopCondition(I2C_RegDef_t *pI2Cx)
+void I2C_GenerateStopCondition(I2C_RegDef_t *pI2Cx)
 {
 	pI2Cx->CR1 |= (1<< I2C_CR1_STOP);
 }
@@ -540,8 +539,16 @@ void I2C_CloseSendData(I2C_Handle_t *pI2CHandle)
 }
 
 
-void I2C_SlaveSendData(I2C_RegDef_t *pI2C,uint8_t data);
-uint8_t I2C_SlaveReceiveData(I2C_RegDef_t *pI2C);
+void I2C_SlaveSendData(I2C_RegDef_t *pI2C,uint8_t data)
+{
+	//only single byte sent at a time so byte loaded into DR
+	pI2C->DR = data;
+}
+uint8_t I2C_SlaveReceiveData(I2C_RegDef_t *pI2C)
+{
+	//Value of DR is returned
+	return (uint8_t) pI2C->DR;
+}
 
 /*
  * IRQ Configuration and ISR handling
@@ -739,6 +746,15 @@ void I2C_EV_IRQHandling(I2C_Handle_t *pI2CHandle)
 				I2C_MasterHandleTXEInterrupt(pI2CHandle);
 			}
 		}
+		else
+		{
+			//Device is slave and must send a byte check if slave is in trasmitter mode
+			if(pI2CHandle->pI2Cx->SR2 & ( 1<< I2C_SR2_TRA))
+			{
+				I2C_ApplicationEventCallback(pI2CHandle, I2C_EV_DATA_REQ);
+
+			}
+		}
 	}
 	if(buffITEnabled && eventITEnabled && RxNESet)
 	{
@@ -751,7 +767,16 @@ void I2C_EV_IRQHandling(I2C_Handle_t *pI2CHandle)
 				I2C_MasterHandleRXNEInterrupt(pI2CHandle);
 			}
 		}
-	}
+		else
+		{
+			//Device is slave and must send a byte check if slave is in reciever mode
+			if(!(pI2CHandle->pI2Cx->SR2 & ( 1<< I2C_SR2_TRA)))
+			{
+				I2C_ApplicationEventCallback(pI2CHandle, I2C_EV_DATA_RCV);
+
+			}
+		}
+}
 
 }
 
@@ -794,14 +819,34 @@ void I2C_ManageAcking(I2C_RegDef_t *pI2Cx, uint8_t EnorDi)
 }
 
 
-void I2C_GenerateStopCondition(I2C_RegDef_t *pI2Cx);
 
+void I2C_SlaveEnableDisableCallbackEvents(I2C_RegDef_t *pI2Cx,uint8_t EnorDi)
+{
+	if(EnorDi == ENABLE)
+	{
+		//Implement the code to enable ITBUFEN Control Bit
+		pI2Cx->CR2 |= ( 1 << I2C_CR2_ITBUFEN);
 
+		//Implement the code to enable ITEVFEN Control Bit
+		pI2Cx->CR2 |= ( 1 << I2C_CR2_ITEVTEN);
 
+		//Implement the code to enable ITERREN Control Bit
+		pI2Cx->CR2 |= ( 1 << I2C_CR2_ITERREN);
+	}
+	else
+	{
+		//Implement the code to enable ITBUFEN Control Bit
+		pI2Cx->CR2 &= ~( 1 << I2C_CR2_ITBUFEN);
 
-void I2C_SlaveEnableDisableCallbackEvents(I2C_RegDef_t *pI2Cx,uint8_t EnorDi);
+		//Implement the code to enable ITEVFEN Control Bit
+		pI2Cx->CR2 &= ~( 1 << I2C_CR2_ITEVTEN);
+
+		//Implement the code to enable ITERREN Control Bit
+		pI2Cx->CR2 &= ~( 1 << I2C_CR2_ITERREN);
+	}
+}
 
 /*
  * Application callback
  */
-void I2C_ApplicationEventCallback(I2C_Handle_t *pI2CHandle,uint8_t AppEv);
+
