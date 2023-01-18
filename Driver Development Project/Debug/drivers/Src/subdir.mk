@@ -7,6 +7,7 @@
 C_SRCS += \
 ../drivers/Src/stm32f407xx_gpio_driver.c \
 ../drivers/Src/stm32f407xx_i2c_driver.c \
+../drivers/Src/stm32f407xx_rcc_driver.c \
 ../drivers/Src/stm32f407xx_spi_driver.c \
 ../drivers/Src/stm32f407xx_usart_driver.c \
 ../drivers/Src/usarttest.c 
@@ -14,6 +15,7 @@ C_SRCS += \
 OBJS += \
 ./drivers/Src/stm32f407xx_gpio_driver.o \
 ./drivers/Src/stm32f407xx_i2c_driver.o \
+./drivers/Src/stm32f407xx_rcc_driver.o \
 ./drivers/Src/stm32f407xx_spi_driver.o \
 ./drivers/Src/stm32f407xx_usart_driver.o \
 ./drivers/Src/usarttest.o 
@@ -21,6 +23,7 @@ OBJS += \
 C_DEPS += \
 ./drivers/Src/stm32f407xx_gpio_driver.d \
 ./drivers/Src/stm32f407xx_i2c_driver.d \
+./drivers/Src/stm32f407xx_rcc_driver.d \
 ./drivers/Src/stm32f407xx_spi_driver.d \
 ./drivers/Src/stm32f407xx_usart_driver.d \
 ./drivers/Src/usarttest.d 
@@ -33,7 +36,7 @@ drivers/Src/%.o drivers/Src/%.su: ../drivers/Src/%.c drivers/Src/subdir.mk
 clean: clean-drivers-2f-Src
 
 clean-drivers-2f-Src:
-	-$(RM) ./drivers/Src/stm32f407xx_gpio_driver.d ./drivers/Src/stm32f407xx_gpio_driver.o ./drivers/Src/stm32f407xx_gpio_driver.su ./drivers/Src/stm32f407xx_i2c_driver.d ./drivers/Src/stm32f407xx_i2c_driver.o ./drivers/Src/stm32f407xx_i2c_driver.su ./drivers/Src/stm32f407xx_spi_driver.d ./drivers/Src/stm32f407xx_spi_driver.o ./drivers/Src/stm32f407xx_spi_driver.su ./drivers/Src/stm32f407xx_usart_driver.d ./drivers/Src/stm32f407xx_usart_driver.o ./drivers/Src/stm32f407xx_usart_driver.su ./drivers/Src/usarttest.d ./drivers/Src/usarttest.o ./drivers/Src/usarttest.su
+	-$(RM) ./drivers/Src/stm32f407xx_gpio_driver.d ./drivers/Src/stm32f407xx_gpio_driver.o ./drivers/Src/stm32f407xx_gpio_driver.su ./drivers/Src/stm32f407xx_i2c_driver.d ./drivers/Src/stm32f407xx_i2c_driver.o ./drivers/Src/stm32f407xx_i2c_driver.su ./drivers/Src/stm32f407xx_rcc_driver.d ./drivers/Src/stm32f407xx_rcc_driver.o ./drivers/Src/stm32f407xx_rcc_driver.su ./drivers/Src/stm32f407xx_spi_driver.d ./drivers/Src/stm32f407xx_spi_driver.o ./drivers/Src/stm32f407xx_spi_driver.su ./drivers/Src/stm32f407xx_usart_driver.d ./drivers/Src/stm32f407xx_usart_driver.o ./drivers/Src/stm32f407xx_usart_driver.su ./drivers/Src/usarttest.d ./drivers/Src/usarttest.o ./drivers/Src/usarttest.su
 
 .PHONY: clean-drivers-2f-Src
 

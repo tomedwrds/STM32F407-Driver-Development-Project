@@ -6,8 +6,7 @@
  */
 
 #include "stm32f407xx_i2c_driver.h"
-uint16_t AHBPreScalarValues[8] = {2,4,8,16,64,128,256,512};
-uint16_t APB1PreScalarValues[8] = {2,4,8,16};
+
 
 static void  I2C_GenerateStartCondition(I2C_RegDef_t *pI2Cx);
 static void I2C_ExecuteAddressPhaseWrite(I2C_RegDef_t *pI2Cx, uint8_t SlaveAddr);
@@ -169,57 +168,6 @@ void I2C_PeriClockControl(I2C_RegDef_t *pI2Cx, uint8_t EnorDi)
 	}
 }
 
-uint32_t RCC_Get_PCLK1Value(void)
-{
-	uint32_t pClk1,SystemClk;
-
-	//Get the clock source HSI, HSE, PLL
-	uint8_t clkSrc = (RCC->CFGR >> 2) & 0x3;
-	if(clkSrc == 0)
-	{
-		//HSI
-		SystemClk = 16000000;
-	}
-	else if (clkSrc == 1)
-	{
-		//HSE
-		SystemClk = 8000000;
-	} else if(clkSrc == 2)
-	{
-		//PLL not used
-	}
-
-	//Get the AHB prescalar value
-	uint8_t AHBSetPreScalar = (RCC->CFGR >> 4) & 0xF;
-	uint16_t ahbp;
-
-	if(AHBSetPreScalar < 8)
-	{
-		ahbp = 1;
-	}
-	else
-	{
-		//First value is 1000 next is 1001. Therefore -8 is nesscary to index array correctly
-		ahbp = AHBPreScalarValues[AHBSetPreScalar-8];
-	}
-
-	//Get the APB1 prescalar value
-	uint8_t APB1SetPreScalar = (RCC->CFGR >> 10) & 0x7;
-	uint16_t apb1p;
-
-	if(APB1SetPreScalar < 4)
-	{
-		apb1p = 1;
-	}
-	else
-	{
-		apb1p = APB1PreScalarValues[APB1SetPreScalar-4];
-	}
-
-	pClk1 = SystemClk/ahbp/apb1p;
-
-	return pClk1;
-}
 
 
 /*
@@ -233,7 +181,7 @@ void I2C_Init(I2C_Handle_t *pI2CHandle)
 
 
 	//Set the freq field
-	pI2CHandle->pI2Cx->CR2 |= (RCC_Get_PCLK1Value())/1000000;
+	pI2CHandle->pI2Cx->CR2 |= (RCC_GetPCLK1Value())/1000000;
 
 	//Configure the device address
 	pI2CHandle->pI2Cx->OAR1 |= (pI2CHandle->I2C_Config.I2C_DeviceAddress) << 1;
@@ -248,7 +196,7 @@ void I2C_Init(I2C_Handle_t *pI2CHandle)
 	if(pI2CHandle->I2C_Config.I2C_SCLSpeed <= I2C_SCL_SPEED_SM)
 	{
 		//CCR = Tscl / 2TpClk1 | CCR = FPclk1 / 2Fscl
-		ccr_value = RCC_Get_PCLK1Value() / (2*pI2CHandle->I2C_Config.I2C_SCLSpeed);
+		ccr_value = RCC_GetPCLK1Value() / (2*pI2CHandle->I2C_Config.I2C_SCLSpeed);
 		//Mask out bits beyond 13 bits of ccr_value
 		pI2CHandle->pI2Cx->CCR |=(ccr_value & 0xFFF);
 	}
@@ -262,12 +210,12 @@ void I2C_Init(I2C_Handle_t *pI2CHandle)
 		if(pI2CHandle->I2C_Config.I2C_FMDutyCycle == I2C_FM_DUTY_2)
 		{
 			//Tlow : Thigh is 2:1
-			ccr_value = RCC_Get_PCLK1Value() / (3*pI2CHandle->I2C_Config.I2C_SCLSpeed);
+			ccr_value = RCC_GetPCLK1Value() / (3*pI2CHandle->I2C_Config.I2C_SCLSpeed);
 		}
 		else
 		{
 			//Tlow : Thigh is 16:9
-			ccr_value = RCC_Get_PCLK1Value() / (25*pI2CHandle->I2C_Config.I2C_SCLSpeed);
+			ccr_value = RCC_GetPCLK1Value() / (25*pI2CHandle->I2C_Config.I2C_SCLSpeed);
 		}
 		pI2CHandle->pI2Cx->CCR |=(ccr_value & 0xFFF);
 	}
@@ -279,11 +227,11 @@ void I2C_Init(I2C_Handle_t *pI2CHandle)
 		//standard mode
 		//trise = trisemax / tpclk1
 		//trise = Fpclk / Frisemax
-		tRise = (RCC_Get_PCLK1Value() / 1000000U) + 1;
+		tRise = (RCC_GetPCLK1Value() / 1000000U) + 1;
 	}
 	else
 	{
-		tRise = ((RCC_Get_PCLK1Value()  *300)/ 1000000U) + 1;
+		tRise = ((RCC_GetPCLK1Value()  *300)/ 1000000U) + 1;
 	}
 	pI2CHandle->pI2Cx->TRISE |=(tRise & 0x3F);
 }
