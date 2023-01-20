@@ -1,93 +1,13 @@
-09:08:17 **** Incremental Build of configuration Debug for project Driver Development Project ****
+20:07:52 **** Incremental Build of configuration Debug for project Driver Development Project ****
 make -j8 all 
-arm-none-eabi-gcc "../bsp/lcd.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DSTM32 -DSTM32F407G_DISC1 -DSTM32F4 -DSTM32F407VGTx -c -I../Inc -I"C:/Users/tomed/Documents/GitHub/GPIO-Driver/Driver Development Project/drivers/Inc" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"bsp/lcd.d" -MT"bsp/lcd.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "bsp/lcd.o"
+arm-none-eabi-gcc "../drivers/Src/timertest.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DSTM32 -DSTM32F407G_DISC1 -DSTM32F4 -DSTM32F407VGTx -c -I../Inc -I"C:/Users/tomed/Documents/GitHub/GPIO-Driver/Driver Development Project/drivers/Inc" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"drivers/Src/timertest.d" -MT"drivers/Src/timertest.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "drivers/Src/timertest.o"
 arm-none-eabi-gcc -o "Driver Development Project.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\tomed\Documents\GitHub\GPIO-Driver\Driver Development Project\STM32F407VGTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Driver Development Project.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 Finished building target: Driver Development Project.elf
  
 arm-none-eabi-size   Driver\ Development\ Project.elf 
 arm-none-eabi-objdump -h -S  Driver\ Development\ Project.elf  > "Driver Development Project.list"
    text	   data	    bss	    dec	    hex	filename
-  10136	    140	   1644	  11920	   2e90	Driver Development Project.elf
-Finished building: default.size.stdout
- 
-Finished building: Driver Development Project.list
- 
-09:08:37 **** Incremental Build of configuration Debug for project Driver Development Project ****
-make -j8 all 
-arm-none-eabi-size   Driver\ Development\ Project.elf 
-   text	   data	    bss	    dec	    hex	filename
-  10136	    140	   1644	  11920	   2e90	Driver Development Project.elf
-Finished building: default.size.stdout
- 
-09:09:19 **** Incremental Build of configuration Debug for project Driver Development Project ****
-make -j8 all 
-arm-none-eabi-gcc "../bsp/rtclcd.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DSTM32 -DSTM32F407G_DISC1 -DSTM32F4 -DSTM32F407VGTx -c -I../Inc -I"C:/Users/tomed/Documents/GitHub/GPIO-Driver/Driver Development Project/drivers/Inc" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"bsp/rtclcd.d" -MT"bsp/rtclcd.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "bsp/rtclcd.o"
-arm-none-eabi-gcc -o "Driver Development Project.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\tomed\Documents\GitHub\GPIO-Driver\Driver Development Project\STM32F407VGTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Driver Development Project.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
-Finished building target: Driver Development Project.elf
- 
-arm-none-eabi-size   Driver\ Development\ Project.elf 
-arm-none-eabi-objdump -h -S  Driver\ Development\ Project.elf  > "Driver Development Project.list"
-   text	   data	    bss	    dec	    hex	filename
-  11044	    140	   1644	  12828	   321c	Driver Development Project.elf
-Finished building: default.size.stdout
- 
-Finished building: Driver Development Project.list
- 
-09:09:56 **** Incremental Build of configuration Debug for project Driver Development Project ****
-make -j8 all 
-arm-none-eabi-gcc "../bsp/rtclcd.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DSTM32 -DSTM32F407G_DISC1 -DSTM32F4 -DSTM32F407VGTx -c -I../Inc -I"C:/Users/tomed/Documents/GitHub/GPIO-Driver/Driver Development Project/drivers/Inc" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"bsp/rtclcd.d" -MT"bsp/rtclcd.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "bsp/rtclcd.o"
-../bsp/rtclcd.c:105:13: warning: 'mdelay' defined but not used [-Wunused-function]
-  105 | static void mdelay(uint32_t cnt)
-      |             ^~~~~~
-arm-none-eabi-gcc -o "Driver Development Project.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\tomed\Documents\GitHub\GPIO-Driver\Driver Development Project\STM32F407VGTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Driver Development Project.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
-Finished building target: Driver Development Project.elf
- 
-arm-none-eabi-size   Driver\ Development\ Project.elf 
-arm-none-eabi-objdump -h -S  Driver\ Development\ Project.elf  > "Driver Development Project.list"
-   text	   data	    bss	    dec	    hex	filename
-  10136	    140	   1644	  11920	   2e90	Driver Development Project.elf
-Finished building: default.size.stdout
- 
-Finished building: Driver Development Project.list
- 
-09:11:15 **** Incremental Build of configuration Debug for project Driver Development Project ****
-make -j8 all 
-arm-none-eabi-gcc "../bsp/rtclcd.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DSTM32 -DSTM32F407G_DISC1 -DSTM32F4 -DSTM32F407VGTx -c -I../Inc -I"C:/Users/tomed/Documents/GitHub/GPIO-Driver/Driver Development Project/drivers/Inc" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"bsp/rtclcd.d" -MT"bsp/rtclcd.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "bsp/rtclcd.o"
-arm-none-eabi-gcc -o "Driver Development Project.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\tomed\Documents\GitHub\GPIO-Driver\Driver Development Project\STM32F407VGTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Driver Development Project.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
-Finished building target: Driver Development Project.elf
- 
-arm-none-eabi-size   Driver\ Development\ Project.elf 
-arm-none-eabi-objdump -h -S  Driver\ Development\ Project.elf  > "Driver Development Project.list"
-   text	   data	    bss	    dec	    hex	filename
-   9280	    140	   1644	  11064	   2b38	Driver Development Project.elf
-Finished building: default.size.stdout
- 
-Finished building: Driver Development Project.list
- 
-09:12:08 **** Incremental Build of configuration Debug for project Driver Development Project ****
-make -j8 all 
-arm-none-eabi-size   Driver\ Development\ Project.elf 
-   text	   data	    bss	    dec	    hex	filename
-   9280	    140	   1644	  11064	   2b38	Driver Development Project.elf
-Finished building: default.size.stdout
- 
-12:04:54 **** Incremental Build of configuration Debug for project Driver Development Project ****
-make -j8 all 
-arm-none-eabi-size   Driver\ Development\ Project.elf 
-   text	   data	    bss	    dec	    hex	filename
-   9280	    140	   1644	  11064	   2b38	Driver Development Project.elf
-Finished building: default.size.stdout
- 
-12:21:27 **** Incremental Build of configuration Debug for project Driver Development Project ****
-make -j8 all 
-arm-none-eabi-gcc "../bsp/rtclcd.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DSTM32 -DSTM32F407G_DISC1 -DSTM32F4 -DSTM32F407VGTx -c -I../Inc -I"C:/Users/tomed/Documents/GitHub/GPIO-Driver/Driver Development Project/drivers/Inc" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"bsp/rtclcd.d" -MT"bsp/rtclcd.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "bsp/rtclcd.o"
-arm-none-eabi-gcc -o "Driver Development Project.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\tomed\Documents\GitHub\GPIO-Driver\Driver Development Project\STM32F407VGTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Driver Development Project.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
-Finished building target: Driver Development Project.elf
- 
-arm-none-eabi-size   Driver\ Development\ Project.elf 
-arm-none-eabi-objdump -h -S  Driver\ Development\ Project.elf  > "Driver Development Project.list"
-   text	   data	    bss	    dec	    hex	filename
-  11296	    140	   1644	  13080	   3318	Driver Development Project.elf
+   1156	      8	   1568	   2732	    aac	Driver Development Project.elf
 Finished building: default.size.stdout
  
 Finished building: Driver Development Project.list

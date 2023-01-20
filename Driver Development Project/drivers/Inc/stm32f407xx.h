@@ -90,6 +90,16 @@
  * base addresses of peripheals attached to APB1 bus
  */
 
+#define TIM2_BASEADDR			(APB1PERIPH_BASE_ADDR +0x0)
+#define TIM3_BASEADDR			(APB1PERIPH_BASE_ADDR +0x400)
+#define TIM4_BASEADDR			(APB1PERIPH_BASE_ADDR +0x800)
+#define TIM5_BASEADDR			(APB1PERIPH_BASE_ADDR +0xC00)
+#define TIM6_BASEADDR			(APB1PERIPH_BASE_ADDR +0x1000)
+#define TIM7_BASEADDR			(APB1PERIPH_BASE_ADDR +0x1400)
+#define TIM12_BASEADDR			(APB1PERIPH_BASE_ADDR +0x1800)
+#define TIM13_BASEADDR			(APB1PERIPH_BASE_ADDR +0x1C00)
+#define TIM14_BASEADDR			(APB1PERIPH_BASE_ADDR +0x2000)
+
 #define I2C1_BASEADDR			(APB1PERIPH_BASE_ADDR + 0x5400)
 #define I2C2_BASEADDR			(APB1PERIPH_BASE_ADDR + 0x5800)
 #define I2C3_BASEADDR			(APB1PERIPH_BASE_ADDR + 0x5C00)
@@ -106,9 +116,20 @@
 /*
  * base addresses of peripheals attached to APB2 bus
  */
+
+#define TIM1_BASEADDR			(APB2PERIPH_BASE_ADDR + 0x0)
+#define TIM8_BASEADDR			(APB2PERIPH_BASE_ADDR + 0x0400)
+#define TIM9_BASEADDR			(APB2PERIPH_BASE_ADDR + 0x4000)
+#define TIM10_BASEADDR			(APB2PERIPH_BASE_ADDR + 0x4400)
+#define TIM11_BASEADDR			(APB2PERIPH_BASE_ADDR + 0x4800)
+
+
 #define EXTI_BASEADDR			(APB2PERIPH_BASE_ADDR + 0x3C00)
+
 #define SPI1_BASEADDR			(APB2PERIPH_BASE_ADDR + 0x3000)
+
 #define SYSCFG_BASEADDR			(APB2PERIPH_BASE_ADDR + 0x3800)
+
 #define USART1_BASEADDR			(APB2PERIPH_BASE_ADDR + 0x1000)
 #define USART6_BASEADDR			(APB2PERIPH_BASE_ADDR + 0x1400)
 
@@ -242,6 +263,31 @@ typedef struct
 } USART_RegDef_t;
 
 
+//Timer registers
+typedef struct
+{
+	__vo uint32_t CR1;
+	__vo uint32_t CR2;
+	__vo uint32_t SMCR;
+	__vo uint32_t DIER;
+	__vo uint32_t SR;
+	__vo uint32_t EGR;
+	__vo uint32_t CCMR1;
+	__vo uint32_t CCMR2;
+	__vo uint32_t CCER;
+	__vo uint32_t CNT;
+	__vo uint32_t PSC;
+	__vo uint32_t ARR;
+	__vo uint32_t RCR;
+	__vo uint32_t CCR1;
+	__vo uint32_t CCR2;
+	__vo uint32_t CCR3;
+	__vo uint32_t CCR4;
+	__vo uint32_t BTDR;
+	__vo uint32_t DMAR;
+}TIM_RegDef_t;
+
+
 /*
  * peripheal defentions (Peripheal base addresses typed casted to xxx_regdef_t)
  * */
@@ -270,6 +316,21 @@ typedef struct
 #define UART4  				((USART_RegDef_t*)UART4_BASEADDR)
 #define UART5  				((USART_RegDef_t*)UART5_BASEADDR)
 #define USART6  			((USART_RegDef_t*)USART6_BASEADDR)
+
+#define TIM1  				((TIM_RegDef_t*)TIM1_BASEADDR)
+#define TIM2  				((TIM_RegDef_t*)TIM2_BASEADDR)
+#define TIM3  				((TIM_RegDef_t*)TIM3_BASEADDR)
+#define TIM4  				((TIM_RegDef_t*)TIM4_BASEADDR)
+#define TIM5  				((TIM_RegDef_t*)TIM5_BASEADDR)
+#define TIM6  				((TIM_RegDef_t*)TIM6_BASEADDR)
+#define TIM7  				((TIM_RegDef_t*)TIM7_BASEADDR)
+#define TIM8  				((TIM_RegDef_t*)TIM8_BASEADDR)
+#define TIM9  				((TIM_RegDef_t*)TIM9_BASEADDR)
+#define TIM10  				((TIM_RegDef_t*)TIM10_BASEADDR)
+#define TIM11				((TIM_RegDef_t*)TIM11_BASEADDR)
+#define TIM12 				((TIM_RegDef_t*)TIM12_BASEADDR)
+#define TIM13 				((TIM_RegDef_t*)TIM13_BASEADDR)
+#define TIM14 				((TIM_RegDef_t*)TIM14_BASEADDR)
 
 #define RCC						((RCC_RegDef_t*)RCC_BASEADDR)
 
@@ -321,6 +382,25 @@ typedef struct
 #define USART6_PCLK_EN() 		(RCC->APB2ENR |= (1 << 5))
 
 /*
+ * Clock Enable Macros for TIMx peripherals
+ */
+#define TIM1_PCLK_EN() 			(RCC->APB2ENR |= (1 << 0))
+#define TIM2_PCLK_EN() 			(RCC->APB1ENR |= (1 << 0))
+#define TIM3_PCLK_EN() 			(RCC->APB1ENR |= (1 << 1))
+#define TIM4_PCLK_EN() 			(RCC->APB1ENR |= (1 << 2))
+#define TIM5_PCLK_EN() 			(RCC->APB1ENR |= (1 << 3))
+#define TIM6_PCLK_EN() 			(RCC->APB1ENR |= (1 << 4))
+#define TIM7_PCLK_EN() 			(RCC->APB1ENR |= (1 << 5))
+#define TIM8_PCLK_EN() 			(RCC->APB2ENR |= (1 << 1))
+#define TIM9_PCLK_EN() 			(RCC->APB2ENR |= (1 << 16))
+#define TIM10_PCLK_EN() 		(RCC->APB2ENR |= (1 << 17))
+#define TIM11_PCLK_EN() 		(RCC->APB2ENR |= (1 << 18))
+#define TIM12_PCLK_EN() 		(RCC->APB1ENR |= (1 << 6))
+#define TIM13_PCLK_EN() 		(RCC->APB1ENR |= (1 << 7))
+#define TIM14_PCLK_EN() 		(RCC->APB1ENR |= (1 << 8))
+
+
+/*
  * Clock Enable Macros for SYSCFG peripherals
  */
 #define SYSCFG_PCLK_EN() (RCC->APB2ENR |= (1 << 14))
@@ -357,6 +437,20 @@ typedef struct
 #define USART5_REG_RESET()               do{ (RCC->APB1RSTR |= (1 << 20)); (RCC->APB1RSTR &= ~(1 << 20)); }while(0)
 #define USART6_REG_RESET()               do{ (RCC->APB2RSTR |= (1 << 5)); (RCC->APB2RSTR &= ~(1 << 5)); }while(0)
 
+#define TIM1_REG_RESET()               	do{ (RCC->APB2RSTR |= (1 << 0)); (RCC->APB2RSTR &= ~(1 << 0)); }while(0)
+#define TIM2_REG_RESET()               do{ (RCC->APB1RSTR |= (1 << 0)); (RCC->APB1RSTR &= ~(1 << 0)); }while(0)
+#define TIM3_REG_RESET()               do{ (RCC->APB1RSTR |= (1 << 1)); (RCC->APB1RSTR &= ~(1 << 1)); }while(0)
+#define TIM4_REG_RESET()               do{ (RCC->APB1RSTR |= (1 << 2)); (RCC->APB1RSTR &= ~(1 << 2)); }while(0)
+#define TIM5_REG_RESET()               do{ (RCC->APB1RSTR |= (1 << 3)); (RCC->APB1RSTR &= ~(1 << 3)); }while(0)
+#define TIM6_REG_RESET()               do{ (RCC->APB1RSTR |= (1 << 4)); (RCC->APB1RSTR &= ~(1 << 4)); }while(0)
+#define TIM7_REG_RESET()               do{ (RCC->APB1RSTR |= (1 << 5)); (RCC->APB1RSTR &= ~(1 << 5)); }while(0)
+#define TIM8_REG_RESET()               do{ (RCC->APB2RSTR |= (1 << 1)); (RCC->APB2RSTR &= ~(1 << 1)); }while(0)
+#define TIM9_REG_RESET()               do{ (RCC->APB2RSTR |= (1 << 16)); (RCC->APB2RSTR &= ~(1 << 16)); }while(0)
+#define TIM10_REG_RESET()               do{ (RCC->APB2RSTR |= (1 << 17)); (RCC->APB2RSTR &= ~(1 << 17)); }while(0)
+#define TIM11_REG_RESET()               do{ (RCC->APB2RSTR |= (1 << 18)); (RCC->APB2RSTR &= ~(1 << 18)); }while(0)
+#define TIM12_REG_RESET()               do{ (RCC->APB1RSTR |= (1 << 6)); (RCC->APB1RSTR &= ~(1 << 6)); }while(0)
+#define TIM13_REG_RESET()               do{ (RCC->APB1RSTR |= (1 << 7)); (RCC->APB1RSTR &= ~(1 << 7)); }while(0)
+#define TIM14_REG_RESET()               do{ (RCC->APB1RSTR |= (1 << 8)); (RCC->APB1RSTR &= ~(1 << 8)); }while(0)
 
 
 /*
@@ -376,29 +470,43 @@ typedef struct
 /*
  * IRQ numer for EXTI interupts, SPI interupts, I2C interupts and U(S)ART interupts
  * */
-#define IRQ_NO_EXTI0 		6
-#define IRQ_NO_EXTI1 		7
-#define IRQ_NO_EXTI2 		8
-#define IRQ_NO_EXTI3 		9
-#define IRQ_NO_EXTI4 		10
-#define IRQ_NO_EXTI9_5 		23
-#define IRQ_NO_EXTI15_10 	40
-#define IRQ_NO_SPI1			35
-#define IRQ_NO_SPI2         36
-#define IRQ_NO_SPI3         51
+#define IRQ_NO_EXTI0 				6
+#define IRQ_NO_EXTI1 				7
+#define IRQ_NO_EXTI2 				8
+#define IRQ_NO_EXTI3 				9
+#define IRQ_NO_EXTI4 				10
+#define IRQ_NO_EXTI9_5 				23
+#define IRQ_NO_EXTI15_10 			40
+#define IRQ_NO_SPI1					35
+#define IRQ_NO_SPI2         		36
+#define IRQ_NO_SPI3         		51
 #define IRQ_NO_SPI4
-#define IRQ_NO_I2C1_EV     31
-#define IRQ_NO_I2C1_ER     32
-#define IRQ_NO_I2C2_EV     33
-#define IRQ_NO_I2C2_ER     34
-#define IRQ_NO_I2C3_EV     72
-#define IRQ_NO_I2C3_ER     73
-#define IRQ_NO_USART1	    37
-#define IRQ_NO_USART2	    38
-#define IRQ_NO_USART3	    39
-#define IRQ_NO_UART4	    52
-#define IRQ_NO_UART5	    53
-#define IRQ_NO_USART6	    71
+#define IRQ_NO_I2C1_EV     			31
+#define IRQ_NO_I2C1_ER     			32
+#define IRQ_NO_I2C2_EV     			33
+#define IRQ_NO_I2C2_ER     			34
+#define IRQ_NO_I2C3_EV     			72
+#define IRQ_NO_I2C3_ER     			73
+#define IRQ_NO_USART1	    		37
+#define IRQ_NO_USART2	    		38
+#define IRQ_NO_USART3	    		39
+#define IRQ_NO_UART4	    		52
+#define IRQ_NO_UART5	    		53
+#define IRQ_NO_USART6	    		71
+#define IRQ_NO_TIM1_BRK_TIM9 		24
+#define IRQ_NO_TIM1_UP_TIM10 		25
+#define IRQ_NO_TIM1_TRG_COM_TIM11 	26
+#define IRQ_NO_TIM1_CC 				27
+#define IRQ_NO_TIM2 				28
+#define IRQ_NO_TIM3 				29
+#define IRQ_NO_TIM4 				30
+#define IRQ_NO_TIM8_BRK_TIM12 		43
+#define IRQ_NO_TIM8_UP_TIM13		44
+#define IRQ_NO_TIM8_TRG_COM_TIM14	45
+#define IRQ_NO_TIM2_TIM8_CC			46
+#define IRQ_NO_TIM5 				50
+#define IRQ_NO_TIM7 				55
+
 
 //Generic macros
 #define ENABLE 					1
@@ -591,6 +699,6 @@ typedef struct
 #include "stm32f407xx_i2c_driver.h"
 #include "stm32f407xx_usart_driver.h"
 #include "stm32f407xx_rcc_driver.h"
-
+#include "stm32f407xx_timer_driver.h"
 
 #endif /* INC_STM32F407XX_H_ */

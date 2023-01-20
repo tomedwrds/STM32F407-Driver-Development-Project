@@ -9,21 +9,27 @@ C_SRCS += \
 ../drivers/Src/stm32f407xx_i2c_driver.c \
 ../drivers/Src/stm32f407xx_rcc_driver.c \
 ../drivers/Src/stm32f407xx_spi_driver.c \
-../drivers/Src/stm32f407xx_usart_driver.c 
+../drivers/Src/stm32f407xx_timer_driver.c \
+../drivers/Src/stm32f407xx_usart_driver.c \
+../drivers/Src/timertest.c 
 
 OBJS += \
 ./drivers/Src/stm32f407xx_gpio_driver.o \
 ./drivers/Src/stm32f407xx_i2c_driver.o \
 ./drivers/Src/stm32f407xx_rcc_driver.o \
 ./drivers/Src/stm32f407xx_spi_driver.o \
-./drivers/Src/stm32f407xx_usart_driver.o 
+./drivers/Src/stm32f407xx_timer_driver.o \
+./drivers/Src/stm32f407xx_usart_driver.o \
+./drivers/Src/timertest.o 
 
 C_DEPS += \
 ./drivers/Src/stm32f407xx_gpio_driver.d \
 ./drivers/Src/stm32f407xx_i2c_driver.d \
 ./drivers/Src/stm32f407xx_rcc_driver.d \
 ./drivers/Src/stm32f407xx_spi_driver.d \
-./drivers/Src/stm32f407xx_usart_driver.d 
+./drivers/Src/stm32f407xx_timer_driver.d \
+./drivers/Src/stm32f407xx_usart_driver.d \
+./drivers/Src/timertest.d 
 
 
 # Each subdirectory must supply rules for building sources it contributes
@@ -33,7 +39,7 @@ drivers/Src/%.o drivers/Src/%.su: ../drivers/Src/%.c drivers/Src/subdir.mk
 clean: clean-drivers-2f-Src
 
 clean-drivers-2f-Src:
-	-$(RM) ./drivers/Src/stm32f407xx_gpio_driver.d ./drivers/Src/stm32f407xx_gpio_driver.o ./drivers/Src/stm32f407xx_gpio_driver.su ./drivers/Src/stm32f407xx_i2c_driver.d ./drivers/Src/stm32f407xx_i2c_driver.o ./drivers/Src/stm32f407xx_i2c_driver.su ./drivers/Src/stm32f407xx_rcc_driver.d ./drivers/Src/stm32f407xx_rcc_driver.o ./drivers/Src/stm32f407xx_rcc_driver.su ./drivers/Src/stm32f407xx_spi_driver.d ./drivers/Src/stm32f407xx_spi_driver.o ./drivers/Src/stm32f407xx_spi_driver.su ./drivers/Src/stm32f407xx_usart_driver.d ./drivers/Src/stm32f407xx_usart_driver.o ./drivers/Src/stm32f407xx_usart_driver.su
+	-$(RM) ./drivers/Src/stm32f407xx_gpio_driver.d ./drivers/Src/stm32f407xx_gpio_driver.o ./drivers/Src/stm32f407xx_gpio_driver.su ./drivers/Src/stm32f407xx_i2c_driver.d ./drivers/Src/stm32f407xx_i2c_driver.o ./drivers/Src/stm32f407xx_i2c_driver.su ./drivers/Src/stm32f407xx_rcc_driver.d ./drivers/Src/stm32f407xx_rcc_driver.o ./drivers/Src/stm32f407xx_rcc_driver.su ./drivers/Src/stm32f407xx_spi_driver.d ./drivers/Src/stm32f407xx_spi_driver.o ./drivers/Src/stm32f407xx_spi_driver.su ./drivers/Src/stm32f407xx_timer_driver.d ./drivers/Src/stm32f407xx_timer_driver.o ./drivers/Src/stm32f407xx_timer_driver.su ./drivers/Src/stm32f407xx_usart_driver.d ./drivers/Src/stm32f407xx_usart_driver.o ./drivers/Src/stm32f407xx_usart_driver.su ./drivers/Src/timertest.d ./drivers/Src/timertest.o ./drivers/Src/timertest.su
 
 .PHONY: clean-drivers-2f-Src
 
