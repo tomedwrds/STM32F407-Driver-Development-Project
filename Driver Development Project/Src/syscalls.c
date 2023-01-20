@@ -61,7 +61,6 @@ void ITM_SendChar(uint8_t ch)
 	ITM_STIMULUS_PORT0 = ch;
 }
 
-
 /* Variables */
 extern int __io_putchar(int ch) __attribute__((weak));
 extern int __io_getchar(void) __attribute__((weak));
