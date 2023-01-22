@@ -7,6 +7,8 @@
 
 #include "stm32f407xx_timer_driver.h"
 
+
+
 /*********************************************************************
  * @fn      		  - TIM_PeriClockControl
  *
@@ -90,10 +92,115 @@ void TIM_Init(TIM_Handle_t *TIM_Handle_t)
 	TIM_PeriClockControl(TIM_Handle_t->pTIMx, ENABLE);
 
 	//Set the prescalar value
-	TIM_Handle_t->pTIMx->PSC = TIM_Handle_t->TIM_Config_t.TIM_Prescalar;
+	TIM_Handle_t->pTIMx->PSC = TIM_Handle_t->TIMConfig.TIM_Prescalar;
 
 	//Set the autoreload value
-	TIM_Handle_t->pTIMx->ARR = TIM_Handle_t->TIM_Config_t.TIM_AutoReload;
+	TIM_Handle_t->pTIMx->ARR = TIM_Handle_t->TIMConfig.TIM_AutoReload;
+
+	//Set the counter mode
+	if(TIM_Handle_t->TIMConfig.TIM_CounterMode != TIM_COUNTER_UP)
+	{
+		if(TIM_Handle_t->TIMConfig.TIM_CounterMode == TIM_COUNTER_DOWN)
+		{
+			TIM_Handle_t->pTIMx->CR1 |= (1<<TIM_CR1_DIR);
+		}
+		else if(TIM_Handle_t->TIMConfig.TIM_CounterMode == TIM_COUNTER_CMS_IT_DOWN)
+		{
+			TIM_Handle_t->pTIMx->CR1 &= ~(0x3<<TIM_CR1_CMS);
+			TIM_Handle_t->pTIMx->CR1 |= (0x1<<TIM_CR1_CMS);
+		}
+		else if(TIM_Handle_t->TIMConfig.TIM_CounterMode == TIM_COUNTER_CMS_IT_UP)
+		{
+			TIM_Handle_t->pTIMx->CR1 &= ~(0x3<<TIM_CR1_CMS);
+			TIM_Handle_t->pTIMx->CR1 |= (0x2<<TIM_CR1_CMS);
+		}
+		else if(TIM_Handle_t->TIMConfig.TIM_CounterMode == TIM_COUNTER_CMS_IT_UPDOWN)
+		{
+			TIM_Handle_t->pTIMx->CR1 |= (0x3<<TIM_CR1_CMS);
+		}
+	}
+
+	//Configure the Capture Compare
+	if(TIM_Handle_t->TIMICConfig.IC_Channel == TIM_IC_Channel_OP)
+	{
+		//output mode
+	}
+	else if(TIM_Handle_t->TIMICConfig.IC_Channel == TIM_IC_Channel_IP1)
+	{
+		//input mode
+		//configure CC into input mode and select TI channel
+		TIM_Handle_t->pTIMx->CCMR1 |= (1<< TIM_CCMR1_CC1S);
+
+		//configure the input capture filter
+		TIM_Handle_t->pTIMx->CCMR1 |= (TIM_Handle_t->TIMICConfig.IC_Filter << TIM_CCMR1_IC1F);
+
+		//set the polarity CCNP holds MSB CCP holds LSB
+		//CCNP and CCP are seperated by a bit
+		//To set CCNP LSB is masked to set CCP MSB is masked
+		TIM_Handle_t->pTIMx->CCER |= ((TIM_Handle_t->TIMICConfig.IC_Polarity &= ~(0x1)) << TIM_CCER_CC1NP);
+		TIM_Handle_t->pTIMx->CCER |= ((TIM_Handle_t->TIMICConfig.IC_Polarity &= ~(0x2)) << TIM_CCER_CC1P);
+
+		//SEt the input prescalar
+		TIM_Handle_t->pTIMx->CCMR1 |= (TIM_Handle_t->TIMICConfig.IC_Prescaler << TIM_CCMR1_IC1PSC);
+
+	}
+	else if(TIM_Handle_t->TIMICConfig.IC_Channel == TIM_IC_Channel_IP2)
+	{
+		//configure CC into input mode and select TI channel
+		TIM_Handle_t->pTIMx->CCMR1 |= (1<< TIM_CCMR1_CC2S);
+
+		//configure the input capture filter
+		TIM_Handle_t->pTIMx->CCMR1 |= (TIM_Handle_t->TIMICConfig.IC_Filter << TIM_CCMR1_IC2F);
+
+		//set the polarity CCNP holds MSB CCP holds LSB
+		//CCNP and CCP are seperated by a bit
+		//To set CCNP LSB is masked to set CCP MSB is masked
+		TIM_Handle_t->pTIMx->CCER |= ((TIM_Handle_t->TIMICConfig.IC_Polarity &= ~(0x1)) << TIM_CCER_CC2NP);
+		TIM_Handle_t->pTIMx->CCER |= ((TIM_Handle_t->TIMICConfig.IC_Polarity &= ~(0x2)) << TIM_CCER_CC2P);
+
+		//SEt the input prescalar
+		TIM_Handle_t->pTIMx->CCMR1 |= (TIM_Handle_t->TIMICConfig.IC_Prescaler << TIM_CCMR1_IC2PSC);
+
+	}
+	else if(TIM_Handle_t->TIMICConfig.IC_Channel == TIM_IC_Channel_IP3)
+	{
+		//input mode
+		//configure CC into input mode and select TI channel
+		TIM_Handle_t->pTIMx->CCMR2 |= (1<< TIM_CCMR2_CC3S);
+
+		//configure the input capture filter
+		TIM_Handle_t->pTIMx->CCMR2 |= (TIM_Handle_t->TIMICConfig.IC_Filter << TIM_CCMR2_IC3F);
+
+		//set the polarity CCNP holds MSB CCP holds LSB
+		//CCNP and CCP are seperated by a bit
+		//To set CCNP LSB is masked to set CCP MSB is masked
+		TIM_Handle_t->pTIMx->CCER |= ((TIM_Handle_t->TIMICConfig.IC_Polarity &= ~(0x1)) << TIM_CCER_CC3NP);
+		TIM_Handle_t->pTIMx->CCER |= ((TIM_Handle_t->TIMICConfig.IC_Polarity &= ~(0x2)) << TIM_CCER_CC3P);
+
+		//SEt the input prescalar
+		TIM_Handle_t->pTIMx->CCMR2 |= (TIM_Handle_t->TIMICConfig.IC_Prescaler << TIM_CCMR2_IC3PSC);
+
+	}
+	else if(TIM_Handle_t->TIMICConfig.IC_Channel == TIM_IC_Channel_IP4)
+	{
+		//input mode
+		//configure CC into input mode and select TI channel
+		TIM_Handle_t->pTIMx->CCMR2 |= (1<< TIM_CCMR2_CC4S);
+
+		//configure the input capture filter
+		TIM_Handle_t->pTIMx->CCMR2 |= (TIM_Handle_t->TIMICConfig.IC_Filter << TIM_CCMR2_IC4F);
+
+		//set the polarity CCNP holds MSB CCP holds LSB
+		//CCNP and CCP are seperated by a bit
+		//To set CCNP LSB is masked to set CCP MSB is masked
+		TIM_Handle_t->pTIMx->CCER |= ((TIM_Handle_t->TIMICConfig.IC_Polarity &= ~(0x1)) << TIM_CCER_CC4NP);
+		TIM_Handle_t->pTIMx->CCER |= ((TIM_Handle_t->TIMICConfig.IC_Polarity &= ~(0x2)) << TIM_CCER_CC4P);
+
+		//SEt the input prescalar
+		TIM_Handle_t->pTIMx->CCMR2 |= (TIM_Handle_t->TIMICConfig.IC_Prescaler << TIM_CCMR2_IC4PSC);
+	}
+
+
 
 }
 /*********************************************************************
@@ -227,3 +334,151 @@ void TIM_IRQPriorityConfig(uint8_t IRQ_Number, uint8_t IRQ_Priority)
 	//We are incrementing the pointer by 32 bits for each value to get to next register
 	*(NVIC_PR_BASE_ADDR + IPRRegister) |= (IRQ_Priority << offset) ;
 }
+
+/*********************************************************************
+ * @fn      		  - TIM_Toggle
+ *
+ * @brief             - toggle the timer and enable the interupt generation
+ *
+ * @param[in]         - timer address
+ * @param[in]         - enable or disable
+ * @param[in]         -
+ *
+ * @return            -  none
+ *
+ * @Note              - none
+ *********************************************************************/
+
+void TIM_Toggle(TIM_RegDef_t *pTIMx,uint8_t EnorDi)
+{
+	if(EnorDi == ENABLE)
+	{
+		//pTIMx->DIER |= 1;
+		pTIMx->CR1 |= 1;
+	}
+	else
+	{
+		//pTIMx->DIER &= ~1;
+		pTIMx->CR1 &= ~1;
+	}
+}
+
+
+/*********************************************************************
+ * @fn      		  - TIM_CC_Toggle
+ *
+ * @brief             - enable the CC
+ *
+ * @param[in]         - timer address
+ * @param[in]         - enable or disable
+ * @param[in]         -
+ *
+ * @return            -  none
+ *
+ * @Note              - none
+ *********************************************************************/
+
+void TIM_CC_Toggle(TIM_Handle_t *TIM_Handle_t,uint8_t EnorDi)
+{
+	if(TIM_Handle_t->TIMICConfig.IC_Channel == TIM_IC_Channel_IP1)
+	{
+		if(EnorDi == ENABLE)
+		{
+			TIM_Handle_t->pTIMx->DIER |= (1<< TIM_DIER_CCIE1);
+			TIM_Handle_t->pTIMx->CCER |= (1<<TIM_CCER_CC1E);
+		}
+		else
+		{
+			TIM_Handle_t->pTIMx->DIER &= ~(1<< TIM_DIER_CCIE1);
+			TIM_Handle_t->pTIMx->CCER &= ~(1<<TIM_CCER_CC1E);
+		}
+	}
+	else if(TIM_Handle_t->TIMICConfig.IC_Channel == TIM_IC_Channel_IP2)
+	{
+		if(EnorDi == ENABLE)
+		{
+			TIM_Handle_t->pTIMx->DIER |= (1<< TIM_DIER_CCIE2);
+			TIM_Handle_t->pTIMx->CCER |= (1<<TIM_CCER_CC2E);
+		}
+		else
+		{
+			TIM_Handle_t->pTIMx->DIER &= ~(1<< TIM_DIER_CCIE2);
+			TIM_Handle_t->pTIMx->CCER &= ~(1<<TIM_CCER_CC2E);
+		}
+	}
+	else if(TIM_Handle_t->TIMICConfig.IC_Channel == TIM_IC_Channel_IP3)
+	{
+		if(EnorDi == ENABLE)
+		{
+			TIM_Handle_t->pTIMx->DIER |= (1<< TIM_DIER_CCIE3);
+			TIM_Handle_t->pTIMx->CCER |= (1<<TIM_CCER_CC3E);
+		}
+		else
+		{
+			TIM_Handle_t->pTIMx->DIER &= ~(1<< TIM_DIER_CCIE3);
+			TIM_Handle_t->pTIMx->CCER &= ~(1<<TIM_CCER_CC3E);
+		}
+	}
+	else if(TIM_Handle_t->TIMICConfig.IC_Channel == TIM_IC_Channel_IP4)
+	{
+		if(EnorDi == ENABLE)
+		{
+			TIM_Handle_t->pTIMx->DIER |= (1<< TIM_DIER_CCIE4);
+			TIM_Handle_t->pTIMx->CCER |= (1<<TIM_CCER_CC4E);
+		}
+		else
+		{
+			TIM_Handle_t->pTIMx->DIER &= ~(1<< TIM_DIER_CCIE4);
+			TIM_Handle_t->pTIMx->CCER &= ~(1<<TIM_CCER_CC4E);
+		}
+	}
+}
+
+/*********************************************************************
+ * @fn      		  - TIM_GetFlagStatus
+ *
+ * @brief             - inspects the state of a flag in the status register
+ *
+ * @param[in]         - timer peripheal
+ * @param[in]         - flag name
+ * @param[in]         -
+ *
+ * @return            -  none
+ *
+ * @Note              - none
+ *********************************************************************/
+
+uint8_t TIM_Get_FlagStatus(TIM_RegDef_t *pTIMx , uint32_t FlagName)
+{
+	if(pTIMx->SR & FlagName)
+	{
+		return SET;
+	}
+	else
+	{
+		return RESET;
+	}
+}
+
+/*********************************************************************
+ * @fn      		  - TIM_Clear_Update
+ *
+ * @brief             - clears the update flag for a timer
+ *
+ * @param[in]         - timer peripheal
+ * @param[in]         -
+ * @param[in]         -
+ *
+ * @return            -  none
+ *
+ * @Note              - none
+ *********************************************************************/
+void TIM_Clear_Update(TIM_RegDef_t *pTIMx)
+{
+	pTIMx->SR &= ~1;
+}
+
+
+
+
+

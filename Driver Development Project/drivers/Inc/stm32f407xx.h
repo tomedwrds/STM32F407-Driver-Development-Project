@@ -112,6 +112,8 @@
 #define UART4_BASEADDR			(APB1PERIPH_BASE_ADDR + 0x4C00)
 #define UART5_BASEADDR			(APB1PERIPH_BASE_ADDR + 0x5000)
 
+#define PWR_BASEADDR			(APB1PERIPH_BASE_ADDR + 0x7000)
+
 
 /*
  * base addresses of peripheals attached to APB2 bus
@@ -132,6 +134,7 @@
 
 #define USART1_BASEADDR			(APB2PERIPH_BASE_ADDR + 0x1000)
 #define USART6_BASEADDR			(APB2PERIPH_BASE_ADDR + 0x1400)
+
 
 
 /*
@@ -288,6 +291,13 @@ typedef struct
 }TIM_RegDef_t;
 
 
+//PWR Register
+typedef struct
+{
+	__vo uint32_t CR;
+	__vo uint32_t CSR;
+}PWR_RegDef_t;
+
 /*
  * peripheal defentions (Peripheal base addresses typed casted to xxx_regdef_t)
  * */
@@ -337,6 +347,8 @@ typedef struct
 #define EXTI					((EXTI_RegDef_t*)EXTI_BASEADDR)
 
 #define SYSCFG					((SYSCFG_RegDef_t*)SYSCFG_BASEADDR)
+
+#define PWR						((PWR_RegDef_t*) PWR_BASEADDR)
 
 
 /*
@@ -406,6 +418,14 @@ typedef struct
 #define SYSCFG_PCLK_EN() (RCC->APB2ENR |= (1 << 14))
 
 
+
+/*
+ * Clock Enable Macros for PWR peripherals
+ */
+#define PWR_PCLK_EN() (RCC->APB1ENR |= (1 << 28))
+
+
+
 /*
  * Macros to reset GPIO and SPI Peripheals
  * */
@@ -451,6 +471,8 @@ typedef struct
 #define TIM12_REG_RESET()               do{ (RCC->APB1RSTR |= (1 << 6)); (RCC->APB1RSTR &= ~(1 << 6)); }while(0)
 #define TIM13_REG_RESET()               do{ (RCC->APB1RSTR |= (1 << 7)); (RCC->APB1RSTR &= ~(1 << 7)); }while(0)
 #define TIM14_REG_RESET()               do{ (RCC->APB1RSTR |= (1 << 8)); (RCC->APB1RSTR &= ~(1 << 8)); }while(0)
+
+
 
 
 /*
@@ -505,6 +527,7 @@ typedef struct
 #define IRQ_NO_TIM8_TRG_COM_TIM14	45
 #define IRQ_NO_TIM2_TIM8_CC			46
 #define IRQ_NO_TIM5 				50
+#define IRQ_NO_TIM6_DAC				54
 #define IRQ_NO_TIM7 				55
 
 
@@ -693,6 +716,71 @@ typedef struct
 #define USART_SR_TXE        			7
 #define USART_SR_LBD        			8
 #define USART_SR_CTS        			9
+
+
+/******************************************************************************************
+ *Bit position definitions of TIMER peripheral
+ ******************************************************************************************/
+/*
+ * Bit position definitions TIM_CR
+ */
+#define TIM_CR1_CEN						0
+#define TIM_CR1_UDIS						1
+#define TIM_CR1_URS						2
+#define TIM_CR1_OPM						3
+#define TIM_CR1_DIR						4
+#define TIM_CR1_CMS						5
+
+/*
+ * Bit positions for TIM_CCMR1 (input mode)
+ */
+
+#define TIM_CCMR1_CC1S					0
+#define TIM_CCMR1_IC1PSC				2
+#define TIM_CCMR1_IC1F					4
+#define TIM_CCMR1_CC2S					8
+#define TIM_CCMR1_IC2PSC				10
+#define TIM_CCMR1_IC2F					12
+
+#define TIM_CCMR2_CC3S					0
+#define TIM_CCMR2_IC3PSC				2
+#define TIM_CCMR2_IC3F					4
+#define TIM_CCMR2_CC4S					8
+#define TIM_CCMR2_IC4PSC				10
+#define TIM_CCMR2_IC4F					12
+/*
+ * Bit position definitions TIM_SR
+ */
+
+#define TIM_SR_UIF						0
+
+/*
+ * Bit position definitions TIM_CCER
+ */
+
+#define TIM_CCER_CC1E					0
+#define TIM_CCER_CC1P					1
+#define TIM_CCER_CC1NP					3
+#define TIM_CCER_CC2E					4
+#define TIM_CCER_CC2P					5
+#define TIM_CCER_CC2NP					7
+#define TIM_CCER_CC3E					8
+#define TIM_CCER_CC3P					9
+#define TIM_CCER_CC3NP					11
+#define TIM_CCER_CC4E					12
+#define TIM_CCER_CC4P					13
+#define TIM_CCER_CC4NP					15
+
+/*
+ * BIt position of TIM_DIER
+ */
+
+#define TIM_DIER_UIE					0
+#define TIM_DIER_CCIE1					1
+#define TIM_DIER_CCIE2					2
+#define TIM_DIER_CCIE3					3
+#define TIM_DIER_CCIE4					4
+
 
 #include "stm32f407xx_gpio_driver.h"
 #include "stm32f407xx_spi_driver.h"

@@ -1,3 +1,9 @@
-../drivers/Src/stm32f407xx_timer_driver.c:24:6:TIM_PeriClockControl	16	static
-../drivers/Src/stm32f407xx_timer_driver.c:87:6:TIM_Init	16	static
-../drivers/Src/stm32f407xx_timer_driver.c:112:6:TIM_DeInit	16	static
+../drivers/Src/stm32f407xx_timer_driver.c:26:6:TIM_PeriClockControl	16	static
+../drivers/Src/stm32f407xx_timer_driver.c:89:6:TIM_Init	16	static
+../drivers/Src/stm32f407xx_timer_driver.c:219:6:TIM_DeInit	16	static
+../drivers/Src/stm32f407xx_timer_driver.c:282:6:TIM_IRQConfig	16	static
+../drivers/Src/stm32f407xx_timer_driver.c:327:6:TIM_IRQPriorityConfig	24	static
+../drivers/Src/stm32f407xx_timer_driver.c:352:6:TIM_Toggle	16	static
+../drivers/Src/stm32f407xx_timer_driver.c:381:6:TIM_CC_Toggle	16	static
+../drivers/Src/stm32f407xx_timer_driver.c:451:9:TIM_Get_FlagStatus	16	static
+../drivers/Src/stm32f407xx_timer_driver.c:476:6:TIM_Clear_Update	16	static
